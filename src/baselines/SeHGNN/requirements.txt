@@ -1,0 +1,26 @@
+# Install this file first. Then install PyG extensions (torch-sparse, etc.):
+#   pip install -r requirements-pyg.txt
+#
+# PyTorch + DGL must match: DGL ships libgraphbolt_pytorch_<torch_version>.so
+# only for specific builds. Installing torch 2.8 from PyPI + dgl from PyPI often
+# yields FileNotFoundError for libgraphbolt_pytorch_2.8.0.so. We pin torch 2.4
+# + cu124 and DGL from data.dgl.ai (same idea as MAGNN environment_notes.txt).
+#
+# torchdata<0.10: DGL imports torchdata.datapipes; 0.10+ removed that module.
+# pyyaml: DGL graphbolt imports yaml.
+# pydantic: used by DGL graphbolt code paths.
+
+--extra-index-url https://download.pytorch.org/whl/cu124
+torch==2.4.0
+
+--find-links https://data.dgl.ai/wheels/torch-2.4/cu124/repo.html
+dgl>=2.1,<3
+
+torchdata>=0.5,<0.10
+pyyaml
+pydantic
+scikit-learn
+scipy
+numpy
+pandas
+tqdm

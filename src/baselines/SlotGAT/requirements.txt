@@ -1,0 +1,23 @@
+# SlotGAT baseline — no PyTorch Geometric needed.
+#
+# PyTorch + DGL must match: DGL ships libgraphbolt_pytorch_<torch_version>.so
+# only for specific builds. We pin torch 2.4 + cu124 and pull DGL from
+# data.dgl.ai (same approach as the SeHGNN baseline).
+#
+# torchdata<0.10: DGL imports torchdata.datapipes; 0.10+ removed that module.
+# pyyaml / pydantic: used by DGL graphbolt code paths.
+
+--extra-index-url https://download.pytorch.org/whl/cu124
+torch==2.4.0
+
+--find-links https://data.dgl.ai/wheels/torch-2.4/cu124/repo.html
+dgl>=2.1,<3
+
+torchdata>=0.5,<0.10
+pyyaml
+pydantic
+scikit-learn
+scipy
+numpy
+pandas
+tqdm
