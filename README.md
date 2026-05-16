@@ -61,16 +61,6 @@ export DGLBACKEND=pytorch                    # also add to ~/.bashrc
 
 See `requirements/README.md` for the conda alternative and SeHGNN extras.
 
-## One missing file (size)
-
-`data/raw/DBLP/DBLP4057_GAT_with_idx.mat` (~388 MB) exceeds GitHub's 100 MB
-limit and is **gitignored**. Copy it locally before running IMDB MAGNN
-preprocess scripts:
-
-```bash
-cp /path/to/source/DBLP4057_GAT_with_idx.mat data/raw/DBLP/
-```
-
 ## Run everything
 
 ```bash
