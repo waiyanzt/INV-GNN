@@ -1,5 +1,5 @@
 # GNN Performance Invariance: Baseline Experiments
-This repository contains the experiment code for Information-based Invariance, Equivariance, and Expressivity for Graph Neural Networks. The code evaluates whether graph neural network baselines remain stable across non-isomorphic graph representations that encode the same information, and includes invariant/skip adaptations of the evaluated models.
+This repository contains the experiment code for **Information-based Invariance, Equivariance, and Expressivity for Graph Neural Networks***. The code evaluates whether graph neural network baselines remain stable across non-isomorphic graph representations that encode the same information, and includes invariant/skip adaptations of the evaluated models.
 
 The paper evaluates the method on IMDb and DBLP variants using node classification and link prediction tasks. The included baselines cover local message passing, path-conditioned propagation, metapath-instance aggregation, metapath-feature propagation, and node-type-aware aggregation.
 
