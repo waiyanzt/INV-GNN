@@ -271,10 +271,16 @@ def parse_lp_minibatch(adjlists_pa, mp_dicts_pa, batch_pairs, device, samples=No
             edges = []
             all_paths = []
             nodes = set()
+            # Guard empty-path cases by tracking path length explicitly.
+            if mp_dict:
+                first_paths = next(iter(mp_dict.values()))
+                path_len = first_paths.shape[1] if isinstance(first_paths, np.ndarray) and first_paths.ndim == 2 else 0
+            else:
+                path_len = 0
 
             # 2) Gather & (optionally) sample paths for each node
             for src in batch_nodes:
-                paths = mp_dict.get(src, np.empty((0, len(next(iter(mp_dict.values()))[0])), dtype=int))
+                paths = mp_dict.get(src, np.empty((0, path_len), dtype=int))
                 nodes.add(src)
 
                 if samples is not None and paths.shape[0] > samples:
@@ -298,7 +304,10 @@ def parse_lp_minibatch(adjlists_pa, mp_dicts_pa, batch_pairs, device, samples=No
                 srcs, dsts = zip(*(remapped_edges[i] for i in order))
             else:
                 srcs, dsts = [], []
-            result_indices = np.stack([all_paths[i] for i in order], axis=0) if all_paths else np.empty((0, len(all_paths[0])), dtype=int)
+            if all_paths:
+                result_indices = np.stack([all_paths[i] for i in order], axis=0)
+            else:
+                result_indices = np.empty((0, path_len), dtype=int)
 
             # 5) Build the DGLGraph
             g = dgl.DGLGraph(multigraph=True)

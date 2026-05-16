@@ -1,0 +1,26 @@
+# Base environment for MAGNN and RGCN baselines.
+# Tested with Python 3.11.4 on Linux + CUDA 12.4.
+#
+# Pin torch 2.4.0 because DGL 2.4 only ships graphbolt for matching torch
+# builds. Installing newer torch + DGL from PyPI fails with
+# "libgraphbolt_pytorch_<ver>.so not found".
+
+--extra-index-url https://download.pytorch.org/whl/cu124
+torch==2.4.0
+torchvision==0.19.0
+torchaudio==2.4.0
+
+--find-links https://data.dgl.ai/wheels/torch-2.4/cu124/repo.html
+dgl>=2.1,<3
+
+torch-geometric
+
+numpy
+scipy
+scikit-learn
+networkx
+pandas
+tqdm
+nltk
+pyyaml
+pydantic

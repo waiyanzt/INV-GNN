@@ -5,33 +5,93 @@ import pickle
 import scipy.sparse
 import os
 
-def load_IMDB_data(prefix='data/preprocessed/IMDB_processed'):
-    G00 = nx.read_adjlist(prefix + '/0/0-1-0.adjlist', create_using=nx.MultiDiGraph)
-    G01 = nx.read_adjlist(prefix + '/0/0-2-0.adjlist', create_using=nx.MultiDiGraph)
-    G10 = nx.read_adjlist(prefix + '/1/1-0-1.adjlist', create_using=nx.MultiDiGraph)
-    G11 = nx.read_adjlist(prefix + '/1/1-0-2-0-1.adjlist', create_using=nx.MultiDiGraph)
-    G20 = nx.read_adjlist(prefix + '/2/2-0-2.adjlist', create_using=nx.MultiDiGraph)
-    G21 = nx.read_adjlist(prefix + '/2/2-0-1-0-2.adjlist', create_using=nx.MultiDiGraph)
-    idx00 = np.load(prefix + '/0/0-1-0_idx.npy')
-    idx01 = np.load(prefix + '/0/0-2-0_idx.npy')
-    idx10 = np.load(prefix + '/1/1-0-1_idx.npy')
-    idx11 = np.load(prefix + '/1/1-0-2-0-1_idx.npy')
-    idx20 = np.load(prefix + '/2/2-0-2_idx.npy')
-    idx21 = np.load(prefix + '/2/2-0-1-0-2_idx.npy')
-    features_0 = scipy.sparse.load_npz(prefix + '/features_0.npz')
-    features_1 = scipy.sparse.load_npz(prefix + '/features_1.npz')
-    features_2 = scipy.sparse.load_npz(prefix + '/features_2.npz')
-    adjM = scipy.sparse.load_npz(prefix + '/adjM.npz')
-    type_mask = np.load(prefix + '/node_types.npy')
-    labels = np.load(prefix + '/labels.npy')
-    train_val_test_idx = np.load(prefix + '/train_val_test_idx.npz')
-    return [[G00, G01], [G10, G11], [G20, G21]], \
-           [[idx00, idx01], [idx10, idx11], [idx20, idx21]], \
-           [features_0, features_1, features_2],\
-           adjM, \
-           type_mask,\
-           labels,\
-           train_val_test_idx
+def load_IMDB_data(prefix='data/preprocessed/IMDB_preprocessed_star', expected_metapaths=None):
+    """
+    Load IMDB MAGNN-NC data from ``preprocess_IMDB_star*.py`` output.
+
+    ``expected_metapaths`` must match ``run_IMDB.py`` / the preprocessor: one list
+    per center type, each entry a tuple metapath like ``(0, 1, 0)``. Files are
+    ``{prefix}/{i}/{stem}.adjlist`` with ``stem = '-'.join(map(str, meta))``.
+
+    **Do not** rely on lexicographic sort of filenames: e.g. ``3-0-1-0-3`` sorts
+    before ``3-0-3``, which would misalign ``etypes_lists`` and cause
+    ``IndexError`` in RotatE aggregation.
+    """
+    prefix = os.path.normpath(prefix)
+    type_mask = np.load(os.path.join(prefix, 'node_types.npy'))
+    num_ntypes = int(type_mask.max()) + 1
+
+    features_list = []
+    for i in range(num_ntypes):
+        fp = os.path.join(prefix, 'features_{}.npz'.format(i))
+        if not os.path.isfile(fp):
+            raise FileNotFoundError(
+                'Missing {}; run the matching preprocess_IMDB_star*.py.'.format(fp)
+            )
+        features_list.append(scipy.sparse.load_npz(fp))
+
+    adjM = scipy.sparse.load_npz(os.path.join(prefix, 'adjM.npz'))
+    labels = np.load(os.path.join(prefix, 'labels.npy'))
+    train_val_test_idx = np.load(os.path.join(prefix, 'train_val_test_idx.npz'))
+
+    nx_G_lists = []
+    edge_metapath_indices_lists = []
+    for i in range(num_ntypes):
+        subdir = os.path.join(prefix, str(i))
+        if not os.path.isdir(subdir):
+            raise FileNotFoundError('Missing metapath directory {}'.format(subdir))
+        G_list = []
+        idx_list = []
+        if expected_metapaths is not None:
+            if len(expected_metapaths) != num_ntypes:
+                raise ValueError(
+                    'expected_metapaths has {} types but data has {}'.format(
+                        len(expected_metapaths), num_ntypes
+                    )
+                )
+            for meta in expected_metapaths[i]:
+                stem = '-'.join(map(str, meta))
+                adjf = stem + '.adjlist'
+                path_g = os.path.join(subdir, adjf)
+                idx_path = os.path.join(subdir, stem + '_idx.npy')
+                if not os.path.isfile(path_g):
+                    raise FileNotFoundError(
+                        'Missing {}; wrong variant folder or rerun preprocess.'.format(path_g)
+                    )
+                if not os.path.isfile(idx_path):
+                    raise FileNotFoundError(
+                        'Missing index for metapath {}: {}'.format(stem, idx_path)
+                    )
+                G = nx.read_adjlist(path_g, nodetype=int, create_using=nx.MultiDiGraph())
+                G_list.append(G)
+                idx_list.append(np.load(idx_path))
+        else:
+            adj_files = sorted(f for f in os.listdir(subdir) if f.endswith('.adjlist'))
+            if not adj_files:
+                raise FileNotFoundError('No .adjlist files under {}'.format(subdir))
+            for adjf in adj_files:
+                stem = adjf[:-len('.adjlist')]
+                idx_path = os.path.join(subdir, stem + '_idx.npy')
+                if not os.path.isfile(idx_path):
+                    raise FileNotFoundError(
+                        'Missing index for metapath {}: {}'.format(stem, idx_path)
+                    )
+                path_g = os.path.join(subdir, adjf)
+                G = nx.read_adjlist(path_g, nodetype=int, create_using=nx.MultiDiGraph())
+                G_list.append(G)
+                idx_list.append(np.load(idx_path))
+        nx_G_lists.append(G_list)
+        edge_metapath_indices_lists.append(idx_list)
+
+    return (
+        nx_G_lists,
+        edge_metapath_indices_lists,
+        features_list,
+        adjM,
+        type_mask,
+        labels,
+        train_val_test_idx,
+    )
 
 
 def load_DBLP_data(prefix='data/preprocessed/DBLP_processed'):
@@ -67,8 +127,8 @@ def load_DBLP_data(prefix='data/preprocessed/DBLP_processed'):
     features_0 = scipy.sparse.load_npz(prefix + '/features_0.npz').toarray()
     features_1 = scipy.sparse.load_npz(prefix + '/features_1.npz').toarray()
     features_2 = np.load(prefix + '/features_2.npy')
-    #features_3 = np.eye(20, dtype=np.float32)
-    features_3 = np.eye(4, dtype=np.float32)
+    features_3 = np.eye(20, dtype=np.float32)
+    # features_3 = np.eye(4, dtype=np.float32)
 
     adjM = scipy.sparse.load_npz(prefix + '/adjM.npz')
     type_mask = np.load(prefix + '/node_types.npy')
@@ -610,7 +670,7 @@ def _read_idx_pickle(path, L, target_count):
     return {t: empty for t in range(target_count)}
 
 def load_DBLP_lp_pc_var1_data(expected_metapaths,
-                              base='data/preprocessed/DBLP_lp_pc_var1_noAuthor/'):
+                              base='data/preprocessed/DBLP_lp_pc_var1_ct_from_pt/'):
 
     type_mask = np.load(os.path.join(base, 'node_types.npy'))
     adjM = sp.load_npz(os.path.join(base, 'adjM.npz'))
@@ -657,10 +717,23 @@ def load_DBLP_lp_pc_var1_data(expected_metapaths,
     return adjlists, edge_metapath_indices_list, adjM, type_mask, pos, neg, num_paper, num_conf
 
 
+def load_DBLP_lp_pc_skip_data(expected_metapaths, variant='v1'):
+    """DBLP paper–venue LP: unified skip preprocess; same expected_metapaths as var1 runner."""
+    v = variant.lower().strip()
+    bases = {
+        'v1': 'data/preprocessed/DBLP_lp_pc_skip_full_v1/',
+        'v2': 'data/preprocessed/DBLP_lp_pc_skip_full_v2/',
+        'v3': 'data/preprocessed/DBLP_lp_pc_skip_full_v3/',
+    }
+    if v not in bases:
+        raise ValueError("variant must be one of v1,v2,v3; got {!r}".format(variant))
+    return load_DBLP_lp_pc_var1_data(expected_metapaths, base=bases[v])
+
+
 # --- DBLP paper–venue LP: Variation 2 loader (Area - Venue) ---
 
 def load_DBLP_lp_pc_var2_data(expected_metapaths,
-                              base='data/preprocessed/DBLP_lp_pc_var2_noAuthor/'):
+                              base='data/preprocessed/DBLP_lp_pc_var2_ct_from_pt/'):
 
     type_mask = np.load(os.path.join(base, 'node_types.npy'))
     adjM = sp.load_npz(os.path.join(base, 'adjM.npz'))
@@ -716,17 +789,12 @@ def load_DBLP_lp_pc_var2_data(expected_metapaths,
 
     return adjlists, edge_metapath_indices_list, adjM, type_mask, pos, neg, num_paper, num_conf
 
-DEFAULT_EXPECTED_METAPATHS_VAR3 = [
-    [(1,0,1), (1,2,1), (1,3,1), (1,0,4,0,1)],
-    [(3,1,0,1,3), (3,1,2,1,3), (3,1,0,4,0,1,3)]
-]
+def load_DBLP_lp_pc_var3_data(expected_metapaths,
+                              base='data/preprocessed/DBLP_lp_pc_var3_ct_from_pt/'):
 
-def load_DBLP_lp_pc_var3_data(expected_metapaths=DEFAULT_EXPECTED_METAPATHS_VAR3,
-                              base='data/preprocessed/DBLP_lp_pc_var3/'):
     type_mask = np.load(os.path.join(base, 'node_types.npy'))
     adjM = sp.load_npz(os.path.join(base, 'adjM.npz'))
 
-    # 1: paper, 3: conf (unchanged type ids)
     num_paper = int((type_mask == 1).sum())
     num_conf  = int((type_mask == 3).sum())
 
@@ -754,14 +822,24 @@ def load_DBLP_lp_pc_var3_data(expected_metapaths=DEFAULT_EXPECTED_METAPATHS_VAR3
             adj_path = os.path.join(base, f'{mode}', f'{name}.adjlist')
             idx_path = os.path.join(base, f'{mode}', f'{name}_idx.pickle')
 
-            # raw STRING lines (MAGNN parser expects strings)
-            adj = _read_adjlist_raw(adj_path)
-            # safety: ensure a row per target
+            # Read raw STRING lines (parser expects strings)
+            if os.path.exists(adj_path):
+                with open(adj_path, 'r') as f:
+                    adj = [ln.rstrip('\n') for ln in f]
+            else:
+                adj = []
+            # Pad to a line per target if needed
             if len(adj) < target_counts[mode]:
                 start = len(adj)
                 adj += [f"{i}" for i in range(start, target_counts[mode])]
 
-            edge_idx = _read_idx_pickle(idx_path, L, target_counts[mode])
+            # Load per-target metapath arrays or synthesize empties
+            if os.path.exists(idx_path):
+                with open(idx_path, 'rb') as f:
+                    edge_idx = pickle.load(f)
+            else:
+                empty = np.empty((0, L), dtype=np.int32)
+                edge_idx = {t: empty for t in range(target_counts[mode])}
 
             adjlists[mode].append(adj)
             edge_metapath_indices_list[mode].append(edge_idx)

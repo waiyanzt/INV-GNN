@@ -28,7 +28,7 @@ from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.model_selection import train_test_split
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
-RAW_CSV = os.path.join(SCRIPT_DIR, '..', 'MAGNN', 'data', 'raw', 'IMDB', 'movie_metadata.csv')
+RAW_CSV = os.path.join(SCRIPT_DIR, '..', '..', '..', 'data', 'raw', 'IMDB', 'movie_metadata.csv')
 SAVE_ROOT = os.path.join(SCRIPT_DIR, 'data')
 RAND_SEED = 1566911444
 

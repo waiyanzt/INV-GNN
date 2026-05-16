@@ -1,0 +1,9 @@
+numpy
+pandas
+scikit-learn
+scipy
+packaging
+pyyaml
+torch
+dgl -f https://data.dgl.ai/wheels/torch-2.4/cu124/repo.html
+torch-geometric

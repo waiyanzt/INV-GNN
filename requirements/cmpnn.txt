@@ -1,0 +1,5 @@
+# CMPNN baseline. Reuses the same base stack as MAGNN/RGCN plus torchdrug.
+# Install gnn.txt first, then this file.
+
+-r gnn.txt
+torchdrug==0.2.1

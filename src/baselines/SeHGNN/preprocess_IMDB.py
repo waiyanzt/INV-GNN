@@ -25,7 +25,7 @@ import scipy.sparse
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.model_selection import train_test_split
 
-RAW_CSV = '../MAGNN/data/raw/IMDB/movie_metadata.csv'
+RAW_CSV = '../../../data/raw/IMDB/movie_metadata.csv'
 SAVE_ROOT = 'data'
 RAND_SEED = 1566911444
 

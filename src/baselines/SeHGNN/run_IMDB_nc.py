@@ -13,7 +13,7 @@ Variant connectivity (all share movie-link edges):
 Usage:
     python run_IMDB_nc.py                              # all variants
     python run_IMDB_nc.py --variant 1                  # variant 1 only
-    python run_IMDB_nc.py --variant 1 2 --seeds 42 123
+    python run_IMDB_nc.py --variant 1 2 --seeds 42,123
 
 MAGNN-aligned skip bundles (same adjacency / labels / splits as MAGNN skip; semantic movie channels):
     From baselines/SeHGNN:  python preprocess_IMDB_skip.py --variant v1   # or --all
@@ -439,8 +439,7 @@ def parse_args():
     )
     parser.add_argument('--variant', nargs='+', type=int, default=[1, 2, 3, 4, 5, 6],
                         choices=[1, 2, 3, 4, 5, 6])
-    parser.add_argument('--seeds', nargs='+', type=int,
-                        default=[1566911444, 20241017, 20251017])
+    parser.add_argument('--seeds', default='1566911444,20241017,20251017')
     parser.add_argument('--gpu', type=int, default=0)
     parser.add_argument('--cpu', action='store_true', default=False)
     parser.add_argument('--epoch', type=int, default=200)
@@ -472,6 +471,7 @@ def parse_args():
 
 if __name__ == '__main__':
     args = parse_args()
+    args.seeds = [int(s.strip()) for s in args.seeds.split(',') if s.strip()]
     print(args)
 
     all_variant_results = {}

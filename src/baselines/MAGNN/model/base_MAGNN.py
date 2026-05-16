@@ -209,6 +209,7 @@ class MAGNN_ctr_ntype_specific(nn.Module):
         self.out_dim = out_dim
         self.num_heads = num_heads
         self.use_minibatch = use_minibatch
+        self.drop_metapath_idxs = set()  # metapath indices to ablate
 
         # metapath-specific layers
         self.metapath_layers = nn.ModuleList()
@@ -238,13 +239,87 @@ class MAGNN_ctr_ntype_specific(nn.Module):
             # metapath-specific layers
             metapath_outs = [F.elu(metapath_layer((g, features, type_mask, edge_metapath_indices, target_idx)).view(-1, self.num_heads * self.out_dim))
                              for g, edge_metapath_indices, target_idx, metapath_layer in zip(g_list, edge_metapath_indices_list, target_idx_list, self.metapath_layers)]
+            
+            beta = []
+            for metapath_out in metapath_outs:
+                fc1 = torch.tanh(self.fc1(metapath_out))
+                fc1_mean = torch.mean(fc1, dim=0)
+                fc2 = self.fc2(fc1_mean)
+                beta.append(fc2)
+            beta = torch.cat(beta, dim=0)
+            beta = F.softmax(beta, dim=0)
+            #self.last_beta = beta.detach()
+            beta = torch.unsqueeze(beta, dim=-1)
+            beta = torch.unsqueeze(beta, dim=-1)
+            metapath_outs = [torch.unsqueeze(metapath_out, dim=0) for metapath_out in metapath_outs]
+            metapath_outs = torch.cat(metapath_outs, dim=0)
+            h = torch.sum(beta * metapath_outs, dim=0)
+            return h
         else:
             g_list, features, type_mask, edge_metapath_indices_list = inputs
 
+            metapath_outs = []
+            beta_scores = []  # store scalar scores per metapath (global beta)
+
             # metapath-specific layers
+            '''
             metapath_outs = [F.elu(metapath_layer((g, features, type_mask, edge_metapath_indices)).view(-1, self.num_heads * self.out_dim))
                              for g, edge_metapath_indices, metapath_layer in zip(g_list, edge_metapath_indices_list, self.metapath_layers)]
+            beta = []
+            for metapath_out in metapath_outs:
+                fc1 = torch.tanh(self.fc1(metapath_out))
+                fc1_mean = torch.mean(fc1, dim=0)
+                fc2 = self.fc2(fc1_mean)
+                beta.append(fc2)
+            beta = torch.cat(beta, dim=0)
+            beta = F.softmax(beta, dim=0)
+            #self.last_beta = beta.detach()
+            beta = torch.unsqueeze(beta, dim=-1)
+            beta = torch.unsqueeze(beta, dim=-1)
+            metapath_outs = [torch.unsqueeze(metapath_out, dim=0) for metapath_out in metapath_outs]
+            metapath_outs = torch.cat(metapath_outs, dim=0)
+            h = torch.sum(beta * metapath_outs, dim=0)
+            return h
+            '''
+            #"""
+            for mp_i, (g, edge_metapath_indices, metapath_layer) in enumerate(
+                zip(g_list, edge_metapath_indices_list, self.metapath_layers)
+            ):
+                # If ablated: output zeros and set score very negative so beta ~ 0
+                if mp_i in self.drop_metapath_idxs:
+                    # We need correct shape: (N_i, H*out_dim)
+                    # Get N_i from any non-ablated output if possible; otherwise infer from node count
+                    # In this codebase, metapath_layer returns (num_nodes_of_center_type, H, out_dim) flattened later.
+                    # We'll compute one normal output once if needed; easiest: use g.num_nodes() as proxy and rely on DGL output size.
+                    # Better: just run layer once to get shape, then zero it:
+                    out = metapath_layer((g, features, type_mask, edge_metapath_indices)).view(-1, self.num_heads * self.out_dim)
+                    out = torch.zeros_like(out)
+                    metapath_outs.append(F.elu(out))
+                    beta_scores.append(out.new_tensor([-1e9]))  # kills it in softmax
+                    continue
 
+                out = metapath_layer((g, features, type_mask, edge_metapath_indices)).view(-1, self.num_heads * self.out_dim)
+                out = F.elu(out)
+                metapath_outs.append(out)
+
+                fc1 = torch.tanh(self.fc1(out))
+                fc1_mean = torch.mean(fc1, dim=0)
+                score = self.fc2(fc1_mean)   # (1,)
+                beta_scores.append(score)
+
+            beta = torch.cat(beta_scores, dim=0)
+            beta = F.softmax(beta, dim=0)
+
+            # store beta for later inspection
+            self.last_beta = beta.detach()
+
+            beta = beta.view(-1, 1, 1)  # (K,1,1)
+            metapath_outs = torch.stack(metapath_outs, dim=0)  # (K, N_i, F)
+            h = torch.sum(beta * metapath_outs, dim=0)         # (N_i, F)
+            return h
+            #"""
+
+        """
         beta = []
         for metapath_out in metapath_outs:
             fc1 = torch.tanh(self.fc1(metapath_out))
@@ -253,9 +328,11 @@ class MAGNN_ctr_ntype_specific(nn.Module):
             beta.append(fc2)
         beta = torch.cat(beta, dim=0)
         beta = F.softmax(beta, dim=0)
+        self.last_beta = beta.detach()
         beta = torch.unsqueeze(beta, dim=-1)
         beta = torch.unsqueeze(beta, dim=-1)
         metapath_outs = [torch.unsqueeze(metapath_out, dim=0) for metapath_out in metapath_outs]
         metapath_outs = torch.cat(metapath_outs, dim=0)
         h = torch.sum(beta * metapath_outs, dim=0)
         return h
+        """
