@@ -116,19 +116,25 @@ data/rgcn_augmentation/freebase/manifest.json
 
 ## 6. Freebase smoke test
 
-The joint test still performs full-graph propagation over `exact_2`; use a
-high-memory GPU node. A CUDA out-of-memory result here means the production run
-needs a larger-memory GPU or changes to the full-graph implementation.
+The joint test still performs full-graph propagation over `exact_2`. Verify the
+chunked layer against the installed PyG implementation first:
+
+```bash
+python rgcn_data_augmentation/verify_FREEBASE_chunked_rgcn.py --device cpu
+```
+
+Chunking retains all graph edges while bounding relation-message tensors.
 
 ```bash
 python rgcn_data_augmentation/run_FREEBASE_rgcn_augmentation.py \
   --variants unchanged,exact_2 \
   --seeds 1566911444 \
   --data-root data/rgcn_augmentation/freebase \
-  --output-dir results/smoke/rgcn_augmentation/FREEBASE \
+  --output-dir results/smoke/rgcn_augmentation/FREEBASE_chunked \
   --super-epochs 1 \
   --patience 1 \
   --label-batch-size 0 \
+  --edge-chunk-size 250000 \
   --device cuda
 ```
 
@@ -139,10 +145,11 @@ python rgcn_data_augmentation/run_FREEBASE_rgcn_augmentation.py \
   --variants unchanged,exact_2 \
   --seeds 1566911444,20241017,20251017 \
   --data-root data/rgcn_augmentation/freebase \
-  --output-dir results/rgcn_augmentation/FREEBASE \
+  --output-dir results/rgcn_augmentation/FREEBASE_chunked \
   --super-epochs 100 \
   --patience 30 \
   --label-batch-size 0 \
+  --edge-chunk-size 250000 \
   --hidden-dim 64 \
   --num-bases 30 \
   --dropout 0.0 \

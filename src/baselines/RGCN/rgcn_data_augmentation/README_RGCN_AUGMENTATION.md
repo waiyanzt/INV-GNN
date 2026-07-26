@@ -109,10 +109,11 @@ python rgcn_data_augmentation/run_FREEBASE_rgcn_augmentation.py \
   --variants unchanged,exact_2 \
   --seeds 1566911444,20241017,20251017 \
   --data-root data/rgcn_augmentation/freebase \
-  --output-dir results/rgcn_augmentation/FREEBASE \
+  --output-dir results/rgcn_augmentation/FREEBASE_chunked \
   --super-epochs 100 \
   --patience 30 \
   --label-batch-size 0 \
+  --edge-chunk-size 250000 \
   --hidden-dim 64 \
   --num-bases 30 \
   --dropout 0.0 \
@@ -125,6 +126,16 @@ python rgcn_data_augmentation/run_FREEBASE_rgcn_augmentation.py \
 
 The best checkpoint minimizes mean validation NLL across variants, matching the
 old single-variant selection criterion.
+
+`--edge-chunk-size 0` uses the original PyG `RGCNConv`. A positive value uses
+the same parameters and complete graph but bounds the number of relation edges
+whose source features are gathered at once. This is exact edge chunking, not
+edge or neighborhood sampling. Before the first chunked run in a new
+environment, run:
+
+```bash
+python rgcn_data_augmentation/verify_FREEBASE_chunked_rgcn.py --device cpu
+```
 
 ## WordNet
 

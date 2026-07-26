@@ -2,8 +2,8 @@
 
 ## Freebase
 
-The augmentation runner now imports the attached `RGCNFeatureless` model
-unchanged:
+The augmentation runner uses the attached `RGCNFeatureless` model parameters
+and computation:
 
 - learned `num_nodes x hidden_dim` node parameter matrix;
 - two PyG `RGCNConv` layers;
@@ -13,6 +13,14 @@ unchanged:
 - `NLLLoss`;
 - Adam over all model parameters with the legacy learning rate and weight decay;
 - checkpoint selection by validation NLL.
+
+The optional `--edge-chunk-size` backend subclasses PyG `RGCNConv` and retains
+the same parameter/state-dict layout. It evaluates each relation's complete
+mean aggregation in bounded edge chunks. No edge is sampled or omitted.
+Because floating-point additions are grouped into chunks, results can differ
+at normal floating-point roundoff scale. The included
+`verify_FREEBASE_chunked_rgcn.py` script checks forward and gradient agreement
+against the installed PyG implementation.
 
 The defaults match the old runner: hidden dimension 64, 30 bases, dropout 0,
 learning rate 0.001, weight decay 0.001, patience 30, and no gradient clipping.

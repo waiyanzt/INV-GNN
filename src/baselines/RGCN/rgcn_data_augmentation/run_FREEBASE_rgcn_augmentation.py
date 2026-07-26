@@ -126,8 +126,8 @@ def run_seed(args, variants: List[str], seed: int, output_root: Path) -> Dict[st
     bundles = prepare_bundles(Path(args.data_root), variants)
     reference = bundles[variants[0]]
 
-    # Exact legacy architecture: learned node matrix -> RGCNConv -> ReLU/dropout
-    # -> RGCNConv to class logits -> log_softmax.
+    # Exact legacy parameters and computation. A positive edge chunk size uses
+    # an equivalent memory-bounded evaluation of relation mean aggregation.
     model = RGCNFeatureless(
         num_nodes=reference["num_nodes"],
         num_relations=reference["num_relations"],
@@ -135,6 +135,7 @@ def run_seed(args, variants: List[str], seed: int, output_root: Path) -> Dict[st
         num_classes=reference["num_classes"],
         num_bases=args.num_bases,
         dropout=args.dropout,
+        edge_chunk_size=args.edge_chunk_size,
     ).to(device)
     optimizer = torch.optim.Adam(
         model.parameters(), lr=args.lr, weight_decay=args.weight_decay
@@ -155,7 +156,11 @@ def run_seed(args, variants: List[str], seed: int, output_root: Path) -> Dict[st
     updates_per_super_epoch = len(variants) * batches_per_variant
     run_config = {
         "dataset": "FREEBASE",
-        "model": "legacy_RGCNFeatureless_pyg",
+        "model": (
+            "legacy_RGCNFeatureless_chunked"
+            if args.edge_chunk_size > 0
+            else "legacy_RGCNFeatureless_pyg"
+        ),
         "seed": seed,
         "variants": variants,
         "hidden_dim": args.hidden_dim,
@@ -165,6 +170,7 @@ def run_seed(args, variants: List[str], seed: int, output_root: Path) -> Dict[st
         "weight_decay": args.weight_decay,
         "grad_clip": args.grad_clip,
         "label_batch_size": args.label_batch_size,
+        "edge_chunk_size": args.edge_chunk_size,
         "patience": args.patience,
         "data_root": str(Path(args.data_root).resolve()),
     }
@@ -380,7 +386,11 @@ def run_seed(args, variants: List[str], seed: int, output_root: Path) -> Dict[st
 
     summary = {
         "dataset": "FREEBASE",
-        "model": "legacy_RGCNFeatureless_pyg",
+        "model": run_config["model"],
+        "aggregation_backend": (
+            "chunked_exact_mean" if args.edge_chunk_size > 0 else "pyg_rgcn_conv"
+        ),
+        "edge_chunk_size": args.edge_chunk_size,
         "seed": seed,
         "variants": variants,
         "epoch_accounting": {
@@ -426,6 +436,15 @@ def main() -> None:
     parser.add_argument(
         "--label-batch-size", type=int, default=0, help="0 = legacy full-batch loss"
     )
+    parser.add_argument(
+        "--edge-chunk-size",
+        type=int,
+        default=0,
+        help=(
+            "Maximum relation edges gathered at once; 0 uses the original PyG "
+            "RGCNConv, while a positive value uses exact chunked mean aggregation"
+        ),
+    )
     parser.add_argument("--hidden-dim", type=int, default=64)
     parser.add_argument("--num-bases", type=int, default=30)
     parser.add_argument("--dropout", type=float, default=0.0)
@@ -437,6 +456,8 @@ def main() -> None:
     parser.add_argument("--device", default="auto")
     parser.add_argument("--resume", action="store_true")
     args = parser.parse_args()
+    if args.edge_chunk_size < 0:
+        raise SystemExit("--edge-chunk-size must be 0 or a positive integer")
 
     variants = parse_csv(args.variants)
     seeds = [int(value) for value in parse_csv(args.seeds)]
@@ -448,6 +469,8 @@ def main() -> None:
         rows.append(
             {
                 "seed": summary["seed"],
+                "aggregation_backend": summary["aggregation_backend"],
+                "edge_chunk_size": summary["edge_chunk_size"],
                 "super_epochs_ran": summary["epoch_accounting"]["super_epochs_ran"],
                 "variant_epochs_ran": summary["epoch_accounting"]["variant_epochs_ran"],
                 "optimizer_steps": summary["epoch_accounting"]["optimizer_steps"],
