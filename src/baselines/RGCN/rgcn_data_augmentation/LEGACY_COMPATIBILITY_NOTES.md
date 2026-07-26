@@ -16,9 +16,11 @@ and computation:
 
 The optional `--edge-chunk-size` backend subclasses PyG `RGCNConv` and retains
 the same parameter/state-dict layout. It evaluates each relation's complete
-mean aggregation in bounded edge chunks. No edge is sampled or omitted.
-Because floating-point additions are grouped into chunks, results can differ
-at normal floating-point roundoff scale. The included
+mean aggregation in bounded edge chunks and uses a custom backward that
+recomputes those aggregates instead of retaining per-chunk autograd state. No
+edge is sampled or omitted. This exchanges additional compute time for lower
+peak CUDA memory. Because floating-point additions are grouped into chunks,
+results can differ at normal floating-point roundoff scale. The included
 `verify_FREEBASE_chunked_rgcn.py` script checks forward and gradient agreement
 against the installed PyG implementation.
 

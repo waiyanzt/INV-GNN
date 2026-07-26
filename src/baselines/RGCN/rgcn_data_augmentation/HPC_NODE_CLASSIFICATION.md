@@ -123,14 +123,17 @@ chunked layer against the installed PyG implementation first:
 python rgcn_data_augmentation/verify_FREEBASE_chunked_rgcn.py --device cpu
 ```
 
-Chunking retains all graph edges while bounding relation-message tensors.
+This backend retains all graph edges, bounds relation-message tensors, and
+recomputes relation aggregates during backward instead of retaining every
+chunk's autograd bookkeeping. It is exact full-graph training, with additional
+compute time traded for substantially lower peak CUDA memory.
 
 ```bash
 python rgcn_data_augmentation/run_FREEBASE_rgcn_augmentation.py \
   --variants unchanged,exact_2 \
   --seeds 1566911444 \
   --data-root data/rgcn_augmentation/freebase \
-  --output-dir results/smoke/rgcn_augmentation/FREEBASE_chunked \
+  --output-dir results/smoke/rgcn_augmentation/FREEBASE_chunked_recompute \
   --super-epochs 1 \
   --patience 1 \
   --label-batch-size 0 \
@@ -145,7 +148,7 @@ python rgcn_data_augmentation/run_FREEBASE_rgcn_augmentation.py \
   --variants unchanged,exact_2 \
   --seeds 1566911444,20241017,20251017 \
   --data-root data/rgcn_augmentation/freebase \
-  --output-dir results/rgcn_augmentation/FREEBASE_chunked \
+  --output-dir results/rgcn_augmentation/FREEBASE_chunked_recompute \
   --super-epochs 100 \
   --patience 30 \
   --label-batch-size 0 \

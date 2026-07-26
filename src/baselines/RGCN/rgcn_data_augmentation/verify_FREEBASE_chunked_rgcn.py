@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Verify chunked Freebase RGCN forward and gradient equivalence to PyG."""
+"""Verify recomputing chunked Freebase RGCN equivalence to PyG."""
 
 from __future__ import annotations
 
@@ -117,6 +117,24 @@ def main() -> None:
             standard_gradient, chunked_gradient
         )
 
+    # One identical optimizer step confirms that the custom backward feeds the
+    # unchanged optimizer/parameter layout exactly as the PyG layer does.
+    standard_optimizer = torch.optim.Adam(standard.parameters(), lr=0.001)
+    chunked_optimizer = torch.optim.Adam(chunked.parameters(), lr=0.001)
+    standard_optimizer.step()
+    chunked_optimizer.step()
+    parameter_step_differences = {}
+    for name in standard_parameters:
+        torch.testing.assert_close(
+            standard_parameters[name],
+            chunked_parameters[name],
+            atol=args.atol,
+            rtol=args.rtol,
+        )
+        parameter_step_differences[name] = maximum_absolute_difference(
+            standard_parameters[name], chunked_parameters[name]
+        )
+
     standard_model = RGCNFeatureless(
         num_nodes=num_nodes,
         num_relations=num_relations,
@@ -137,7 +155,7 @@ def main() -> None:
     if tuple(standard_model.state_dict()) != tuple(chunked_model.state_dict()):
         raise AssertionError("Standard and chunked model state-dict keys differ")
 
-    print("[OK] Chunked RGCN matches PyG RGCNConv")
+    print("[OK] Recomputing chunked RGCN matches PyG RGCNConv")
     print(
         "maximum_forward_absolute_difference:",
         maximum_absolute_difference(standard_output, chunked_output),
@@ -147,6 +165,7 @@ def main() -> None:
         maximum_absolute_difference(standard_x.grad, chunked_x.grad),
     )
     print("parameter_gradient_absolute_differences:", parameter_gradient_differences)
+    print("parameter_step_absolute_differences:", parameter_step_differences)
 
 
 if __name__ == "__main__":

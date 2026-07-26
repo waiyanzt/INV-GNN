@@ -157,7 +157,7 @@ def run_seed(args, variants: List[str], seed: int, output_root: Path) -> Dict[st
     run_config = {
         "dataset": "FREEBASE",
         "model": (
-            "legacy_RGCNFeatureless_chunked"
+            "legacy_RGCNFeatureless_chunked_recompute_v1"
             if args.edge_chunk_size > 0
             else "legacy_RGCNFeatureless_pyg"
         ),
@@ -171,6 +171,9 @@ def run_seed(args, variants: List[str], seed: int, output_root: Path) -> Dict[st
         "grad_clip": args.grad_clip,
         "label_batch_size": args.label_batch_size,
         "edge_chunk_size": args.edge_chunk_size,
+        "chunked_backend_version": (
+            "recompute_v1" if args.edge_chunk_size > 0 else None
+        ),
         "patience": args.patience,
         "data_root": str(Path(args.data_root).resolve()),
     }
@@ -388,7 +391,9 @@ def run_seed(args, variants: List[str], seed: int, output_root: Path) -> Dict[st
         "dataset": "FREEBASE",
         "model": run_config["model"],
         "aggregation_backend": (
-            "chunked_exact_mean" if args.edge_chunk_size > 0 else "pyg_rgcn_conv"
+            "chunked_recompute_exact_mean"
+            if args.edge_chunk_size > 0
+            else "pyg_rgcn_conv"
         ),
         "edge_chunk_size": args.edge_chunk_size,
         "seed": seed,
@@ -442,7 +447,8 @@ def main() -> None:
         default=0,
         help=(
             "Maximum relation edges gathered at once; 0 uses the original PyG "
-            "RGCNConv, while a positive value uses exact chunked mean aggregation"
+            "RGCNConv, while a positive value uses exact chunked mean aggregation "
+            "with a memory-bounded recomputing backward pass"
         ),
     )
     parser.add_argument("--hidden-dim", type=int, default=64)
