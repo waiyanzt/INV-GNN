@@ -1,1 +1,18 @@
 data/*
+
+# Python environments and caches
+.venv/
+__pycache__/
+*.py[cod]
+
+# Generated experiment artifacts outside data/
+results/
+**/results/
+**/checkpoint/
+**/checkpoints/
+
+# Scheduler and operating-system artifacts
+slurm-*.out
+*.slurm.out
+*.slurm.err
+.DS_Store
