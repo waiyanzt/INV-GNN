@@ -1,0 +1,105 @@
+{
+  "dataset": "IMDB",
+  "feature_policy": "learned homogeneous node embedding; no external feature preprocessing required",
+  "global_native_relation_vocabulary": [
+    "actor-movie",
+    "movie-actor",
+    "movie-link",
+    "link-movie",
+    "movie-director",
+    "director-movie",
+    "actor-link",
+    "link-actor",
+    "link-director",
+    "director-link"
+  ],
+  "num_nodes": {
+    "actor": 5257,
+    "director": 2081,
+    "link": 4180,
+    "movie": 4180
+  },
+  "shared_supervision": {
+    "labels": {
+      "sha256": "3781428c391f02e98ea43e91704e17b2d57e215d8d79a657681f7d4e26047047",
+      "shape": [
+        4180
+      ]
+    },
+    "test_idx": {
+      "sha256": "6140c2b7872dc096bcbd88eec8b7afcbe47781d76ca331d224d82e51b145cd3b",
+      "shape": [
+        836
+      ]
+    },
+    "train_idx": {
+      "sha256": "643d5d82e8bf44f90f6056c97f468be66f0e2ba037b661b3e0cc2f29b2ea6be8",
+      "shape": [
+        2508
+      ]
+    },
+    "val_idx": {
+      "sha256": "41c81e5eafde30d31944b0b9bb3986104fbb58e25acf2be9576589adb65ed488",
+      "shape": [
+        836
+      ]
+    }
+  },
+  "total_homogeneous_nodes": 15698,
+  "variant_paths": {
+    "v1": "data/preprocessed/IMDB_rgcn_v1",
+    "v2": "data/preprocessed/IMDB_rgcn_v2",
+    "v3": "data/preprocessed/IMDB_rgcn_v3",
+    "v4": "data/preprocessed/IMDB_rgcn_v4"
+  },
+  "variants": {
+    "v1": {
+      "edge_counts": {
+        "actor-movie": 12534,
+        "movie-director": 4180,
+        "movie-link": 4180
+      },
+      "graph_keys": [
+        "actor-movie",
+        "movie-director",
+        "movie-link"
+      ]
+    },
+    "v2": {
+      "edge_counts": {
+        "actor-link": 12534,
+        "link-director": 4180,
+        "link-movie": 4180
+      },
+      "graph_keys": [
+        "actor-link",
+        "link-director",
+        "link-movie"
+      ]
+    },
+    "v3": {
+      "edge_counts": {
+        "actor-link": 12534,
+        "link-movie": 4180,
+        "movie-director": 4180
+      },
+      "graph_keys": [
+        "actor-link",
+        "link-movie",
+        "movie-director"
+      ]
+    },
+    "v4": {
+      "edge_counts": {
+        "actor-movie": 12534,
+        "link-director": 4180,
+        "movie-link": 4180
+      },
+      "graph_keys": [
+        "actor-movie",
+        "link-director",
+        "movie-link"
+      ]
+    }
+  }
+}

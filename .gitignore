@@ -6,8 +6,6 @@ __pycache__/
 *.py[cod]
 
 # Generated experiment artifacts outside data/
-results/
-**/results/
 **/checkpoint/
 **/checkpoints/
 

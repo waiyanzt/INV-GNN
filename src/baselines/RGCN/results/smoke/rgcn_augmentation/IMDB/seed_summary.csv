@@ -1,0 +1,2 @@
+seed,super_epochs_ran,variant_epochs_ran,optimizer_steps,training_seconds,best_mean_val_macro_f1,mean_test_Accuracy,mean_test_Precision_macro,mean_test_Recall_macro,mean_test_Micro_F1,mean_test_Macro_F1,mean_test_edge_count
+1566911444,1,4,4,0.8146373629570007,0.32812146412315873,0.4416866028708134,0.3429814104793584,0.3993540160304916,0.4416866028708134,0.309617214192044,41788.0
