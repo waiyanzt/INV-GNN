@@ -1,0 +1,2 @@
+variant_a,variant_b,kendall_tau_flat_logits,kendall_tau_confidence,prediction_agreement,max_abs_logit_diff,mean_abs_logit_diff,mean_l2_logit_diff
+unchanged,exact_2,0.938298679857398,0.9273631447455805,0.9560025141420491,0.0509946346282959,0.0019766318146139383,0.006942917592823505

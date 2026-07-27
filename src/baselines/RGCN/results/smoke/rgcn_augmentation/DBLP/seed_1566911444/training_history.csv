@@ -1,0 +1,2 @@
+super_epoch,variant_order,variant_epochs_cumulative,optimizer_steps_cumulative,batches_per_variant,train_graph_forwards_cumulative,validation_graph_forwards_cumulative,mean_train_loss,mean_val_loss,best_mean_val_loss,cycle_seconds,train_loss_v1,val_loss_v1,train_loss_v2,val_loss_v2,train_loss_v3,val_loss_v3
+1,"v1,v3,v2",3,30,10,30,3,6966895.2870035805,42982.97615559896,42982.97615559896,3.5877695279195905,20762293.8515625,120288.296875,73639.2150390625,7399.52197265625,64752.79440917969,1261.109619140625

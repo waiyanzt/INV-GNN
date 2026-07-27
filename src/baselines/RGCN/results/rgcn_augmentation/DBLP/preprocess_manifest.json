@@ -1,0 +1,119 @@
+{
+  "dataset": "DBLP",
+  "feature_policy": "learned homogeneous node embedding; no external feature preprocessing required",
+  "global_native_relation_vocabulary": [
+    "author-paper",
+    "paper-author",
+    "paper-conference",
+    "conference-paper",
+    "paper-term",
+    "term-paper",
+    "paper-area",
+    "area-paper",
+    "conference-area",
+    "area-conference",
+    "author-area",
+    "area-author"
+  ],
+  "num_nodes": {
+    "area": 4,
+    "author": 3948,
+    "conference": 20,
+    "paper": 13462,
+    "term": 8642
+  },
+  "shared_supervision": {
+    "test_neg": {
+      "sha256": "67f76135a15574b08f802cc90f8e2f86882dbd667c1e65ce55b3b4692e593d0c",
+      "shape": [
+        50654,
+        2
+      ]
+    },
+    "test_pos": {
+      "sha256": "cfe1d4c9256e300db4fdaeebe35019fef6e78f4b4021ae897c18a746c64ba0d2",
+      "shape": [
+        2666,
+        2
+      ]
+    },
+    "train_neg": {
+      "sha256": "e43f07df99e801da13e321389c65c586f23388ae669d386c0add6d5edad33dee",
+      "shape": [
+        179512,
+        2
+      ]
+    },
+    "train_pos": {
+      "sha256": "b685f6bf31cfc947574b9b7d0dcb7f5a569076edc6f3d0a0bd1348ffa328929a",
+      "shape": [
+        9448,
+        2
+      ]
+    },
+    "val_neg": {
+      "sha256": "cab5eeff9e62d5bf35afb47353404181b7a2ec10b67f8721d20b337d64dc242f",
+      "shape": [
+        25612,
+        2
+      ]
+    },
+    "val_pos": {
+      "sha256": "547f5b80a4a33c8b329397ea34c0078f519afdd9a7dce6ffe70ad4257e4d21d8",
+      "shape": [
+        1348,
+        2
+      ]
+    }
+  },
+  "total_homogeneous_nodes": 26076,
+  "variant_paths": {
+    "v1": "data/preprocessed/DBLP_rgcn_v1",
+    "v2": "data/preprocessed/DBLP_rgcn_v2",
+    "v3": "data/preprocessed/DBLP_rgcn_v3"
+  },
+  "variants": {
+    "v1": {
+      "edge_counts": {
+        "author-paper": 17568,
+        "paper-area": 13462,
+        "paper-conference": 9448,
+        "paper-term": 107154
+      },
+      "graph_keys": [
+        "author-paper",
+        "paper-area",
+        "paper-conference",
+        "paper-term"
+      ]
+    },
+    "v2": {
+      "edge_counts": {
+        "author-paper": 17568,
+        "conference-area": 77,
+        "paper-conference": 9448,
+        "paper-term": 107154
+      },
+      "graph_keys": [
+        "author-paper",
+        "conference-area",
+        "paper-conference",
+        "paper-term"
+      ]
+    },
+    "v3": {
+      "edge_counts": {
+        "author-area": 3948,
+        "author-paper": 17568,
+        "paper-conference": 9448,
+        "paper-term": 107154
+      },
+      "graph_keys": [
+        "author-area",
+        "author-paper",
+        "paper-conference",
+        "paper-term"
+      ]
+    }
+  }
+}

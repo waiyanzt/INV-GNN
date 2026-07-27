@@ -1,0 +1,178 @@
+{
+  "runs": [
+    {
+      "best_val_filtered_MRR": 0.34652477502822876,
+      "checkpoint": "/nfs/hpc/share/tinw/idealab/INV-GNN/src/baselines/RGCN/checkpoint/wordnet_3var_updated/best_model_R2087_seed_1566911444_variant_universal_edges.pt",
+      "dataset": "WORDNET",
+      "epochs_trained": 1600,
+      "memory": {
+        "buffer_bytes": 0,
+        "checkpoint_bytes": 39638706,
+        "inference_gpu": {
+          "gpu_allocated_bytes": 151695872,
+          "gpu_peak_allocated_bytes": 2437237248,
+          "gpu_peak_reserved_bytes": 3099590656,
+          "gpu_reserved_bytes": 3099590656
+        },
+        "parameter_bytes": 39635240,
+        "process_peak_rss_bytes": 2227220480,
+        "static_model_bytes": 39635240,
+        "training_gpu": {
+          "gpu_allocated_bytes": 296314880,
+          "gpu_peak_allocated_bytes": 8909957120,
+          "gpu_peak_reserved_bytes": 10808721408,
+          "gpu_reserved_bytes": 10808721408
+        }
+      },
+      "mode": "full_training",
+      "model": "legacy_WordNetRGCNLinkPredictor",
+      "seed": 1566911444,
+      "splits_npz": "/nfs/hpc/share/tinw/idealab/INV-GNN/data/raw/wordnet_3hops_augmented_full/wordnet_splits.npz",
+      "telemetry_semantics": {
+        "inference_gpu": "Peak CUDA allocator statistics for final validation-and-test evaluation after loading the best checkpoint.",
+        "process_peak_rss_bytes": "Process-wide ru_maxrss; this value is cumulative when multiple seeds run in one Python process.",
+        "training_gpu": "Peak CUDA allocator statistics across training and periodic validation after model/graph construction."
+      },
+      "test_metrics": {
+        "Hits@1": 0.2825462667517549,
+        "Hits@10": 0.44527760051052967,
+        "Hits@3": 0.3781110402042119,
+        "accuracy": 0.9896517637048438,
+        "filtered_MRR": 0.3438628911972046,
+        "macro_f1": 0.829623938991621,
+        "precision": 0.9512803241395722,
+        "raw_MRR": 0.24554692208766937,
+        "recall": 0.7608232291001915
+      },
+      "training_seconds": 1196.833768954035,
+      "val_metrics": {
+        "Hits@1": 0.28526697429136455,
+        "Hits@10": 0.4500659195781147,
+        "Hits@3": 0.3805207646671061,
+        "accuracy": 0.989769539984748,
+        "filtered_MRR": 0.34652477502822876,
+        "macro_f1": 0.8336996199991248,
+        "precision": 0.9468125570428219,
+        "raw_MRR": 0.24841831624507904,
+        "recall": 0.7673862887277522
+      },
+      "variant": "universal_edges"
+    },
+    {
+      "best_val_filtered_MRR": 0.36444127559661865,
+      "checkpoint": "/nfs/hpc/share/tinw/idealab/INV-GNN/src/baselines/RGCN/checkpoint/wordnet_3var_updated/best_model_R2087_seed_20241017_variant_universal_edges.pt",
+      "dataset": "WORDNET",
+      "epochs_trained": 2350,
+      "memory": {
+        "buffer_bytes": 0,
+        "checkpoint_bytes": 39638686,
+        "inference_gpu": {
+          "gpu_allocated_bytes": 152486400,
+          "gpu_peak_allocated_bytes": 2438027776,
+          "gpu_peak_reserved_bytes": 2669674496,
+          "gpu_reserved_bytes": 2669674496
+        },
+        "parameter_bytes": 39635240,
+        "process_peak_rss_bytes": 2227220480,
+        "static_model_bytes": 39635240,
+        "training_gpu": {
+          "gpu_allocated_bytes": 296217600,
+          "gpu_peak_allocated_bytes": 8908145152,
+          "gpu_peak_reserved_bytes": 11972640768,
+          "gpu_reserved_bytes": 11972640768
+        }
+      },
+      "mode": "full_training",
+      "model": "legacy_WordNetRGCNLinkPredictor",
+      "seed": 20241017,
+      "splits_npz": "/nfs/hpc/share/tinw/idealab/INV-GNN/data/raw/wordnet_3hops_augmented_full/wordnet_splits.npz",
+      "telemetry_semantics": {
+        "inference_gpu": "Peak CUDA allocator statistics for final validation-and-test evaluation after loading the best checkpoint.",
+        "process_peak_rss_bytes": "Process-wide ru_maxrss; this value is cumulative when multiple seeds run in one Python process.",
+        "training_gpu": "Peak CUDA allocator statistics across training and periodic validation after model/graph construction."
+      },
+      "test_metrics": {
+        "Hits@1": 0.3052010210593491,
+        "Hits@10": 0.45213784301212506,
+        "Hits@3": 0.3900765794511806,
+        "accuracy": 0.9893889910782436,
+        "filtered_MRR": 0.3613778352737427,
+        "macro_f1": 0.8193054365582992,
+        "precision": 0.9654953850840717,
+        "raw_MRR": 0.254156231880188,
+        "recall": 0.7444288449266113
+      },
+      "training_seconds": 1792.3117864909582,
+      "val_metrics": {
+        "Hits@1": 0.3111404087013843,
+        "Hits@10": 0.45088991430454844,
+        "Hits@3": 0.3951878707976269,
+        "accuracy": 0.9892266728708623,
+        "filtered_MRR": 0.36444127559661865,
+        "macro_f1": 0.818287635875718,
+        "precision": 0.9555410858885303,
+        "raw_MRR": 0.2560046315193176,
+        "recall": 0.7459525379037574
+      },
+      "variant": "universal_edges"
+    },
+    {
+      "best_val_filtered_MRR": 0.35726314783096313,
+      "checkpoint": "/nfs/hpc/share/tinw/idealab/INV-GNN/src/baselines/RGCN/checkpoint/wordnet_3var_updated/best_model_R2087_seed_20251017_variant_universal_edges.pt",
+      "dataset": "WORDNET",
+      "epochs_trained": 2190,
+      "memory": {
+        "buffer_bytes": 0,
+        "checkpoint_bytes": 39638686,
+        "inference_gpu": {
+          "gpu_allocated_bytes": 151797760,
+          "gpu_peak_allocated_bytes": 2437339136,
+          "gpu_peak_reserved_bytes": 3814719488,
+          "gpu_reserved_bytes": 3814719488
+        },
+        "parameter_bytes": 39635240,
+        "process_peak_rss_bytes": 2227220480,
+        "static_model_bytes": 39635240,
+        "training_gpu": {
+          "gpu_allocated_bytes": 296128000,
+          "gpu_peak_allocated_bytes": 8907977216,
+          "gpu_peak_reserved_bytes": 11972640768,
+          "gpu_reserved_bytes": 11972640768
+        }
+      },
+      "mode": "full_training",
+      "model": "legacy_WordNetRGCNLinkPredictor",
+      "seed": 20251017,
+      "splits_npz": "/nfs/hpc/share/tinw/idealab/INV-GNN/data/raw/wordnet_3hops_augmented_full/wordnet_splits.npz",
+      "telemetry_semantics": {
+        "inference_gpu": "Peak CUDA allocator statistics for final validation-and-test evaluation after loading the best checkpoint.",
+        "process_peak_rss_bytes": "Process-wide ru_maxrss; this value is cumulative when multiple seeds run in one Python process.",
+        "training_gpu": "Peak CUDA allocator statistics across training and periodic validation after model/graph construction."
+      },
+      "test_metrics": {
+        "Hits@1": 0.2965858328015316,
+        "Hits@10": 0.44862795149968093,
+        "Hits@3": 0.38895979578813017,
+        "accuracy": 0.989464068971558,
+        "filtered_MRR": 0.3553779125213623,
+        "macro_f1": 0.8249960293879568,
+        "precision": 0.9520576433108324,
+        "raw_MRR": 0.2534497380256653,
+        "recall": 0.7549425654116145
+      },
+      "training_seconds": 1703.7788169560954,
+      "val_metrics": {
+        "Hits@1": 0.2999340804218853,
+        "Hits@10": 0.4507251153592617,
+        "Hits@3": 0.3907382992748846,
+        "accuracy": 0.9895691961689093,
+        "filtered_MRR": 0.35726314783096313,
+        "macro_f1": 0.8285229370789781,
+        "precision": 0.9485796765768391,
+        "raw_MRR": 0.2550131678581238,
+        "recall": 0.7603394858272907
+      },
+      "variant": "universal_edges"
+    }
+  ]
+}

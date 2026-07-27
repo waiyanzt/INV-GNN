@@ -1,0 +1,969 @@
+Device: cuda
+Splits: /nfs/hpc/share/tinw/idealab/INV-GNN/src/baselines/RGCN/data/raw/wordnet_3hops_augmented_full/wordnet_splits.npz
+Checkpoints: /nfs/hpc/share/tinw/idealab/INV-GNN/src/baselines/RGCN/checkpoint/wordnet_3var_updated
+
+============================================================
+  Variant: no_changes | Seed: 1566911444
+============================================================
+WordNetLPDataset(variant=no_changes, num_entities=40943, num_relations=2087, train=86835, val=3034, test=3134, format=wordnet_lp_four_variants_v1)
+Epoch   10 | loss 0.6931 | val filtered_MRR 0.0075 | raw_MRR 0.0075 | H@1 0.0013 | H@3 0.0071 | H@10 0.0190 | 4s
+  --> New best (0.0075), checkpoint saved.
+Epoch   20 | loss 0.6509 | val filtered_MRR 0.0070 | raw_MRR 0.0070 | H@1 0.0028 | H@3 0.0058 | H@10 0.0152 | 8s
+Epoch   30 | loss 0.5629 | val filtered_MRR 0.0009 | raw_MRR 0.0009 | H@1 0.0002 | H@3 0.0003 | H@10 0.0010 | 11s
+Epoch   40 | loss 0.4521 | val filtered_MRR 0.0024 | raw_MRR 0.0024 | H@1 0.0003 | H@3 0.0008 | H@10 0.0048 | 15s
+Epoch   50 | loss 0.3682 | val filtered_MRR 0.0038 | raw_MRR 0.0038 | H@1 0.0005 | H@3 0.0023 | H@10 0.0064 | 19s
+Epoch   60 | loss 0.3965 | val filtered_MRR 0.0033 | raw_MRR 0.0032 | H@1 0.0008 | H@3 0.0021 | H@10 0.0041 | 22s
+Epoch   70 | loss 0.3216 | val filtered_MRR 0.0066 | raw_MRR 0.0065 | H@1 0.0012 | H@3 0.0046 | H@10 0.0137 | 26s
+Epoch   80 | loss 0.2200 | val filtered_MRR 0.0077 | raw_MRR 0.0076 | H@1 0.0021 | H@3 0.0053 | H@10 0.0129 | 29s
+  --> New best (0.0077), checkpoint saved.
+Epoch   90 | loss 0.6553 | val filtered_MRR 0.0085 | raw_MRR 0.0083 | H@1 0.0028 | H@3 0.0046 | H@10 0.0158 | 33s
+  --> New best (0.0085), checkpoint saved.
+Epoch  100 | loss 0.1982 | val filtered_MRR 0.0090 | raw_MRR 0.0089 | H@1 0.0023 | H@3 0.0048 | H@10 0.0163 | 37s
+  --> New best (0.0090), checkpoint saved.
+Epoch  110 | loss 0.1620 | val filtered_MRR 0.0105 | raw_MRR 0.0105 | H@1 0.0018 | H@3 0.0076 | H@10 0.0208 | 40s
+  --> New best (0.0105), checkpoint saved.
+Epoch  120 | loss 0.1666 | val filtered_MRR 0.0162 | raw_MRR 0.0160 | H@1 0.0053 | H@3 0.0115 | H@10 0.0325 | 44s
+  --> New best (0.0162), checkpoint saved.
+Epoch  130 | loss 0.1487 | val filtered_MRR 0.0174 | raw_MRR 0.0171 | H@1 0.0046 | H@3 0.0117 | H@10 0.0368 | 48s
+  --> New best (0.0174), checkpoint saved.
+Epoch  140 | loss 0.1250 | val filtered_MRR 0.0209 | raw_MRR 0.0206 | H@1 0.0053 | H@3 0.0153 | H@10 0.0465 | 51s
+  --> New best (0.0209), checkpoint saved.
+Epoch  150 | loss 0.1111 | val filtered_MRR 0.0261 | raw_MRR 0.0257 | H@1 0.0081 | H@3 0.0206 | H@10 0.0569 | 55s
+  --> New best (0.0261), checkpoint saved.
+Epoch  160 | loss 0.0971 | val filtered_MRR 0.0323 | raw_MRR 0.0315 | H@1 0.0107 | H@3 0.0277 | H@10 0.0697 | 59s
+  --> New best (0.0323), checkpoint saved.
+Epoch  170 | loss 0.0777 | val filtered_MRR 0.0441 | raw_MRR 0.0427 | H@1 0.0160 | H@3 0.0405 | H@10 0.0957 | 62s
+  --> New best (0.0441), checkpoint saved.
+Epoch  180 | loss 0.4485 | val filtered_MRR 0.0449 | raw_MRR 0.0432 | H@1 0.0158 | H@3 0.0422 | H@10 0.0985 | 66s
+  --> New best (0.0449), checkpoint saved.
+Epoch  190 | loss 0.0900 | val filtered_MRR 0.0521 | raw_MRR 0.0494 | H@1 0.0199 | H@3 0.0475 | H@10 0.1160 | 70s
+  --> New best (0.0521), checkpoint saved.
+Epoch  200 | loss 0.0859 | val filtered_MRR 0.0569 | raw_MRR 0.0543 | H@1 0.0213 | H@3 0.0550 | H@10 0.1262 | 74s
+  --> New best (0.0569), checkpoint saved.
+Epoch  210 | loss 0.0562 | val filtered_MRR 0.0653 | raw_MRR 0.0610 | H@1 0.0274 | H@3 0.0630 | H@10 0.1430 | 77s
+  --> New best (0.0653), checkpoint saved.
+Epoch  220 | loss 0.0715 | val filtered_MRR 0.0686 | raw_MRR 0.0649 | H@1 0.0297 | H@3 0.0686 | H@10 0.1508 | 81s
+  --> New best (0.0686), checkpoint saved.
+Epoch  230 | loss 0.0628 | val filtered_MRR 0.0818 | raw_MRR 0.0760 | H@1 0.0369 | H@3 0.0860 | H@10 0.1717 | 85s
+  --> New best (0.0818), checkpoint saved.
+Epoch  240 | loss 0.0464 | val filtered_MRR 0.0778 | raw_MRR 0.0714 | H@1 0.0308 | H@3 0.0803 | H@10 0.1796 | 88s
+Epoch  250 | loss 0.0413 | val filtered_MRR 0.0822 | raw_MRR 0.0759 | H@1 0.0356 | H@3 0.0822 | H@10 0.1831 | 92s
+  --> New best (0.0822), checkpoint saved.
+Epoch  260 | loss 0.0411 | val filtered_MRR 0.1024 | raw_MRR 0.0930 | H@1 0.0508 | H@3 0.1091 | H@10 0.2141 | 96s
+  --> New best (0.1024), checkpoint saved.
+Epoch  270 | loss 0.0390 | val filtered_MRR 0.1123 | raw_MRR 0.1010 | H@1 0.0582 | H@3 0.1251 | H@10 0.2243 | 99s
+  --> New best (0.1123), checkpoint saved.
+Epoch  280 | loss 0.1437 | val filtered_MRR 0.1150 | raw_MRR 0.1044 | H@1 0.0618 | H@3 0.1287 | H@10 0.2250 | 103s
+  --> New best (0.1150), checkpoint saved.
+Epoch  290 | loss 0.1388 | val filtered_MRR 0.0870 | raw_MRR 0.0794 | H@1 0.0427 | H@3 0.0883 | H@10 0.1806 | 107s
+Epoch  300 | loss 0.0565 | val filtered_MRR 0.0883 | raw_MRR 0.0817 | H@1 0.0417 | H@3 0.0943 | H@10 0.1833 | 110s
+Epoch  310 | loss 0.0407 | val filtered_MRR 0.1154 | raw_MRR 0.1033 | H@1 0.0631 | H@3 0.1249 | H@10 0.2253 | 114s
+  --> New best (0.1154), checkpoint saved.
+Epoch  320 | loss 0.0404 | val filtered_MRR 0.1334 | raw_MRR 0.1164 | H@1 0.0763 | H@3 0.1486 | H@10 0.2515 | 117s
+  --> New best (0.1334), checkpoint saved.
+Epoch  330 | loss 0.3380 | val filtered_MRR 0.1432 | raw_MRR 0.1252 | H@1 0.0829 | H@3 0.1575 | H@10 0.2711 | 121s
+  --> New best (0.1432), checkpoint saved.
+Epoch  340 | loss 0.0271 | val filtered_MRR 0.1582 | raw_MRR 0.1367 | H@1 0.0997 | H@3 0.1765 | H@10 0.2802 | 125s
+  --> New best (0.1582), checkpoint saved.
+Epoch  350 | loss 0.3508 | val filtered_MRR 0.1697 | raw_MRR 0.1439 | H@1 0.1099 | H@3 0.1885 | H@10 0.2953 | 128s
+  --> New best (0.1697), checkpoint saved.
+Epoch  360 | loss 0.3443 | val filtered_MRR 0.1773 | raw_MRR 0.1497 | H@1 0.1163 | H@3 0.1987 | H@10 0.3032 | 132s
+  --> New best (0.1773), checkpoint saved.
+Epoch  370 | loss 0.0249 | val filtered_MRR 0.1805 | raw_MRR 0.1516 | H@1 0.1160 | H@3 0.2076 | H@10 0.3090 | 136s
+  --> New best (0.1805), checkpoint saved.
+Epoch  380 | loss 0.0197 | val filtered_MRR 0.1906 | raw_MRR 0.1586 | H@1 0.1236 | H@3 0.2208 | H@10 0.3250 | 139s
+  --> New best (0.1906), checkpoint saved.
+Epoch  390 | loss 0.0299 | val filtered_MRR 0.1784 | raw_MRR 0.1498 | H@1 0.1150 | H@3 0.2032 | H@10 0.3095 | 143s
+Epoch  400 | loss 0.3296 | val filtered_MRR 0.1803 | raw_MRR 0.1519 | H@1 0.1147 | H@3 0.2058 | H@10 0.3171 | 147s
+Epoch  410 | loss 0.0221 | val filtered_MRR 0.1842 | raw_MRR 0.1543 | H@1 0.1183 | H@3 0.2146 | H@10 0.3184 | 150s
+Epoch  420 | loss 0.0200 | val filtered_MRR 0.1956 | raw_MRR 0.1614 | H@1 0.1289 | H@3 0.2236 | H@10 0.3276 | 154s
+  --> New best (0.1956), checkpoint saved.
+Epoch  430 | loss 0.3199 | val filtered_MRR 0.1995 | raw_MRR 0.1643 | H@1 0.1350 | H@3 0.2301 | H@10 0.3301 | 158s
+  --> New best (0.1995), checkpoint saved.
+Epoch  440 | loss 0.0206 | val filtered_MRR 0.2026 | raw_MRR 0.1645 | H@1 0.1355 | H@3 0.2340 | H@10 0.3370 | 161s
+  --> New best (0.2026), checkpoint saved.
+Epoch  450 | loss 0.0185 | val filtered_MRR 0.2056 | raw_MRR 0.1675 | H@1 0.1376 | H@3 0.2381 | H@10 0.3428 | 165s
+  --> New best (0.2056), checkpoint saved.
+Epoch  460 | loss 0.0154 | val filtered_MRR 0.2099 | raw_MRR 0.1727 | H@1 0.1396 | H@3 0.2456 | H@10 0.3502 | 169s
+  --> New best (0.2099), checkpoint saved.
+Epoch  470 | loss 0.0169 | val filtered_MRR 0.2144 | raw_MRR 0.1728 | H@1 0.1467 | H@3 0.2492 | H@10 0.3494 | 172s
+  --> New best (0.2144), checkpoint saved.
+Epoch  480 | loss 0.0151 | val filtered_MRR 0.2263 | raw_MRR 0.1809 | H@1 0.1585 | H@3 0.2633 | H@10 0.3601 | 176s
+  --> New best (0.2263), checkpoint saved.
+Epoch  490 | loss 0.0191 | val filtered_MRR 0.2240 | raw_MRR 0.1781 | H@1 0.1566 | H@3 0.2581 | H@10 0.3560 | 180s
+Epoch  500 | loss 0.0213 | val filtered_MRR 0.2113 | raw_MRR 0.1716 | H@1 0.1394 | H@3 0.2495 | H@10 0.3489 | 183s
+Epoch  510 | loss 0.3154 | val filtered_MRR 0.2227 | raw_MRR 0.1777 | H@1 0.1544 | H@3 0.2577 | H@10 0.3546 | 187s
+Epoch  520 | loss 0.0164 | val filtered_MRR 0.2256 | raw_MRR 0.1806 | H@1 0.1554 | H@3 0.2620 | H@10 0.3622 | 191s
+Epoch  530 | loss 0.0199 | val filtered_MRR 0.2316 | raw_MRR 0.1829 | H@1 0.1615 | H@3 0.2713 | H@10 0.3603 | 194s
+  --> New best (0.2316), checkpoint saved.
+Epoch  540 | loss 0.0155 | val filtered_MRR 0.2377 | raw_MRR 0.1857 | H@1 0.1696 | H@3 0.2759 | H@10 0.3678 | 198s
+  --> New best (0.2377), checkpoint saved.
+Epoch  550 | loss 0.0228 | val filtered_MRR 0.2288 | raw_MRR 0.1799 | H@1 0.1597 | H@3 0.2675 | H@10 0.3570 | 201s
+Epoch  560 | loss 0.0212 | val filtered_MRR 0.2377 | raw_MRR 0.1860 | H@1 0.1702 | H@3 0.2792 | H@10 0.3639 | 205s
+  --> New best (0.2377), checkpoint saved.
+Epoch  570 | loss 0.1259 | val filtered_MRR 0.2342 | raw_MRR 0.1841 | H@1 0.1701 | H@3 0.2688 | H@10 0.3560 | 209s
+Epoch  580 | loss 0.1078 | val filtered_MRR 0.1858 | raw_MRR 0.1529 | H@1 0.1215 | H@3 0.2132 | H@10 0.3123 | 212s
+Epoch  590 | loss 0.4103 | val filtered_MRR 0.1697 | raw_MRR 0.1441 | H@1 0.1025 | H@3 0.1963 | H@10 0.3088 | 216s
+Epoch  600 | loss 0.0448 | val filtered_MRR 0.1816 | raw_MRR 0.1524 | H@1 0.1205 | H@3 0.2067 | H@10 0.3044 | 220s
+Epoch  610 | loss 0.0330 | val filtered_MRR 0.1537 | raw_MRR 0.1328 | H@1 0.0819 | H@3 0.1788 | H@10 0.3062 | 223s
+Epoch  620 | loss 0.3149 | val filtered_MRR 0.1878 | raw_MRR 0.1571 | H@1 0.1163 | H@3 0.2182 | H@10 0.3352 | 227s
+Epoch  630 | loss 0.0182 | val filtered_MRR 0.2279 | raw_MRR 0.1830 | H@1 0.1577 | H@3 0.2632 | H@10 0.3639 | 230s
+Epoch  640 | loss 0.0175 | val filtered_MRR 0.2341 | raw_MRR 0.1838 | H@1 0.1653 | H@3 0.2721 | H@10 0.3660 | 234s
+Epoch  650 | loss 0.3008 | val filtered_MRR 0.2520 | raw_MRR 0.1954 | H@1 0.1826 | H@3 0.2958 | H@10 0.3787 | 238s
+  --> New best (0.2520), checkpoint saved.
+Epoch  660 | loss 0.0108 | val filtered_MRR 0.2662 | raw_MRR 0.2037 | H@1 0.1992 | H@3 0.3078 | H@10 0.3873 | 241s
+  --> New best (0.2662), checkpoint saved.
+Epoch  670 | loss 0.2969 | val filtered_MRR 0.2787 | raw_MRR 0.2079 | H@1 0.2146 | H@3 0.3191 | H@10 0.3893 | 245s
+  --> New best (0.2787), checkpoint saved.
+Epoch  680 | loss 0.3058 | val filtered_MRR 0.2704 | raw_MRR 0.2032 | H@1 0.2022 | H@3 0.3131 | H@10 0.3888 | 249s
+Epoch  690 | loss 0.3032 | val filtered_MRR 0.2752 | raw_MRR 0.2050 | H@1 0.2096 | H@3 0.3162 | H@10 0.3904 | 252s
+Epoch  700 | loss 0.0184 | val filtered_MRR 0.2623 | raw_MRR 0.1987 | H@1 0.1917 | H@3 0.3080 | H@10 0.3835 | 256s
+Epoch  710 | loss 0.0523 | val filtered_MRR 0.1988 | raw_MRR 0.1639 | H@1 0.1290 | H@3 0.2289 | H@10 0.3461 | 259s
+Epoch  720 | loss 0.2029 | val filtered_MRR 0.1391 | raw_MRR 0.1210 | H@1 0.0854 | H@3 0.1510 | H@10 0.2498 | 263s
+Epoch  730 | loss 0.4532 | val filtered_MRR 0.1559 | raw_MRR 0.1302 | H@1 0.1079 | H@3 0.1717 | H@10 0.2495 | 267s
+Epoch  740 | loss 0.4436 | val filtered_MRR 0.0884 | raw_MRR 0.0787 | H@1 0.0456 | H@3 0.0938 | H@10 0.1716 | 270s
+Epoch  750 | loss 0.0912 | val filtered_MRR 0.1129 | raw_MRR 0.0978 | H@1 0.0623 | H@3 0.1241 | H@10 0.2147 | 274s
+Epoch  760 | loss 0.0343 | val filtered_MRR 0.1729 | raw_MRR 0.1433 | H@1 0.1109 | H@3 0.1958 | H@10 0.3039 | 277s
+Epoch  770 | loss 0.0926 | val filtered_MRR 0.2099 | raw_MRR 0.1685 | H@1 0.1460 | H@3 0.2426 | H@10 0.3291 | 281s
+Epoch  780 | loss 0.0299 | val filtered_MRR 0.2283 | raw_MRR 0.1806 | H@1 0.1671 | H@3 0.2596 | H@10 0.3421 | 285s
+Epoch  790 | loss 0.0199 | val filtered_MRR 0.2426 | raw_MRR 0.1906 | H@1 0.1795 | H@3 0.2800 | H@10 0.3609 | 288s
+Epoch  800 | loss 0.0152 | val filtered_MRR 0.2677 | raw_MRR 0.2049 | H@1 0.2039 | H@3 0.3078 | H@10 0.3792 | 292s
+Epoch  810 | loss 0.0113 | val filtered_MRR 0.2925 | raw_MRR 0.2156 | H@1 0.2353 | H@3 0.3293 | H@10 0.3907 | 296s
+  --> New best (0.2925), checkpoint saved.
+Epoch  820 | loss 0.0099 | val filtered_MRR 0.3074 | raw_MRR 0.2227 | H@1 0.2538 | H@3 0.3425 | H@10 0.4006 | 299s
+  --> New best (0.3074), checkpoint saved.
+Epoch  830 | loss 0.0143 | val filtered_MRR 0.3039 | raw_MRR 0.2178 | H@1 0.2497 | H@3 0.3387 | H@10 0.3962 | 303s
+Epoch  840 | loss 0.0118 | val filtered_MRR 0.3150 | raw_MRR 0.2228 | H@1 0.2655 | H@3 0.3477 | H@10 0.3972 | 306s
+  --> New best (0.3150), checkpoint saved.
+Epoch  850 | loss 0.3289 | val filtered_MRR 0.3137 | raw_MRR 0.2232 | H@1 0.2627 | H@3 0.3441 | H@10 0.3998 | 310s
+Epoch  860 | loss 0.0115 | val filtered_MRR 0.3162 | raw_MRR 0.2255 | H@1 0.2637 | H@3 0.3494 | H@10 0.4071 | 314s
+  --> New best (0.3162), checkpoint saved.
+Epoch  870 | loss 0.3034 | val filtered_MRR 0.3211 | raw_MRR 0.2276 | H@1 0.2719 | H@3 0.3515 | H@10 0.4066 | 317s
+  --> New best (0.3211), checkpoint saved.
+Epoch  880 | loss 0.0080 | val filtered_MRR 0.3227 | raw_MRR 0.2296 | H@1 0.2711 | H@3 0.3565 | H@10 0.4092 | 321s
+  --> New best (0.3227), checkpoint saved.
+Epoch  890 | loss 0.0089 | val filtered_MRR 0.3204 | raw_MRR 0.2283 | H@1 0.2678 | H@3 0.3566 | H@10 0.4062 | 325s
+Epoch  900 | loss 0.0094 | val filtered_MRR 0.3222 | raw_MRR 0.2283 | H@1 0.2711 | H@3 0.3550 | H@10 0.4080 | 328s
+Epoch  910 | loss 0.0088 | val filtered_MRR 0.3220 | raw_MRR 0.2289 | H@1 0.2699 | H@3 0.3566 | H@10 0.4077 | 332s
+Epoch  920 | loss 0.2875 | val filtered_MRR 0.3218 | raw_MRR 0.2285 | H@1 0.2694 | H@3 0.3561 | H@10 0.4107 | 336s
+Epoch  930 | loss 0.2867 | val filtered_MRR 0.3243 | raw_MRR 0.2293 | H@1 0.2726 | H@3 0.3565 | H@10 0.4120 | 339s
+  --> New best (0.3243), checkpoint saved.
+Epoch  940 | loss 0.0089 | val filtered_MRR 0.3260 | raw_MRR 0.2290 | H@1 0.2749 | H@3 0.3596 | H@10 0.4125 | 343s
+  --> New best (0.3260), checkpoint saved.
+Epoch  950 | loss 0.0077 | val filtered_MRR 0.3256 | raw_MRR 0.2294 | H@1 0.2741 | H@3 0.3611 | H@10 0.4095 | 347s
+Epoch  960 | loss 0.0091 | val filtered_MRR 0.3200 | raw_MRR 0.2264 | H@1 0.2665 | H@3 0.3540 | H@10 0.4117 | 350s
+Epoch  970 | loss 0.0083 | val filtered_MRR 0.3218 | raw_MRR 0.2270 | H@1 0.2648 | H@3 0.3617 | H@10 0.4112 | 354s
+Epoch  980 | loss 0.2980 | val filtered_MRR 0.3232 | raw_MRR 0.2289 | H@1 0.2673 | H@3 0.3631 | H@10 0.4146 | 357s
+Epoch  990 | loss 0.0086 | val filtered_MRR 0.3238 | raw_MRR 0.2295 | H@1 0.2698 | H@3 0.3599 | H@10 0.4138 | 361s
+Epoch 1000 | loss 0.0074 | val filtered_MRR 0.3338 | raw_MRR 0.2340 | H@1 0.2835 | H@3 0.3665 | H@10 0.4155 | 365s
+  --> New best (0.3338), checkpoint saved.
+Epoch 1010 | loss 0.2840 | val filtered_MRR 0.3334 | raw_MRR 0.2325 | H@1 0.2810 | H@3 0.3691 | H@10 0.4164 | 368s
+Epoch 1020 | loss 0.0076 | val filtered_MRR 0.3370 | raw_MRR 0.2349 | H@1 0.2882 | H@3 0.3667 | H@10 0.4173 | 372s
+  --> New best (0.3370), checkpoint saved.
+Epoch 1030 | loss 0.0082 | val filtered_MRR 0.3331 | raw_MRR 0.2311 | H@1 0.2839 | H@3 0.3632 | H@10 0.4120 | 375s
+Epoch 1040 | loss 0.2851 | val filtered_MRR 0.3287 | raw_MRR 0.2284 | H@1 0.2755 | H@3 0.3632 | H@10 0.4128 | 379s
+Epoch 1050 | loss 0.0076 | val filtered_MRR 0.3193 | raw_MRR 0.2255 | H@1 0.2617 | H@3 0.3581 | H@10 0.4133 | 383s
+Epoch 1060 | loss 0.0072 | val filtered_MRR 0.3291 | raw_MRR 0.2294 | H@1 0.2767 | H@3 0.3659 | H@10 0.4127 | 386s
+Epoch 1070 | loss 0.0073 | val filtered_MRR 0.3343 | raw_MRR 0.2329 | H@1 0.2833 | H@3 0.3706 | H@10 0.4150 | 390s
+Epoch 1080 | loss 0.2800 | val filtered_MRR 0.3329 | raw_MRR 0.2323 | H@1 0.2797 | H@3 0.3701 | H@10 0.4171 | 394s
+Epoch 1090 | loss 0.0063 | val filtered_MRR 0.3339 | raw_MRR 0.2325 | H@1 0.2831 | H@3 0.3698 | H@10 0.4155 | 397s
+Epoch 1100 | loss 0.0089 | val filtered_MRR 0.3291 | raw_MRR 0.2299 | H@1 0.2777 | H@3 0.3631 | H@10 0.4132 | 401s
+Epoch 1110 | loss 0.0079 | val filtered_MRR 0.3269 | raw_MRR 0.2280 | H@1 0.2706 | H@3 0.3660 | H@10 0.4163 | 404s
+Epoch 1120 | loss 0.0070 | val filtered_MRR 0.3304 | raw_MRR 0.2289 | H@1 0.2760 | H@3 0.3683 | H@10 0.4173 | 408s
+Epoch 1130 | loss 0.0105 | val filtered_MRR 0.3264 | raw_MRR 0.2301 | H@1 0.2731 | H@3 0.3631 | H@10 0.4130 | 412s
+Epoch 1140 | loss 0.2876 | val filtered_MRR 0.3390 | raw_MRR 0.2364 | H@1 0.2884 | H@3 0.3749 | H@10 0.4168 | 415s
+  --> New best (0.3390), checkpoint saved.
+Epoch 1150 | loss 0.0064 | val filtered_MRR 0.3376 | raw_MRR 0.2349 | H@1 0.2882 | H@3 0.3715 | H@10 0.4155 | 419s
+Epoch 1160 | loss 0.0063 | val filtered_MRR 0.3419 | raw_MRR 0.2362 | H@1 0.2927 | H@3 0.3746 | H@10 0.4192 | 422s
+  --> New best (0.3419), checkpoint saved.
+Epoch 1170 | loss 0.0106 | val filtered_MRR 0.3453 | raw_MRR 0.2389 | H@1 0.2991 | H@3 0.3771 | H@10 0.4191 | 426s
+  --> New best (0.3453), checkpoint saved.
+Epoch 1180 | loss 0.0066 | val filtered_MRR 0.3444 | raw_MRR 0.2375 | H@1 0.2953 | H@3 0.3789 | H@10 0.4199 | 430s
+Epoch 1190 | loss 0.0072 | val filtered_MRR 0.3369 | raw_MRR 0.2352 | H@1 0.2830 | H@3 0.3749 | H@10 0.4230 | 433s
+Epoch 1200 | loss 0.0072 | val filtered_MRR 0.3404 | raw_MRR 0.2366 | H@1 0.2909 | H@3 0.3748 | H@10 0.4204 | 437s
+Epoch 1210 | loss 0.2838 | val filtered_MRR 0.3431 | raw_MRR 0.2375 | H@1 0.2925 | H@3 0.3797 | H@10 0.4212 | 441s
+Epoch 1220 | loss 0.2815 | val filtered_MRR 0.3443 | raw_MRR 0.2390 | H@1 0.2938 | H@3 0.3780 | H@10 0.4267 | 444s
+Epoch 1230 | loss 0.0069 | val filtered_MRR 0.3472 | raw_MRR 0.2393 | H@1 0.2980 | H@3 0.3813 | H@10 0.4237 | 448s
+  --> New best (0.3472), checkpoint saved.
+Epoch 1240 | loss 0.0060 | val filtered_MRR 0.3485 | raw_MRR 0.2413 | H@1 0.3022 | H@3 0.3784 | H@10 0.4224 | 451s
+  --> New best (0.3485), checkpoint saved.
+Epoch 1250 | loss 0.0074 | val filtered_MRR 0.3451 | raw_MRR 0.2391 | H@1 0.2983 | H@3 0.3774 | H@10 0.4196 | 455s
+Epoch 1260 | loss 0.2817 | val filtered_MRR 0.3466 | raw_MRR 0.2396 | H@1 0.2981 | H@3 0.3795 | H@10 0.4242 | 459s
+Epoch 1270 | loss 0.0054 | val filtered_MRR 0.3487 | raw_MRR 0.2407 | H@1 0.3017 | H@3 0.3800 | H@10 0.4222 | 462s
+  --> New best (0.3487), checkpoint saved.
+Epoch 1280 | loss 0.0065 | val filtered_MRR 0.3431 | raw_MRR 0.2358 | H@1 0.2937 | H@3 0.3766 | H@10 0.4211 | 466s
+Epoch 1290 | loss 0.0064 | val filtered_MRR 0.3406 | raw_MRR 0.2345 | H@1 0.2869 | H@3 0.3790 | H@10 0.4234 | 470s
+Epoch 1300 | loss 0.0121 | val filtered_MRR 0.3459 | raw_MRR 0.2389 | H@1 0.2976 | H@3 0.3780 | H@10 0.4217 | 473s
+Epoch 1310 | loss 0.0065 | val filtered_MRR 0.3453 | raw_MRR 0.2389 | H@1 0.2975 | H@3 0.3774 | H@10 0.4229 | 477s
+Epoch 1320 | loss 0.0067 | val filtered_MRR 0.3468 | raw_MRR 0.2396 | H@1 0.2988 | H@3 0.3795 | H@10 0.4229 | 480s
+Epoch 1330 | loss 0.0080 | val filtered_MRR 0.3427 | raw_MRR 0.2364 | H@1 0.2909 | H@3 0.3780 | H@10 0.4240 | 484s
+Epoch 1340 | loss 0.0081 | val filtered_MRR 0.3476 | raw_MRR 0.2393 | H@1 0.2991 | H@3 0.3804 | H@10 0.4235 | 488s
+Epoch 1350 | loss 0.0070 | val filtered_MRR 0.3387 | raw_MRR 0.2337 | H@1 0.2844 | H@3 0.3782 | H@10 0.4227 | 491s
+Epoch 1360 | loss 0.0062 | val filtered_MRR 0.3389 | raw_MRR 0.2330 | H@1 0.2856 | H@3 0.3774 | H@10 0.4186 | 495s
+Epoch 1370 | loss 0.0087 | val filtered_MRR 0.3444 | raw_MRR 0.2370 | H@1 0.2958 | H@3 0.3764 | H@10 0.4217 | 498s
+Epoch 1380 | loss 0.0069 | val filtered_MRR 0.3484 | raw_MRR 0.2386 | H@1 0.3014 | H@3 0.3807 | H@10 0.4204 | 502s
+Epoch 1390 | loss 0.0063 | val filtered_MRR 0.3396 | raw_MRR 0.2351 | H@1 0.2866 | H@3 0.3771 | H@10 0.4206 | 506s
+Epoch 1400 | loss 0.0057 | val filtered_MRR 0.3497 | raw_MRR 0.2400 | H@1 0.3027 | H@3 0.3822 | H@10 0.4230 | 509s
+  --> New best (0.3497), checkpoint saved.
+Epoch 1410 | loss 0.0063 | val filtered_MRR 0.3493 | raw_MRR 0.2390 | H@1 0.3017 | H@3 0.3818 | H@10 0.4244 | 513s
+Epoch 1420 | loss 0.0060 | val filtered_MRR 0.3473 | raw_MRR 0.2391 | H@1 0.2978 | H@3 0.3799 | H@10 0.4240 | 517s
+Epoch 1430 | loss 0.0071 | val filtered_MRR 0.3492 | raw_MRR 0.2407 | H@1 0.3017 | H@3 0.3817 | H@10 0.4204 | 520s
+Epoch 1440 | loss 0.0069 | val filtered_MRR 0.3433 | raw_MRR 0.2396 | H@1 0.2928 | H@3 0.3752 | H@10 0.4235 | 524s
+Epoch 1450 | loss 0.0080 | val filtered_MRR 0.3441 | raw_MRR 0.2389 | H@1 0.2925 | H@3 0.3815 | H@10 0.4237 | 527s
+Epoch 1460 | loss 0.0070 | val filtered_MRR 0.3451 | raw_MRR 0.2379 | H@1 0.2948 | H@3 0.3797 | H@10 0.4225 | 531s
+Epoch 1470 | loss 0.0071 | val filtered_MRR 0.3450 | raw_MRR 0.2401 | H@1 0.2935 | H@3 0.3823 | H@10 0.4255 | 535s
+Epoch 1480 | loss 0.0061 | val filtered_MRR 0.3396 | raw_MRR 0.2368 | H@1 0.2858 | H@3 0.3784 | H@10 0.4227 | 538s
+Epoch 1490 | loss 0.0056 | val filtered_MRR 0.3455 | raw_MRR 0.2401 | H@1 0.2922 | H@3 0.3846 | H@10 0.4252 | 542s
+Epoch 1500 | loss 0.0051 | val filtered_MRR 0.3499 | raw_MRR 0.2412 | H@1 0.3006 | H@3 0.3850 | H@10 0.4245 | 545s
+  --> New best (0.3499), checkpoint saved.
+Epoch 1510 | loss 0.0064 | val filtered_MRR 0.3512 | raw_MRR 0.2417 | H@1 0.3022 | H@3 0.3843 | H@10 0.4273 | 549s
+  --> New best (0.3512), checkpoint saved.
+Epoch 1520 | loss 0.0052 | val filtered_MRR 0.3471 | raw_MRR 0.2400 | H@1 0.2958 | H@3 0.3837 | H@10 0.4222 | 553s
+Epoch 1530 | loss 0.0407 | val filtered_MRR 0.3481 | raw_MRR 0.2375 | H@1 0.3034 | H@3 0.3759 | H@10 0.4202 | 556s
+Epoch 1540 | loss 0.1667 | val filtered_MRR 0.2216 | raw_MRR 0.1765 | H@1 0.1610 | H@3 0.2540 | H@10 0.3375 | 560s
+Epoch 1550 | loss 0.0501 | val filtered_MRR 0.1762 | raw_MRR 0.1461 | H@1 0.1140 | H@3 0.1984 | H@10 0.3072 | 563s
+Epoch 1560 | loss 0.0492 | val filtered_MRR 0.2102 | raw_MRR 0.1694 | H@1 0.1460 | H@3 0.2462 | H@10 0.3288 | 567s
+Epoch 1570 | loss 0.4997 | val filtered_MRR 0.2334 | raw_MRR 0.1841 | H@1 0.1737 | H@3 0.2624 | H@10 0.3454 | 571s
+Epoch 1580 | loss 0.0432 | val filtered_MRR 0.1961 | raw_MRR 0.1589 | H@1 0.1305 | H@3 0.2253 | H@10 0.3276 | 574s
+Epoch 1590 | loss 0.0265 | val filtered_MRR 0.2304 | raw_MRR 0.1823 | H@1 0.1625 | H@3 0.2660 | H@10 0.3640 | 578s
+Epoch 1600 | loss 0.0149 | val filtered_MRR 0.2695 | raw_MRR 0.2050 | H@1 0.2044 | H@3 0.3105 | H@10 0.3858 | 582s
+Epoch 1610 | loss 0.0122 | val filtered_MRR 0.2958 | raw_MRR 0.2180 | H@1 0.2358 | H@3 0.3349 | H@10 0.3975 | 585s
+Epoch 1620 | loss 0.0107 | val filtered_MRR 0.3173 | raw_MRR 0.2273 | H@1 0.2633 | H@3 0.3515 | H@10 0.4094 | 589s
+Epoch 1630 | loss 0.2860 | val filtered_MRR 0.3235 | raw_MRR 0.2297 | H@1 0.2698 | H@3 0.3584 | H@10 0.4122 | 592s
+Epoch 1640 | loss 0.0090 | val filtered_MRR 0.3329 | raw_MRR 0.2341 | H@1 0.2816 | H@3 0.3683 | H@10 0.4155 | 596s
+Epoch 1650 | loss 0.0071 | val filtered_MRR 0.3392 | raw_MRR 0.2378 | H@1 0.2889 | H@3 0.3731 | H@10 0.4207 | 600s
+Epoch 1660 | loss 0.0085 | val filtered_MRR 0.3291 | raw_MRR 0.2318 | H@1 0.2754 | H@3 0.3647 | H@10 0.4184 | 603s
+Epoch 1670 | loss 0.0057 | val filtered_MRR 0.3370 | raw_MRR 0.2364 | H@1 0.2869 | H@3 0.3701 | H@10 0.4197 | 607s
+Epoch 1680 | loss 0.0066 | val filtered_MRR 0.3433 | raw_MRR 0.2383 | H@1 0.2945 | H@3 0.3756 | H@10 0.4225 | 611s
+Epoch 1690 | loss 0.0060 | val filtered_MRR 0.3448 | raw_MRR 0.2391 | H@1 0.2953 | H@3 0.3787 | H@10 0.4232 | 614s
+Epoch 1700 | loss 0.0142 | val filtered_MRR 0.3429 | raw_MRR 0.2368 | H@1 0.2945 | H@3 0.3736 | H@10 0.4214 | 618s
+Epoch 1710 | loss 0.0073 | val filtered_MRR 0.3492 | raw_MRR 0.2391 | H@1 0.3032 | H@3 0.3823 | H@10 0.4201 | 621s
+Epoch 1720 | loss 0.0054 | val filtered_MRR 0.3485 | raw_MRR 0.2413 | H@1 0.3024 | H@3 0.3805 | H@10 0.4209 | 625s
+Epoch 1730 | loss 0.0057 | val filtered_MRR 0.3494 | raw_MRR 0.2409 | H@1 0.3017 | H@3 0.3830 | H@10 0.4239 | 628s
+Epoch 1740 | loss 0.0056 | val filtered_MRR 0.3505 | raw_MRR 0.2393 | H@1 0.3022 | H@3 0.3832 | H@10 0.4230 | 632s
+Epoch 1750 | loss 0.2819 | val filtered_MRR 0.3499 | raw_MRR 0.2399 | H@1 0.3019 | H@3 0.3815 | H@10 0.4234 | 636s
+Epoch 1760 | loss 0.0055 | val filtered_MRR 0.3507 | raw_MRR 0.2401 | H@1 0.3031 | H@3 0.3833 | H@10 0.4252 | 639s
+Epoch 1770 | loss 0.0051 | val filtered_MRR 0.3521 | raw_MRR 0.2404 | H@1 0.3067 | H@3 0.3810 | H@10 0.4232 | 643s
+  --> New best (0.3521), checkpoint saved.
+Epoch 1780 | loss 0.0048 | val filtered_MRR 0.3499 | raw_MRR 0.2397 | H@1 0.3026 | H@3 0.3813 | H@10 0.4245 | 647s
+Epoch 1790 | loss 0.0055 | val filtered_MRR 0.3497 | raw_MRR 0.2383 | H@1 0.3009 | H@3 0.3833 | H@10 0.4244 | 650s
+Epoch 1800 | loss 0.0054 | val filtered_MRR 0.3528 | raw_MRR 0.2403 | H@1 0.3057 | H@3 0.3838 | H@10 0.4257 | 654s
+  --> New best (0.3528), checkpoint saved.
+Epoch 1810 | loss 0.0049 | val filtered_MRR 0.3538 | raw_MRR 0.2409 | H@1 0.3075 | H@3 0.3846 | H@10 0.4255 | 657s
+  --> New best (0.3538), checkpoint saved.
+Epoch 1820 | loss 0.0054 | val filtered_MRR 0.3513 | raw_MRR 0.2389 | H@1 0.3036 | H@3 0.3828 | H@10 0.4278 | 661s
+Epoch 1830 | loss 0.0077 | val filtered_MRR 0.3522 | raw_MRR 0.2411 | H@1 0.3057 | H@3 0.3812 | H@10 0.4260 | 665s
+Epoch 1840 | loss 0.0052 | val filtered_MRR 0.3488 | raw_MRR 0.2402 | H@1 0.3013 | H@3 0.3810 | H@10 0.4242 | 668s
+Epoch 1850 | loss 0.0052 | val filtered_MRR 0.3499 | raw_MRR 0.2410 | H@1 0.3014 | H@3 0.3828 | H@10 0.4253 | 672s
+Epoch 1860 | loss 0.0055 | val filtered_MRR 0.3528 | raw_MRR 0.2411 | H@1 0.3069 | H@3 0.3823 | H@10 0.4265 | 676s
+Epoch 1870 | loss 0.2751 | val filtered_MRR 0.3551 | raw_MRR 0.2420 | H@1 0.3100 | H@3 0.3843 | H@10 0.4262 | 679s
+  --> New best (0.3551), checkpoint saved.
+Epoch 1880 | loss 0.0047 | val filtered_MRR 0.3476 | raw_MRR 0.2380 | H@1 0.2973 | H@3 0.3832 | H@10 0.4257 | 683s
+Epoch 1890 | loss 0.0049 | val filtered_MRR 0.3567 | raw_MRR 0.2411 | H@1 0.3105 | H@3 0.3891 | H@10 0.4275 | 686s
+  --> New best (0.3567), checkpoint saved.
+Epoch 1900 | loss 0.0054 | val filtered_MRR 0.3566 | raw_MRR 0.2404 | H@1 0.3108 | H@3 0.3884 | H@10 0.4280 | 690s
+Epoch 1910 | loss 0.2747 | val filtered_MRR 0.3554 | raw_MRR 0.2407 | H@1 0.3098 | H@3 0.3856 | H@10 0.4270 | 694s
+Epoch 1920 | loss 0.0044 | val filtered_MRR 0.3537 | raw_MRR 0.2395 | H@1 0.3055 | H@3 0.3871 | H@10 0.4296 | 697s
+Epoch 1930 | loss 0.2735 | val filtered_MRR 0.3511 | raw_MRR 0.2393 | H@1 0.3019 | H@3 0.3841 | H@10 0.4291 | 701s
+Epoch 1940 | loss 0.0052 | val filtered_MRR 0.3529 | raw_MRR 0.2404 | H@1 0.3044 | H@3 0.3878 | H@10 0.4286 | 704s
+Epoch 1950 | loss 0.0056 | val filtered_MRR 0.3540 | raw_MRR 0.2405 | H@1 0.3070 | H@3 0.3855 | H@10 0.4267 | 708s
+Epoch 1960 | loss 0.0047 | val filtered_MRR 0.3540 | raw_MRR 0.2421 | H@1 0.3077 | H@3 0.3853 | H@10 0.4267 | 712s
+Epoch 1970 | loss 0.0054 | val filtered_MRR 0.3584 | raw_MRR 0.2420 | H@1 0.3153 | H@3 0.3866 | H@10 0.4268 | 715s
+  --> New best (0.3584), checkpoint saved.
+Epoch 1980 | loss 0.0047 | val filtered_MRR 0.3604 | raw_MRR 0.2441 | H@1 0.3181 | H@3 0.3894 | H@10 0.4272 | 719s
+  --> New best (0.3604), checkpoint saved.
+Epoch 1990 | loss 0.0044 | val filtered_MRR 0.3583 | raw_MRR 0.2419 | H@1 0.3153 | H@3 0.3873 | H@10 0.4242 | 723s
+Epoch 2000 | loss 0.0041 | val filtered_MRR 0.3588 | raw_MRR 0.2422 | H@1 0.3149 | H@3 0.3868 | H@10 0.4268 | 726s
+Epoch 2010 | loss 0.0046 | val filtered_MRR 0.3560 | raw_MRR 0.2428 | H@1 0.3083 | H@3 0.3876 | H@10 0.4298 | 730s
+Epoch 2020 | loss 0.3155 | val filtered_MRR 0.3567 | raw_MRR 0.2417 | H@1 0.3108 | H@3 0.3869 | H@10 0.4295 | 733s
+Epoch 2030 | loss 0.0063 | val filtered_MRR 0.3573 | raw_MRR 0.2421 | H@1 0.3134 | H@3 0.3855 | H@10 0.4247 | 737s
+Epoch 2040 | loss 0.2810 | val filtered_MRR 0.3465 | raw_MRR 0.2391 | H@1 0.2961 | H@3 0.3818 | H@10 0.4260 | 741s
+Epoch 2050 | loss 0.0059 | val filtered_MRR 0.3527 | raw_MRR 0.2407 | H@1 0.3052 | H@3 0.3846 | H@10 0.4265 | 744s
+Epoch 2060 | loss 0.0044 | val filtered_MRR 0.3525 | raw_MRR 0.2392 | H@1 0.3059 | H@3 0.3841 | H@10 0.4234 | 748s
+Epoch 2070 | loss 0.0047 | val filtered_MRR 0.3584 | raw_MRR 0.2429 | H@1 0.3133 | H@3 0.3879 | H@10 0.4263 | 751s
+Epoch 2080 | loss 0.0045 | val filtered_MRR 0.3582 | raw_MRR 0.2425 | H@1 0.3133 | H@3 0.3873 | H@10 0.4288 | 755s
+Epoch 2090 | loss 0.0034 | val filtered_MRR 0.3597 | raw_MRR 0.2433 | H@1 0.3153 | H@3 0.3873 | H@10 0.4286 | 759s
+Epoch 2100 | loss 0.0065 | val filtered_MRR 0.3600 | raw_MRR 0.2436 | H@1 0.3139 | H@3 0.3921 | H@10 0.4303 | 762s
+Epoch 2110 | loss 0.0047 | val filtered_MRR 0.3615 | raw_MRR 0.2423 | H@1 0.3179 | H@3 0.3902 | H@10 0.4296 | 766s
+  --> New best (0.3615), checkpoint saved.
+Epoch 2120 | loss 0.2697 | val filtered_MRR 0.3625 | raw_MRR 0.2427 | H@1 0.3200 | H@3 0.3894 | H@10 0.4293 | 770s
+  --> New best (0.3625), checkpoint saved.
+Epoch 2130 | loss 0.0045 | val filtered_MRR 0.3622 | raw_MRR 0.2430 | H@1 0.3212 | H@3 0.3874 | H@10 0.4278 | 773s
+Epoch 2140 | loss 0.0044 | val filtered_MRR 0.3629 | raw_MRR 0.2445 | H@1 0.3197 | H@3 0.3894 | H@10 0.4311 | 777s
+  --> New best (0.3629), checkpoint saved.
+Epoch 2150 | loss 0.0053 | val filtered_MRR 0.3577 | raw_MRR 0.2406 | H@1 0.3139 | H@3 0.3853 | H@10 0.4253 | 780s
+Epoch 2160 | loss 0.0049 | val filtered_MRR 0.3583 | raw_MRR 0.2425 | H@1 0.3130 | H@3 0.3863 | H@10 0.4296 | 784s
+Epoch 2170 | loss 0.0057 | val filtered_MRR 0.3572 | raw_MRR 0.2410 | H@1 0.3131 | H@3 0.3851 | H@10 0.4244 | 788s
+Epoch 2180 | loss 0.0076 | val filtered_MRR 0.3534 | raw_MRR 0.2387 | H@1 0.3095 | H@3 0.3813 | H@10 0.4212 | 791s
+Epoch 2190 | loss 0.0100 | val filtered_MRR 0.3514 | raw_MRR 0.2369 | H@1 0.3078 | H@3 0.3794 | H@10 0.4191 | 795s
+Epoch 2200 | loss 0.0067 | val filtered_MRR 0.3510 | raw_MRR 0.2376 | H@1 0.3055 | H@3 0.3833 | H@10 0.4214 | 798s
+Epoch 2210 | loss 0.0058 | val filtered_MRR 0.3544 | raw_MRR 0.2392 | H@1 0.3090 | H@3 0.3846 | H@10 0.4268 | 802s
+Epoch 2220 | loss 0.0043 | val filtered_MRR 0.3559 | raw_MRR 0.2397 | H@1 0.3111 | H@3 0.3848 | H@10 0.4239 | 806s
+Epoch 2230 | loss 0.0043 | val filtered_MRR 0.3561 | raw_MRR 0.2415 | H@1 0.3105 | H@3 0.3856 | H@10 0.4268 | 809s
+Epoch 2240 | loss 0.0055 | val filtered_MRR 0.3580 | raw_MRR 0.2425 | H@1 0.3125 | H@3 0.3873 | H@10 0.4275 | 813s
+Epoch 2250 | loss 0.0049 | val filtered_MRR 0.3568 | raw_MRR 0.2434 | H@1 0.3095 | H@3 0.3894 | H@10 0.4273 | 816s
+Epoch 2260 | loss 0.0039 | val filtered_MRR 0.3574 | raw_MRR 0.2431 | H@1 0.3093 | H@3 0.3904 | H@10 0.4298 | 820s
+Epoch 2270 | loss 0.0056 | val filtered_MRR 0.3532 | raw_MRR 0.2400 | H@1 0.3036 | H@3 0.3866 | H@10 0.4303 | 824s
+Epoch 2280 | loss 0.0050 | val filtered_MRR 0.3607 | raw_MRR 0.2439 | H@1 0.3125 | H@3 0.3927 | H@10 0.4329 | 827s
+Epoch 2290 | loss 0.0057 | val filtered_MRR 0.3582 | raw_MRR 0.2439 | H@1 0.3113 | H@3 0.3897 | H@10 0.4333 | 831s
+Epoch 2300 | loss 0.2758 | val filtered_MRR 0.3578 | raw_MRR 0.2448 | H@1 0.3125 | H@3 0.3858 | H@10 0.4300 | 834s
+Epoch 2310 | loss 0.2880 | val filtered_MRR 0.3491 | raw_MRR 0.2383 | H@1 0.2985 | H@3 0.3822 | H@10 0.4291 | 838s
+Epoch 2320 | loss 0.0116 | val filtered_MRR 0.3529 | raw_MRR 0.2421 | H@1 0.3062 | H@3 0.3841 | H@10 0.4257 | 842s
+Epoch 2330 | loss 0.0360 | val filtered_MRR 0.3369 | raw_MRR 0.2334 | H@1 0.2836 | H@3 0.3739 | H@10 0.4209 | 845s
+Epoch 2340 | loss 0.0164 | val filtered_MRR 0.3240 | raw_MRR 0.2266 | H@1 0.2713 | H@3 0.3617 | H@10 0.4061 | 849s
+Epoch 2350 | loss 0.0104 | val filtered_MRR 0.3105 | raw_MRR 0.2183 | H@1 0.2510 | H@3 0.3500 | H@10 0.4102 | 852s
+Epoch 2360 | loss 0.0075 | val filtered_MRR 0.3286 | raw_MRR 0.2259 | H@1 0.2760 | H@3 0.3649 | H@10 0.4135 | 856s
+Epoch 2370 | loss 0.0059 | val filtered_MRR 0.3300 | raw_MRR 0.2243 | H@1 0.2769 | H@3 0.3667 | H@10 0.4156 | 860s
+Epoch 2380 | loss 0.0046 | val filtered_MRR 0.3430 | raw_MRR 0.2315 | H@1 0.2930 | H@3 0.3762 | H@10 0.4216 | 863s
+Epoch 2390 | loss 0.2800 | val filtered_MRR 0.3534 | raw_MRR 0.2373 | H@1 0.3085 | H@3 0.3820 | H@10 0.4265 | 867s
+Epoch 2400 | loss 0.2772 | val filtered_MRR 0.3575 | raw_MRR 0.2394 | H@1 0.3139 | H@3 0.3846 | H@10 0.4278 | 870s
+Epoch 2410 | loss 0.2751 | val filtered_MRR 0.3617 | raw_MRR 0.2410 | H@1 0.3192 | H@3 0.3893 | H@10 0.4298 | 874s
+Epoch 2420 | loss 0.0043 | val filtered_MRR 0.3630 | raw_MRR 0.2413 | H@1 0.3209 | H@3 0.3893 | H@10 0.4300 | 878s
+  --> New best (0.3630), checkpoint saved.
+Epoch 2430 | loss 0.2743 | val filtered_MRR 0.3619 | raw_MRR 0.2423 | H@1 0.3187 | H@3 0.3889 | H@10 0.4329 | 881s
+Epoch 2440 | loss 0.0046 | val filtered_MRR 0.3602 | raw_MRR 0.2440 | H@1 0.3158 | H@3 0.3888 | H@10 0.4341 | 885s
+Epoch 2450 | loss 0.0037 | val filtered_MRR 0.3625 | raw_MRR 0.2421 | H@1 0.3184 | H@3 0.3927 | H@10 0.4333 | 889s
+Epoch 2460 | loss 0.0042 | val filtered_MRR 0.3629 | raw_MRR 0.2437 | H@1 0.3177 | H@3 0.3929 | H@10 0.4342 | 892s
+Epoch 2470 | loss 0.0043 | val filtered_MRR 0.3643 | raw_MRR 0.2429 | H@1 0.3212 | H@3 0.3906 | H@10 0.4344 | 896s
+  --> New best (0.3643), checkpoint saved.
+Epoch 2480 | loss 0.0035 | val filtered_MRR 0.3669 | raw_MRR 0.2442 | H@1 0.3255 | H@3 0.3916 | H@10 0.4347 | 899s
+  --> New best (0.3669), checkpoint saved.
+Epoch 2490 | loss 0.0043 | val filtered_MRR 0.3672 | raw_MRR 0.2438 | H@1 0.3255 | H@3 0.3926 | H@10 0.4339 | 903s
+  --> New best (0.3672), checkpoint saved.
+Epoch 2500 | loss 0.0042 | val filtered_MRR 0.3651 | raw_MRR 0.2443 | H@1 0.3225 | H@3 0.3922 | H@10 0.4342 | 907s
+Epoch 2510 | loss 0.2706 | val filtered_MRR 0.3660 | raw_MRR 0.2445 | H@1 0.3238 | H@3 0.3912 | H@10 0.4346 | 910s
+Epoch 2520 | loss 0.0041 | val filtered_MRR 0.3635 | raw_MRR 0.2441 | H@1 0.3182 | H@3 0.3927 | H@10 0.4362 | 914s
+Epoch 2530 | loss 0.0035 | val filtered_MRR 0.3592 | raw_MRR 0.2435 | H@1 0.3128 | H@3 0.3883 | H@10 0.4338 | 918s
+Epoch 2540 | loss 0.0041 | val filtered_MRR 0.3623 | raw_MRR 0.2441 | H@1 0.3184 | H@3 0.3888 | H@10 0.4347 | 921s/nfs/hpc/share/tinw/idealab/INV-GNN/src/baselines/RGCN/rgcn_data_augmentation/run_wordnet_lp.py:376: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict(torch.load(ckpt_path, map_location=device))
+
+Epoch 2550 | loss 0.0036 | val filtered_MRR 0.3641 | raw_MRR 0.2437 | H@1 0.3215 | H@3 0.3894 | H@10 0.4331 | 925s
+Epoch 2560 | loss 0.0046 | val filtered_MRR 0.3643 | raw_MRR 0.2458 | H@1 0.3215 | H@3 0.3912 | H@10 0.4319 | 928s
+Epoch 2570 | loss 0.0050 | val filtered_MRR 0.3655 | raw_MRR 0.2445 | H@1 0.3243 | H@3 0.3902 | H@10 0.4306 | 932s
+Epoch 2580 | loss 0.2663 | val filtered_MRR 0.3621 | raw_MRR 0.2457 | H@1 0.3166 | H@3 0.3909 | H@10 0.4334 | 936s
+Epoch 2590 | loss 0.0058 | val filtered_MRR 0.3590 | raw_MRR 0.2446 | H@1 0.3121 | H@3 0.3894 | H@10 0.4328 | 939s
+Epoch 2600 | loss 0.0046 | val filtered_MRR 0.3572 | raw_MRR 0.2433 | H@1 0.3098 | H@3 0.3866 | H@10 0.4305 | 943s
+Epoch 2610 | loss 0.0086 | val filtered_MRR 0.3557 | raw_MRR 0.2452 | H@1 0.3097 | H@3 0.3828 | H@10 0.4313 | 946s
+Epoch 2620 | loss 0.0078 | val filtered_MRR 0.3368 | raw_MRR 0.2348 | H@1 0.2823 | H@3 0.3724 | H@10 0.4212 | 950s
+Epoch 2630 | loss 0.0058 | val filtered_MRR 0.3410 | raw_MRR 0.2349 | H@1 0.2882 | H@3 0.3767 | H@10 0.4242 | 954s
+Epoch 2640 | loss 0.0047 | val filtered_MRR 0.3479 | raw_MRR 0.2387 | H@1 0.2973 | H@3 0.3813 | H@10 0.4249 | 957s
+Epoch 2650 | loss 0.0047 | val filtered_MRR 0.3481 | raw_MRR 0.2391 | H@1 0.2975 | H@3 0.3815 | H@10 0.4296 | 961s
+Epoch 2660 | loss 0.0042 | val filtered_MRR 0.3566 | raw_MRR 0.2404 | H@1 0.3120 | H@3 0.3840 | H@10 0.4286 | 964s
+Epoch 2670 | loss 0.0046 | val filtered_MRR 0.3531 | raw_MRR 0.2407 | H@1 0.3047 | H@3 0.3835 | H@10 0.4316 | 968s
+Epoch 2680 | loss 0.0037 | val filtered_MRR 0.3584 | raw_MRR 0.2434 | H@1 0.3125 | H@3 0.3876 | H@10 0.4328 | 972s
+Epoch 2690 | loss 0.0038 | val filtered_MRR 0.3649 | raw_MRR 0.2467 | H@1 0.3212 | H@3 0.3921 | H@10 0.4351 | 975s
+Epoch 2700 | loss 0.2661 | val filtered_MRR 0.3627 | raw_MRR 0.2459 | H@1 0.3167 | H@3 0.3909 | H@10 0.4357 | 979s
+Epoch 2710 | loss 0.0039 | val filtered_MRR 0.3664 | raw_MRR 0.2483 | H@1 0.3228 | H@3 0.3942 | H@10 0.4354 | 982s
+Epoch 2720 | loss 0.0040 | val filtered_MRR 0.3686 | raw_MRR 0.2491 | H@1 0.3266 | H@3 0.3939 | H@10 0.4367 | 986s
+  --> New best (0.3686), checkpoint saved.
+Epoch 2730 | loss 0.0049 | val filtered_MRR 0.3673 | raw_MRR 0.2477 | H@1 0.3238 | H@3 0.3949 | H@10 0.4356 | 990s
+Epoch 2740 | loss 0.0045 | val filtered_MRR 0.3691 | raw_MRR 0.2503 | H@1 0.3250 | H@3 0.3955 | H@10 0.4398 | 993s
+  --> New best (0.3691), checkpoint saved.
+Epoch 2750 | loss 0.2753 | val filtered_MRR 0.3688 | raw_MRR 0.2480 | H@1 0.3304 | H@3 0.3926 | H@10 0.4300 | 997s
+Epoch 2760 | loss 0.0047 | val filtered_MRR 0.3632 | raw_MRR 0.2454 | H@1 0.3194 | H@3 0.3889 | H@10 0.4334 | 1001s
+Epoch 2770 | loss 0.0089 | val filtered_MRR 0.3615 | raw_MRR 0.2457 | H@1 0.3149 | H@3 0.3896 | H@10 0.4387 | 1004s
+Epoch 2780 | loss 0.0056 | val filtered_MRR 0.3609 | raw_MRR 0.2447 | H@1 0.3143 | H@3 0.3914 | H@10 0.4342 | 1008s
+Epoch 2790 | loss 0.0070 | val filtered_MRR 0.3578 | raw_MRR 0.2446 | H@1 0.3120 | H@3 0.3881 | H@10 0.4314 | 1011s
+Epoch 2800 | loss 0.0042 | val filtered_MRR 0.3566 | raw_MRR 0.2423 | H@1 0.3120 | H@3 0.3850 | H@10 0.4270 | 1015s
+Epoch 2810 | loss 0.9357 | val filtered_MRR 0.2955 | raw_MRR 0.2150 | H@1 0.2472 | H@3 0.3251 | H@10 0.3797 | 1019s
+Epoch 2820 | loss 1.2585 | val filtered_MRR 0.0279 | raw_MRR 0.0263 | H@1 0.0117 | H@3 0.0255 | H@10 0.0583 | 1022s
+Epoch 2830 | loss 0.1924 | val filtered_MRR 0.1274 | raw_MRR 0.1081 | H@1 0.0779 | H@3 0.1416 | H@10 0.2284 | 1026s
+Epoch 2840 | loss 0.0694 | val filtered_MRR 0.1505 | raw_MRR 0.1263 | H@1 0.0953 | H@3 0.1689 | H@10 0.2627 | 1029s
+Epoch 2850 | loss 0.1272 | val filtered_MRR 0.0908 | raw_MRR 0.0826 | H@1 0.0476 | H@3 0.0974 | H@10 0.1770 | 1033s
+Epoch 2860 | loss 0.4766 | val filtered_MRR 0.1163 | raw_MRR 0.1010 | H@1 0.0728 | H@3 0.1256 | H@10 0.2040 | 1037s
+Epoch 2870 | loss 0.0590 | val filtered_MRR 0.2172 | raw_MRR 0.1697 | H@1 0.1613 | H@3 0.2452 | H@10 0.3223 | 1040s
+Epoch 2880 | loss 0.0373 | val filtered_MRR 0.2577 | raw_MRR 0.1952 | H@1 0.1997 | H@3 0.2920 | H@10 0.3635 | 1044s
+Epoch 2890 | loss 0.0238 | val filtered_MRR 0.2517 | raw_MRR 0.1924 | H@1 0.1875 | H@3 0.2892 | H@10 0.3711 | 1047s
+Epoch 2900 | loss 0.0132 | val filtered_MRR 0.2944 | raw_MRR 0.2143 | H@1 0.2386 | H@3 0.3326 | H@10 0.3897 | 1051s
+Epoch 2910 | loss 0.3349 | val filtered_MRR 0.3031 | raw_MRR 0.2185 | H@1 0.2482 | H@3 0.3401 | H@10 0.3944 | 1055s
+Epoch 2920 | loss 0.3145 | val filtered_MRR 0.3252 | raw_MRR 0.2274 | H@1 0.2759 | H@3 0.3596 | H@10 0.4038 | 1058s
+Epoch 2930 | loss 0.0078 | val filtered_MRR 0.3354 | raw_MRR 0.2287 | H@1 0.2909 | H@3 0.3677 | H@10 0.4059 | 1062s
+Epoch 2940 | loss 0.0073 | val filtered_MRR 0.3410 | raw_MRR 0.2310 | H@1 0.2986 | H@3 0.3687 | H@10 0.4097 | 1065s
+Epoch 2950 | loss 0.0074 | val filtered_MRR 0.3448 | raw_MRR 0.2329 | H@1 0.3024 | H@3 0.3731 | H@10 0.4118 | 1069s
+Epoch 2960 | loss 0.2961 | val filtered_MRR 0.3409 | raw_MRR 0.2301 | H@1 0.2961 | H@3 0.3728 | H@10 0.4130 | 1073s
+Epoch 2970 | loss 0.0086 | val filtered_MRR 0.3478 | raw_MRR 0.2346 | H@1 0.3042 | H@3 0.3789 | H@10 0.4155 | 1076s
+Epoch 2980 | loss 0.0071 | val filtered_MRR 0.3493 | raw_MRR 0.2339 | H@1 0.3069 | H@3 0.3785 | H@10 0.4146 | 1080s
+Epoch 2990 | loss 0.2941 | val filtered_MRR 0.3511 | raw_MRR 0.2348 | H@1 0.3088 | H@3 0.3800 | H@10 0.4161 | 1083s
+Epoch 3000 | loss 0.0069 | val filtered_MRR 0.3525 | raw_MRR 0.2345 | H@1 0.3116 | H@3 0.3800 | H@10 0.4166 | 1087s
+
+Loaded best checkpoint: best_model_R2087_seed_1566911444_variant_no_changes.pt
+
+  Epochs trained: 3000  Run time: 1087.0s
+  Final val:  filtered_MRR=0.3691  raw_MRR=0.2503  H@1=0.3250  H@3=0.3955  H@10=0.4398  Acc=0.9885  Prec=0.9716  Rec=0.7173  F1=0.7959
+  Final test: filtered_MRR=0.3680  raw_MRR=0.2499  H@1=0.3267  H@3=0.3933  H@10=0.4312  Acc=0.9886  Prec=0.9770  Rec=0.7165  F1=0.7962
+
+============================================================
+  Variant: no_changes | Seed: 20241017
+============================================================
+WordNetLPDataset(variant=no_changes, num_entities=40943, num_relations=2087, train=86835, val=3034, test=3134, format=wordnet_lp_four_variants_v1)
+Epoch   10 | loss 0.6931 | val filtered_MRR 0.0067 | raw_MRR 0.0067 | H@1 0.0023 | H@3 0.0046 | H@10 0.0158 | 4s
+  --> New best (0.0067), checkpoint saved.
+Epoch   20 | loss 0.6575 | val filtered_MRR 0.0047 | raw_MRR 0.0046 | H@1 0.0008 | H@3 0.0033 | H@10 0.0120 | 7s
+Epoch   30 | loss 0.5383 | val filtered_MRR 0.0013 | raw_MRR 0.0013 | H@1 0.0000 | H@3 0.0002 | H@10 0.0015 | 11s
+Epoch   40 | loss 0.5515 | val filtered_MRR 0.0013 | raw_MRR 0.0013 | H@1 0.0000 | H@3 0.0003 | H@10 0.0012 | 14s
+Epoch   50 | loss 0.4583 | val filtered_MRR 0.0018 | raw_MRR 0.0018 | H@1 0.0000 | H@3 0.0007 | H@10 0.0021 | 18s
+Epoch   60 | loss 0.3737 | val filtered_MRR 0.0040 | raw_MRR 0.0040 | H@1 0.0007 | H@3 0.0016 | H@10 0.0068 | 22s
+Epoch   70 | loss 0.3166 | val filtered_MRR 0.0064 | raw_MRR 0.0064 | H@1 0.0008 | H@3 0.0046 | H@10 0.0132 | 25s
+Epoch   80 | loss 0.2668 | val filtered_MRR 0.0081 | raw_MRR 0.0080 | H@1 0.0013 | H@3 0.0056 | H@10 0.0166 | 29s
+  --> New best (0.0081), checkpoint saved.
+Epoch   90 | loss 0.2170 | val filtered_MRR 0.0088 | raw_MRR 0.0087 | H@1 0.0015 | H@3 0.0064 | H@10 0.0165 | 32s
+  --> New best (0.0088), checkpoint saved.
+Epoch  100 | loss 0.1843 | val filtered_MRR 0.0104 | raw_MRR 0.0104 | H@1 0.0033 | H@3 0.0054 | H@10 0.0193 | 36s
+  --> New best (0.0104), checkpoint saved.
+Epoch  110 | loss 0.1570 | val filtered_MRR 0.0132 | raw_MRR 0.0130 | H@1 0.0028 | H@3 0.0096 | H@10 0.0262 | 40s
+  --> New best (0.0132), checkpoint saved.
+Epoch  120 | loss 0.4572 | val filtered_MRR 0.0144 | raw_MRR 0.0143 | H@1 0.0036 | H@3 0.0104 | H@10 0.0287 | 44s
+  --> New best (0.0144), checkpoint saved.
+Epoch  130 | loss 0.1429 | val filtered_MRR 0.0182 | raw_MRR 0.0179 | H@1 0.0058 | H@3 0.0129 | H@10 0.0344 | 47s
+  --> New best (0.0182), checkpoint saved.
+Epoch  140 | loss 0.1237 | val filtered_MRR 0.0198 | raw_MRR 0.0195 | H@1 0.0049 | H@3 0.0152 | H@10 0.0425 | 51s
+  --> New best (0.0198), checkpoint saved.
+Epoch  150 | loss 0.0987 | val filtered_MRR 0.0259 | raw_MRR 0.0254 | H@1 0.0092 | H@3 0.0196 | H@10 0.0529 | 55s
+  --> New best (0.0259), checkpoint saved.
+Epoch  160 | loss 0.0837 | val filtered_MRR 0.0325 | raw_MRR 0.0317 | H@1 0.0119 | H@3 0.0269 | H@10 0.0679 | 58s
+  --> New best (0.0325), checkpoint saved.
+Epoch  170 | loss 0.0792 | val filtered_MRR 0.0346 | raw_MRR 0.0338 | H@1 0.0101 | H@3 0.0313 | H@10 0.0791 | 62s
+  --> New best (0.0346), checkpoint saved.
+Epoch  180 | loss 0.1097 | val filtered_MRR 0.0354 | raw_MRR 0.0347 | H@1 0.0130 | H@3 0.0303 | H@10 0.0720 | 66s
+  --> New best (0.0354), checkpoint saved.
+Epoch  190 | loss 0.0976 | val filtered_MRR 0.0374 | raw_MRR 0.0362 | H@1 0.0142 | H@3 0.0325 | H@10 0.0786 | 69s
+  --> New best (0.0374), checkpoint saved.
+Epoch  200 | loss 0.0763 | val filtered_MRR 0.0428 | raw_MRR 0.0415 | H@1 0.0173 | H@3 0.0377 | H@10 0.0857 | 73s
+  --> New best (0.0428), checkpoint saved.
+Epoch  210 | loss 0.3845 | val filtered_MRR 0.0543 | raw_MRR 0.0521 | H@1 0.0224 | H@3 0.0539 | H@10 0.1131 | 77s
+  --> New best (0.0543), checkpoint saved.
+Epoch  220 | loss 0.0516 | val filtered_MRR 0.0603 | raw_MRR 0.0578 | H@1 0.0265 | H@3 0.0565 | H@10 0.1259 | 80s
+  --> New best (0.0603), checkpoint saved.
+Epoch  230 | loss 0.0754 | val filtered_MRR 0.0621 | raw_MRR 0.0591 | H@1 0.0242 | H@3 0.0605 | H@10 0.1391 | 84s
+  --> New best (0.0621), checkpoint saved.
+Epoch  240 | loss 0.0777 | val filtered_MRR 0.0766 | raw_MRR 0.0723 | H@1 0.0351 | H@3 0.0781 | H@10 0.1628 | 88s
+  --> New best (0.0766), checkpoint saved.
+Epoch  250 | loss 0.0978 | val filtered_MRR 0.0773 | raw_MRR 0.0728 | H@1 0.0364 | H@3 0.0776 | H@10 0.1597 | 91s
+  --> New best (0.0773), checkpoint saved.
+Epoch  260 | loss 0.0543 | val filtered_MRR 0.0811 | raw_MRR 0.0764 | H@1 0.0396 | H@3 0.0816 | H@10 0.1633 | 95s
+  --> New best (0.0811), checkpoint saved.
+Epoch  270 | loss 0.0461 | val filtered_MRR 0.0782 | raw_MRR 0.0726 | H@1 0.0364 | H@3 0.0770 | H@10 0.1688 | 99s
+Epoch  280 | loss 0.0436 | val filtered_MRR 0.0949 | raw_MRR 0.0880 | H@1 0.0481 | H@3 0.0999 | H@10 0.1948 | 102s
+  --> New best (0.0949), checkpoint saved.
+Epoch  290 | loss 0.0350 | val filtered_MRR 0.0959 | raw_MRR 0.0889 | H@1 0.0452 | H@3 0.1004 | H@10 0.2073 | 106s
+  --> New best (0.0959), checkpoint saved.
+Epoch  300 | loss 0.0340 | val filtered_MRR 0.1052 | raw_MRR 0.0962 | H@1 0.0542 | H@3 0.1121 | H@10 0.2076 | 110s
+  --> New best (0.1052), checkpoint saved.
+Epoch  310 | loss 0.3691 | val filtered_MRR 0.1200 | raw_MRR 0.1077 | H@1 0.0631 | H@3 0.1327 | H@10 0.2390 | 113s
+  --> New best (0.1200), checkpoint saved.
+Epoch  320 | loss 0.3583 | val filtered_MRR 0.1248 | raw_MRR 0.1131 | H@1 0.0671 | H@3 0.1393 | H@10 0.2464 | 117s
+  --> New best (0.1248), checkpoint saved.
+Epoch  330 | loss 0.0393 | val filtered_MRR 0.1289 | raw_MRR 0.1147 | H@1 0.0692 | H@3 0.1457 | H@10 0.2515 | 121s
+  --> New best (0.1289), checkpoint saved.
+Epoch  340 | loss 0.0531 | val filtered_MRR 0.1110 | raw_MRR 0.1010 | H@1 0.0532 | H@3 0.1218 | H@10 0.2340 | 124s
+Epoch  350 | loss 0.0351 | val filtered_MRR 0.1130 | raw_MRR 0.1032 | H@1 0.0539 | H@3 0.1221 | H@10 0.2454 | 128s
+Epoch  360 | loss 0.0300 | val filtered_MRR 0.1260 | raw_MRR 0.1131 | H@1 0.0634 | H@3 0.1397 | H@10 0.2612 | 132s
+Epoch  370 | loss 0.0215 | val filtered_MRR 0.1528 | raw_MRR 0.1341 | H@1 0.0890 | H@3 0.1729 | H@10 0.2881 | 135s
+  --> New best (0.1528), checkpoint saved.
+Epoch  380 | loss 0.0266 | val filtered_MRR 0.1612 | raw_MRR 0.1388 | H@1 0.0954 | H@3 0.1831 | H@10 0.2980 | 139s
+  --> New best (0.1612), checkpoint saved.
+Epoch  390 | loss 0.0513 | val filtered_MRR 0.1671 | raw_MRR 0.1437 | H@1 0.1009 | H@3 0.1941 | H@10 0.3019 | 142s
+  --> New best (0.1671), checkpoint saved.
+Epoch  400 | loss 0.3254 | val filtered_MRR 0.1627 | raw_MRR 0.1405 | H@1 0.0982 | H@3 0.1846 | H@10 0.3013 | 146s
+Epoch  410 | loss 0.0262 | val filtered_MRR 0.1494 | raw_MRR 0.1294 | H@1 0.0831 | H@3 0.1714 | H@10 0.2904 | 150s
+Epoch  420 | loss 0.0206 | val filtered_MRR 0.1680 | raw_MRR 0.1443 | H@1 0.0972 | H@3 0.1959 | H@10 0.3121 | 153s
+  --> New best (0.1680), checkpoint saved.
+Epoch  430 | loss 0.0354 | val filtered_MRR 0.1704 | raw_MRR 0.1461 | H@1 0.1038 | H@3 0.1979 | H@10 0.2971 | 157s
+  --> New best (0.1704), checkpoint saved.
+Epoch  440 | loss 0.0349 | val filtered_MRR 0.1692 | raw_MRR 0.1456 | H@1 0.0979 | H@3 0.1992 | H@10 0.3118 | 161s
+Epoch  450 | loss 0.0246 | val filtered_MRR 0.1690 | raw_MRR 0.1455 | H@1 0.1004 | H@3 0.1945 | H@10 0.3116 | 164s
+Epoch  460 | loss 0.0279 | val filtered_MRR 0.1857 | raw_MRR 0.1549 | H@1 0.1163 | H@3 0.2116 | H@10 0.3324 | 168s
+  --> New best (0.1857), checkpoint saved.
+Epoch  470 | loss 0.0204 | val filtered_MRR 0.1939 | raw_MRR 0.1586 | H@1 0.1228 | H@3 0.2248 | H@10 0.3359 | 172s
+  --> New best (0.1939), checkpoint saved.
+Epoch  480 | loss 0.0181 | val filtered_MRR 0.1834 | raw_MRR 0.1525 | H@1 0.1093 | H@3 0.2154 | H@10 0.3411 | 175s
+Epoch  490 | loss 0.0155 | val filtered_MRR 0.1944 | raw_MRR 0.1619 | H@1 0.1168 | H@3 0.2315 | H@10 0.3514 | 179s
+  --> New best (0.1944), checkpoint saved.
+Epoch  500 | loss 0.0141 | val filtered_MRR 0.2071 | raw_MRR 0.1698 | H@1 0.1345 | H@3 0.2413 | H@10 0.3574 | 183s
+  --> New best (0.2071), checkpoint saved.
+Epoch  510 | loss 0.5216 | val filtered_MRR 0.1939 | raw_MRR 0.1599 | H@1 0.1353 | H@3 0.2205 | H@10 0.3057 | 186s
+Epoch  520 | loss 0.1045 | val filtered_MRR 0.1054 | raw_MRR 0.0925 | H@1 0.0572 | H@3 0.1121 | H@10 0.2024 | 190s
+Epoch  530 | loss 0.1091 | val filtered_MRR 0.1493 | raw_MRR 0.1277 | H@1 0.0916 | H@3 0.1702 | H@10 0.2609 | 193s
+Epoch  540 | loss 0.0429 | val filtered_MRR 0.1238 | raw_MRR 0.1083 | H@1 0.0662 | H@3 0.1365 | H@10 0.2393 | 197s
+Epoch  550 | loss 0.0289 | val filtered_MRR 0.1606 | raw_MRR 0.1359 | H@1 0.0948 | H@3 0.1818 | H@10 0.2991 | 201s
+Epoch  560 | loss 0.3244 | val filtered_MRR 0.2084 | raw_MRR 0.1705 | H@1 0.1424 | H@3 0.2411 | H@10 0.3385 | 204s
+  --> New best (0.2084), checkpoint saved.
+Epoch  570 | loss 0.3127 | val filtered_MRR 0.2372 | raw_MRR 0.1870 | H@1 0.1722 | H@3 0.2713 | H@10 0.3603 | 208s
+  --> New best (0.2372), checkpoint saved.
+Epoch  580 | loss 0.0139 | val filtered_MRR 0.2536 | raw_MRR 0.1956 | H@1 0.1905 | H@3 0.2891 | H@10 0.3718 | 212s
+  --> New best (0.2536), checkpoint saved.
+Epoch  590 | loss 0.0125 | val filtered_MRR 0.2648 | raw_MRR 0.2007 | H@1 0.2035 | H@3 0.2983 | H@10 0.3754 | 215s
+  --> New best (0.2648), checkpoint saved.
+Epoch  600 | loss 0.0143 | val filtered_MRR 0.2629 | raw_MRR 0.2001 | H@1 0.2019 | H@3 0.2989 | H@10 0.3741 | 219s
+Epoch  610 | loss 0.0135 | val filtered_MRR 0.2641 | raw_MRR 0.2009 | H@1 0.2037 | H@3 0.2956 | H@10 0.3764 | 223s
+Epoch  620 | loss 0.0140 | val filtered_MRR 0.2626 | raw_MRR 0.1996 | H@1 0.2004 | H@3 0.2945 | H@10 0.3795 | 226s
+Epoch  630 | loss 0.2968 | val filtered_MRR 0.2705 | raw_MRR 0.2053 | H@1 0.2088 | H@3 0.3055 | H@10 0.3858 | 230s
+  --> New best (0.2705), checkpoint saved.
+Epoch  640 | loss 0.0128 | val filtered_MRR 0.2724 | raw_MRR 0.2049 | H@1 0.2109 | H@3 0.3083 | H@10 0.3860 | 233s
+  --> New best (0.2724), checkpoint saved.
+Epoch  650 | loss 0.0144 | val filtered_MRR 0.2715 | raw_MRR 0.2038 | H@1 0.2121 | H@3 0.3044 | H@10 0.3813 | 237s
+Epoch  660 | loss 0.0122 | val filtered_MRR 0.2771 | raw_MRR 0.2049 | H@1 0.2144 | H@3 0.3136 | H@10 0.3868 | 241s
+  --> New best (0.2771), checkpoint saved.
+Epoch  670 | loss 0.0115 | val filtered_MRR 0.2742 | raw_MRR 0.2062 | H@1 0.2109 | H@3 0.3126 | H@10 0.3858 | 244s
+Epoch  680 | loss 0.0111 | val filtered_MRR 0.2811 | raw_MRR 0.2091 | H@1 0.2187 | H@3 0.3166 | H@10 0.3896 | 248s
+  --> New best (0.2811), checkpoint saved.
+Epoch  690 | loss 0.0089 | val filtered_MRR 0.2854 | raw_MRR 0.2127 | H@1 0.2245 | H@3 0.3227 | H@10 0.3942 | 252s
+  --> New best (0.2854), checkpoint saved.
+Epoch  700 | loss 0.0218 | val filtered_MRR 0.2660 | raw_MRR 0.2014 | H@1 0.2007 | H@3 0.3032 | H@10 0.3869 | 255s
+Epoch  710 | loss 0.0132 | val filtered_MRR 0.2799 | raw_MRR 0.2091 | H@1 0.2195 | H@3 0.3143 | H@10 0.3914 | 259s
+Epoch  720 | loss 0.0285 | val filtered_MRR 0.2705 | raw_MRR 0.2034 | H@1 0.2048 | H@3 0.3118 | H@10 0.3907 | 263s
+Epoch  730 | loss 0.0118 | val filtered_MRR 0.2720 | raw_MRR 0.2041 | H@1 0.2044 | H@3 0.3143 | H@10 0.3919 | 266s
+Epoch  740 | loss 0.0137 | val filtered_MRR 0.2778 | raw_MRR 0.2077 | H@1 0.2123 | H@3 0.3181 | H@10 0.3962 | 270s
+Epoch  750 | loss 0.0120 | val filtered_MRR 0.2669 | raw_MRR 0.2015 | H@1 0.1989 | H@3 0.3052 | H@10 0.3934 | 273s
+Epoch  760 | loss 0.0116 | val filtered_MRR 0.2663 | raw_MRR 0.1992 | H@1 0.1961 | H@3 0.3105 | H@10 0.3930 | 277s
+Epoch  770 | loss 0.0099 | val filtered_MRR 0.2805 | raw_MRR 0.2082 | H@1 0.2156 | H@3 0.3212 | H@10 0.3965 | 281s
+Epoch  780 | loss 0.0096 | val filtered_MRR 0.2896 | raw_MRR 0.2127 | H@1 0.2240 | H@3 0.3324 | H@10 0.4001 | 284s
+  --> New best (0.2896), checkpoint saved.
+Epoch  790 | loss 0.2873 | val filtered_MRR 0.2946 | raw_MRR 0.2154 | H@1 0.2322 | H@3 0.3355 | H@10 0.4003 | 288s
+  --> New best (0.2946), checkpoint saved.
+Epoch  800 | loss 0.2872 | val filtered_MRR 0.2989 | raw_MRR 0.2169 | H@1 0.2380 | H@3 0.3382 | H@10 0.4041 | 292s
+  --> New best (0.2989), checkpoint saved.
+Epoch  810 | loss 0.0085 | val filtered_MRR 0.3004 | raw_MRR 0.2178 | H@1 0.2386 | H@3 0.3388 | H@10 0.4044 | 295s
+  --> New best (0.3004), checkpoint saved.
+Epoch  820 | loss 0.0120 | val filtered_MRR 0.3014 | raw_MRR 0.2188 | H@1 0.2429 | H@3 0.3387 | H@10 0.4039 | 299s
+  --> New best (0.3014), checkpoint saved.
+Epoch  830 | loss 0.0153 | val filtered_MRR 0.3042 | raw_MRR 0.2201 | H@1 0.2421 | H@3 0.3466 | H@10 0.4071 | 303s
+  --> New best (0.3042), checkpoint saved.
+Epoch  840 | loss 0.0120 | val filtered_MRR 0.2842 | raw_MRR 0.2100 | H@1 0.2170 | H@3 0.3286 | H@10 0.3986 | 306s
+Epoch  850 | loss 0.3078 | val filtered_MRR 0.2861 | raw_MRR 0.2113 | H@1 0.2220 | H@3 0.3248 | H@10 0.4006 | 310s
+Epoch  860 | loss 0.2983 | val filtered_MRR 0.2967 | raw_MRR 0.2155 | H@1 0.2360 | H@3 0.3337 | H@10 0.4029 | 313s
+Epoch  870 | loss 0.0084 | val filtered_MRR 0.3086 | raw_MRR 0.2213 | H@1 0.2497 | H@3 0.3462 | H@10 0.4095 | 317s
+  --> New best (0.3086), checkpoint saved.
+Epoch  880 | loss 0.0083 | val filtered_MRR 0.3126 | raw_MRR 0.2222 | H@1 0.2561 | H@3 0.3490 | H@10 0.4069 | 321s
+  --> New best (0.3126), checkpoint saved.
+Epoch  890 | loss 0.0074 | val filtered_MRR 0.3121 | raw_MRR 0.2221 | H@1 0.2543 | H@3 0.3494 | H@10 0.4094 | 324s
+Epoch  900 | loss 0.0075 | val filtered_MRR 0.3142 | raw_MRR 0.2242 | H@1 0.2582 | H@3 0.3502 | H@10 0.4090 | 328s
+  --> New best (0.3142), checkpoint saved.
+Epoch  910 | loss 0.0079 | val filtered_MRR 0.3138 | raw_MRR 0.2237 | H@1 0.2558 | H@3 0.3530 | H@10 0.4102 | 332s
+Epoch  920 | loss 0.0072 | val filtered_MRR 0.3142 | raw_MRR 0.2228 | H@1 0.2558 | H@3 0.3535 | H@10 0.4117 | 335s
+Epoch  930 | loss 0.0108 | val filtered_MRR 0.3106 | raw_MRR 0.2211 | H@1 0.2502 | H@3 0.3512 | H@10 0.4127 | 339s
+Epoch  940 | loss 0.0078 | val filtered_MRR 0.3006 | raw_MRR 0.2155 | H@1 0.2367 | H@3 0.3448 | H@10 0.4071 | 343s
+Epoch  950 | loss 0.2829 | val filtered_MRR 0.2946 | raw_MRR 0.2131 | H@1 0.2317 | H@3 0.3339 | H@10 0.4047 | 346s
+Epoch  960 | loss 0.0137 | val filtered_MRR 0.2982 | raw_MRR 0.2147 | H@1 0.2393 | H@3 0.3349 | H@10 0.4024 | 350s
+Epoch  970 | loss 0.2900 | val filtered_MRR 0.2913 | raw_MRR 0.2144 | H@1 0.2263 | H@3 0.3312 | H@10 0.4056 | 353s
+Epoch  980 | loss 0.0098 | val filtered_MRR 0.2900 | raw_MRR 0.2122 | H@1 0.2235 | H@3 0.3301 | H@10 0.4069 | 357s
+Epoch  990 | loss 0.0086 | val filtered_MRR 0.3034 | raw_MRR 0.2189 | H@1 0.2429 | H@3 0.3398 | H@10 0.4107 | 361s
+Epoch 1000 | loss 0.0087 | val filtered_MRR 0.3098 | raw_MRR 0.2216 | H@1 0.2505 | H@3 0.3485 | H@10 0.4095 | 364s
+Epoch 1010 | loss 0.0072 | val filtered_MRR 0.3203 | raw_MRR 0.2280 | H@1 0.2614 | H@3 0.3617 | H@10 0.4163 | 368s
+  --> New best (0.3203), checkpoint saved.
+Epoch 1020 | loss 0.0081 | val filtered_MRR 0.3244 | raw_MRR 0.2298 | H@1 0.2690 | H@3 0.3591 | H@10 0.4169 | 371s
+  --> New best (0.3244), checkpoint saved.
+Epoch 1030 | loss 0.0076 | val filtered_MRR 0.3155 | raw_MRR 0.2263 | H@1 0.2553 | H@3 0.3594 | H@10 0.4122 | 375s
+Epoch 1040 | loss 0.0071 | val filtered_MRR 0.3195 | raw_MRR 0.2296 | H@1 0.2614 | H@3 0.3586 | H@10 0.4158 | 379s
+Epoch 1050 | loss 0.2799 | val filtered_MRR 0.3272 | raw_MRR 0.2330 | H@1 0.2732 | H@3 0.3616 | H@10 0.4192 | 382s
+  --> New best (0.3272), checkpoint saved.
+Epoch 1060 | loss 0.0077 | val filtered_MRR 0.3268 | raw_MRR 0.2318 | H@1 0.2726 | H@3 0.3640 | H@10 0.4163 | 386s
+Epoch 1070 | loss 0.0080 | val filtered_MRR 0.3317 | raw_MRR 0.2350 | H@1 0.2798 | H@3 0.3642 | H@10 0.4179 | 390s
+  --> New best (0.3317), checkpoint saved.
+Epoch 1080 | loss 0.0071 | val filtered_MRR 0.3217 | raw_MRR 0.2298 | H@1 0.2640 | H@3 0.3607 | H@10 0.4168 | 393s
+Epoch 1090 | loss 0.0250 | val filtered_MRR 0.3098 | raw_MRR 0.2220 | H@1 0.2497 | H@3 0.3495 | H@10 0.4115 | 397s
+Epoch 1100 | loss 0.2920 | val filtered_MRR 0.2903 | raw_MRR 0.2106 | H@1 0.2238 | H@3 0.3326 | H@10 0.4047 | 400s
+Epoch 1110 | loss 0.0190 | val filtered_MRR 0.2854 | raw_MRR 0.2076 | H@1 0.2215 | H@3 0.3250 | H@10 0.4003 | 404s
+Epoch 1120 | loss 0.0189 | val filtered_MRR 0.2823 | raw_MRR 0.2068 | H@1 0.2202 | H@3 0.3205 | H@10 0.3902 | 408s
+Epoch 1130 | loss 0.0144 | val filtered_MRR 0.2869 | raw_MRR 0.2054 | H@1 0.2226 | H@3 0.3284 | H@10 0.3962 | 411s
+Epoch 1140 | loss 0.0204 | val filtered_MRR 0.2922 | raw_MRR 0.2110 | H@1 0.2254 | H@3 0.3390 | H@10 0.4024 | 415s
+Epoch 1150 | loss 0.2833 | val filtered_MRR 0.3110 | raw_MRR 0.2240 | H@1 0.2510 | H@3 0.3532 | H@10 0.4100 | 418s
+Epoch 1160 | loss 0.0079 | val filtered_MRR 0.3205 | raw_MRR 0.2272 | H@1 0.2655 | H@3 0.3566 | H@10 0.4102 | 422s
+Epoch 1170 | loss 0.0081 | val filtered_MRR 0.3201 | raw_MRR 0.2264 | H@1 0.2632 | H@3 0.3573 | H@10 0.4135 | 426s
+Epoch 1180 | loss 0.0078 | val filtered_MRR 0.3156 | raw_MRR 0.2251 | H@1 0.2551 | H@3 0.3574 | H@10 0.4164 | 429s
+Epoch 1190 | loss 0.0083 | val filtered_MRR 0.3289 | raw_MRR 0.2305 | H@1 0.2741 | H@3 0.3662 | H@10 0.4196 | 433s
+Epoch 1200 | loss 0.0086 | val filtered_MRR 0.3247 | raw_MRR 0.2274 | H@1 0.2714 | H@3 0.3598 | H@10 0.4140 | 436s
+Epoch 1210 | loss 0.0096 | val filtered_MRR 0.3081 | raw_MRR 0.2210 | H@1 0.2464 | H@3 0.3489 | H@10 0.4132 | 440s
+Epoch 1220 | loss 0.0088 | val filtered_MRR 0.3085 | raw_MRR 0.2221 | H@1 0.2449 | H@3 0.3490 | H@10 0.4191 | 444s
+Epoch 1230 | loss 0.2856 | val filtered_MRR 0.3121 | raw_MRR 0.2250 | H@1 0.2502 | H@3 0.3550 | H@10 0.4120 | 447s
+Epoch 1240 | loss 0.0085 | val filtered_MRR 0.3190 | raw_MRR 0.2276 | H@1 0.2587 | H@3 0.3574 | H@10 0.4189 | 451s
+Epoch 1250 | loss 0.0087 | val filtered_MRR 0.3134 | raw_MRR 0.2232 | H@1 0.2548 | H@3 0.3514 | H@10 0.4118 | 454s
+Epoch 1260 | loss 0.0085 | val filtered_MRR 0.3185 | raw_MRR 0.2256 | H@1 0.2591 | H@3 0.3591 | H@10 0.4138 | 458s
+Epoch 1270 | loss 0.0071 | val filtered_MRR 0.3296 | raw_MRR 0.2321 | H@1 0.2716 | H@3 0.3690 | H@10 0.4212 | 462s
+Epoch 1280 | loss 0.2768 | val filtered_MRR 0.3234 | raw_MRR 0.2301 | H@1 0.2638 | H@3 0.3627 | H@10 0.4221 | 465s
+Epoch 1290 | loss 0.0059 | val filtered_MRR 0.3223 | raw_MRR 0.2275 | H@1 0.2594 | H@3 0.3688 | H@10 0.4207 | 469s
+Epoch 1300 | loss 0.0102 | val filtered_MRR 0.3195 | raw_MRR 0.2263 | H@1 0.2597 | H@3 0.3593 | H@10 0.4188 | 473s
+Epoch 1310 | loss 0.2873 | val filtered_MRR 0.3185 | raw_MRR 0.2267 | H@1 0.2579 | H@3 0.3576 | H@10 0.4196 | 476s
+Epoch 1320 | loss 0.0067 | val filtered_MRR 0.3293 | raw_MRR 0.2331 | H@1 0.2739 | H@3 0.3663 | H@10 0.4211 | 480s
+Epoch 1330 | loss 0.0060 | val filtered_MRR 0.3357 | raw_MRR 0.2383 | H@1 0.2802 | H@3 0.3748 | H@10 0.4216 | 483s
+  --> New best (0.3357), checkpoint saved.
+Epoch 1340 | loss 0.0134 | val filtered_MRR 0.3242 | raw_MRR 0.2320 | H@1 0.2678 | H@3 0.3614 | H@10 0.4186 | 487s
+Epoch 1350 | loss 0.0099 | val filtered_MRR 0.3318 | raw_MRR 0.2340 | H@1 0.2777 | H@3 0.3695 | H@10 0.4206 | 491s
+Epoch 1360 | loss 0.2778 | val filtered_MRR 0.3274 | raw_MRR 0.2318 | H@1 0.2703 | H@3 0.3668 | H@10 0.4191 | 494s
+Epoch 1370 | loss 0.0154 | val filtered_MRR 0.3255 | raw_MRR 0.2287 | H@1 0.2685 | H@3 0.3670 | H@10 0.4176 | 498s
+Epoch 1380 | loss 0.0070 | val filtered_MRR 0.3382 | raw_MRR 0.2356 | H@1 0.2863 | H@3 0.3731 | H@10 0.4199 | 501s
+  --> New best (0.3382), checkpoint saved.
+Epoch 1390 | loss 0.0074 | val filtered_MRR 0.3316 | raw_MRR 0.2340 | H@1 0.2749 | H@3 0.3711 | H@10 0.4202 | 505s
+Epoch 1400 | loss 0.0074 | val filtered_MRR 0.3341 | raw_MRR 0.2320 | H@1 0.2803 | H@3 0.3731 | H@10 0.4169 | 509s/nfs/hpc/share/tinw/idealab/INV-GNN/src/baselines/RGCN/rgcn_data_augmentation/run_wordnet_lp.py:376: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict(torch.load(ckpt_path, map_location=device))
+
+Epoch 1410 | loss 0.0070 | val filtered_MRR 0.3405 | raw_MRR 0.2345 | H@1 0.2887 | H@3 0.3756 | H@10 0.4229 | 512s
+  --> New best (0.3405), checkpoint saved.
+Epoch 1420 | loss 0.0084 | val filtered_MRR 0.3401 | raw_MRR 0.2391 | H@1 0.2853 | H@3 0.3805 | H@10 0.4258 | 516s
+Epoch 1430 | loss 0.0079 | val filtered_MRR 0.3228 | raw_MRR 0.2292 | H@1 0.2660 | H@3 0.3594 | H@10 0.4179 | 520s
+Epoch 1440 | loss 0.0076 | val filtered_MRR 0.3197 | raw_MRR 0.2287 | H@1 0.2584 | H@3 0.3609 | H@10 0.4204 | 523s
+Epoch 1450 | loss 0.2829 | val filtered_MRR 0.3319 | raw_MRR 0.2337 | H@1 0.2785 | H@3 0.3650 | H@10 0.4227 | 527s
+Epoch 1460 | loss 0.0067 | val filtered_MRR 0.3321 | raw_MRR 0.2315 | H@1 0.2744 | H@3 0.3708 | H@10 0.4239 | 530s
+Epoch 1470 | loss 0.0067 | val filtered_MRR 0.3127 | raw_MRR 0.2262 | H@1 0.2442 | H@3 0.3637 | H@10 0.4224 | 534s
+Epoch 1480 | loss 0.0208 | val filtered_MRR 0.3153 | raw_MRR 0.2259 | H@1 0.2556 | H@3 0.3525 | H@10 0.4169 | 538s
+Epoch 1490 | loss 0.0155 | val filtered_MRR 0.3251 | raw_MRR 0.2326 | H@1 0.2660 | H@3 0.3668 | H@10 0.4214 | 541s
+Epoch 1500 | loss 0.2781 | val filtered_MRR 0.3167 | raw_MRR 0.2261 | H@1 0.2543 | H@3 0.3603 | H@10 0.4188 | 545s
+Epoch 1510 | loss 0.0075 | val filtered_MRR 0.3256 | raw_MRR 0.2296 | H@1 0.2681 | H@3 0.3650 | H@10 0.4199 | 548s
+Epoch 1520 | loss 0.0070 | val filtered_MRR 0.3364 | raw_MRR 0.2364 | H@1 0.2831 | H@3 0.3723 | H@10 0.4229 | 552s
+Epoch 1530 | loss 0.0062 | val filtered_MRR 0.3386 | raw_MRR 0.2366 | H@1 0.2864 | H@3 0.3700 | H@10 0.4240 | 556s
+Epoch 1540 | loss 0.2772 | val filtered_MRR 0.3461 | raw_MRR 0.2410 | H@1 0.2975 | H@3 0.3762 | H@10 0.4260 | 559s
+  --> New best (0.3461), checkpoint saved.
+Epoch 1550 | loss 0.0060 | val filtered_MRR 0.3507 | raw_MRR 0.2434 | H@1 0.3019 | H@3 0.3830 | H@10 0.4275 | 563s
+  --> New best (0.3507), checkpoint saved.
+Epoch 1560 | loss 0.0069 | val filtered_MRR 0.3485 | raw_MRR 0.2428 | H@1 0.2994 | H@3 0.3799 | H@10 0.4280 | 567s
+Epoch 1570 | loss 0.0060 | val filtered_MRR 0.3469 | raw_MRR 0.2409 | H@1 0.2991 | H@3 0.3782 | H@10 0.4250 | 570s
+Epoch 1580 | loss 0.3007 | val filtered_MRR 0.3463 | raw_MRR 0.2384 | H@1 0.2973 | H@3 0.3785 | H@10 0.4234 | 574s
+Epoch 1590 | loss 0.0083 | val filtered_MRR 0.3359 | raw_MRR 0.2356 | H@1 0.2831 | H@3 0.3695 | H@10 0.4253 | 577s
+Epoch 1600 | loss 0.0109 | val filtered_MRR 0.3339 | raw_MRR 0.2364 | H@1 0.2803 | H@3 0.3683 | H@10 0.4250 | 581s
+Epoch 1610 | loss 0.0070 | val filtered_MRR 0.3341 | raw_MRR 0.2339 | H@1 0.2820 | H@3 0.3680 | H@10 0.4227 | 585s
+Epoch 1620 | loss 0.2812 | val filtered_MRR 0.3342 | raw_MRR 0.2373 | H@1 0.2787 | H@3 0.3734 | H@10 0.4217 | 588s
+Epoch 1630 | loss 0.3352 | val filtered_MRR 0.3388 | raw_MRR 0.2397 | H@1 0.2843 | H@3 0.3756 | H@10 0.4250 | 592s
+Epoch 1640 | loss 0.7626 | val filtered_MRR 0.2304 | raw_MRR 0.1850 | H@1 0.1656 | H@3 0.2662 | H@10 0.3489 | 595s
+Epoch 1650 | loss 0.5687 | val filtered_MRR 0.0965 | raw_MRR 0.0842 | H@1 0.0600 | H@3 0.1086 | H@10 0.1666 | 599s
+Epoch 1660 | loss 0.9578 | val filtered_MRR 0.0572 | raw_MRR 0.0535 | H@1 0.0285 | H@3 0.0582 | H@10 0.1119 | 603s
+Epoch 1670 | loss 0.1290 | val filtered_MRR 0.1324 | raw_MRR 0.1136 | H@1 0.0796 | H@3 0.1454 | H@10 0.2421 | 606s
+Epoch 1680 | loss 0.4075 | val filtered_MRR 0.1371 | raw_MRR 0.1171 | H@1 0.0857 | H@3 0.1518 | H@10 0.2406 | 610s
+Epoch 1690 | loss 0.0436 | val filtered_MRR 0.1818 | raw_MRR 0.1474 | H@1 0.1221 | H@3 0.2030 | H@10 0.3060 | 614s
+Epoch 1700 | loss 0.0225 | val filtered_MRR 0.2412 | raw_MRR 0.1853 | H@1 0.1765 | H@3 0.2779 | H@10 0.3601 | 617s
+Epoch 1710 | loss 0.0197 | val filtered_MRR 0.2696 | raw_MRR 0.1999 | H@1 0.2068 | H@3 0.3085 | H@10 0.3805 | 621s
+Epoch 1720 | loss 0.0143 | val filtered_MRR 0.2874 | raw_MRR 0.2086 | H@1 0.2286 | H@3 0.3238 | H@10 0.3881 | 624s
+Epoch 1730 | loss 0.0105 | val filtered_MRR 0.3062 | raw_MRR 0.2164 | H@1 0.2540 | H@3 0.3382 | H@10 0.3944 | 628s
+Epoch 1740 | loss 0.0275 | val filtered_MRR 0.2910 | raw_MRR 0.2073 | H@1 0.2338 | H@3 0.3266 | H@10 0.3874 | 632s
+Epoch 1750 | loss 0.3277 | val filtered_MRR 0.3114 | raw_MRR 0.2201 | H@1 0.2589 | H@3 0.3484 | H@10 0.3972 | 635s
+Epoch 1760 | loss 0.0119 | val filtered_MRR 0.3079 | raw_MRR 0.2176 | H@1 0.2538 | H@3 0.3436 | H@10 0.3975 | 639s
+Epoch 1770 | loss 0.0089 | val filtered_MRR 0.3156 | raw_MRR 0.2213 | H@1 0.2622 | H@3 0.3535 | H@10 0.3998 | 642s
+Epoch 1780 | loss 0.0083 | val filtered_MRR 0.3216 | raw_MRR 0.2242 | H@1 0.2691 | H@3 0.3591 | H@10 0.4024 | 646s
+Epoch 1790 | loss 0.0078 | val filtered_MRR 0.3253 | raw_MRR 0.2254 | H@1 0.2741 | H@3 0.3616 | H@10 0.4059 | 650s
+Epoch 1800 | loss 0.0097 | val filtered_MRR 0.3251 | raw_MRR 0.2238 | H@1 0.2731 | H@3 0.3593 | H@10 0.4074 | 653s
+Epoch 1810 | loss 0.0174 | val filtered_MRR 0.3315 | raw_MRR 0.2266 | H@1 0.2825 | H@3 0.3647 | H@10 0.4107 | 657s
+Epoch 1820 | loss 0.0085 | val filtered_MRR 0.3300 | raw_MRR 0.2262 | H@1 0.2807 | H@3 0.3640 | H@10 0.4069 | 660s
+Epoch 1830 | loss 0.0087 | val filtered_MRR 0.3302 | raw_MRR 0.2264 | H@1 0.2803 | H@3 0.3645 | H@10 0.4087 | 664s
+Epoch 1840 | loss 0.2904 | val filtered_MRR 0.3356 | raw_MRR 0.2282 | H@1 0.2881 | H@3 0.3685 | H@10 0.4095 | 668s
+Epoch 1850 | loss 0.0066 | val filtered_MRR 0.3368 | raw_MRR 0.2280 | H@1 0.2896 | H@3 0.3691 | H@10 0.4097 | 671s
+Early stopping at epoch 1850 (patience=300)
+
+Loaded best checkpoint: best_model_R2087_seed_20241017_variant_no_changes.pt
+
+  Epochs trained: 1850  Run time: 671.3s
+  Final val:  filtered_MRR=0.3507  raw_MRR=0.2434  H@1=0.3019  H@3=0.3830  H@10=0.4275  Acc=0.9882  Prec=0.9551  Rec=0.7178  F1=0.7931
+  Final test: filtered_MRR=0.3467  raw_MRR=0.2426  H@1=0.2980  H@3=0.3803  H@10=0.4247  Acc=0.9884  Prec=0.9611  Rec=0.7183  F1=0.7947
+
+============================================================
+  Variant: no_changes | Seed: 20251017
+============================================================
+WordNetLPDataset(variant=no_changes, num_entities=40943, num_relations=2087, train=86835, val=3034, test=3134, format=wordnet_lp_four_variants_v1)
+Epoch   10 | loss 0.6931 | val filtered_MRR 0.0074 | raw_MRR 0.0074 | H@1 0.0021 | H@3 0.0071 | H@10 0.0166 | 4s
+  --> New best (0.0074), checkpoint saved.
+Epoch   20 | loss 0.6301 | val filtered_MRR 0.0061 | raw_MRR 0.0060 | H@1 0.0021 | H@3 0.0051 | H@10 0.0135 | 7s
+Epoch   30 | loss 0.5704 | val filtered_MRR 0.0018 | raw_MRR 0.0018 | H@1 0.0007 | H@3 0.0013 | H@10 0.0023 | 11s
+Epoch   40 | loss 0.4857 | val filtered_MRR 0.0019 | raw_MRR 0.0019 | H@1 0.0002 | H@3 0.0010 | H@10 0.0030 | 14s
+Epoch   50 | loss 0.5931 | val filtered_MRR 0.0027 | raw_MRR 0.0027 | H@1 0.0005 | H@3 0.0016 | H@10 0.0040 | 18s
+Epoch   60 | loss 0.3586 | val filtered_MRR 0.0054 | raw_MRR 0.0054 | H@1 0.0013 | H@3 0.0043 | H@10 0.0097 | 22s
+Epoch   70 | loss 0.2654 | val filtered_MRR 0.0057 | raw_MRR 0.0057 | H@1 0.0008 | H@3 0.0035 | H@10 0.0107 | 25s
+Epoch   80 | loss 0.2081 | val filtered_MRR 0.0068 | raw_MRR 0.0068 | H@1 0.0015 | H@3 0.0036 | H@10 0.0124 | 29s
+Epoch   90 | loss 0.7485 | val filtered_MRR 0.0095 | raw_MRR 0.0094 | H@1 0.0021 | H@3 0.0058 | H@10 0.0180 | 32s
+  --> New best (0.0095), checkpoint saved.
+Epoch  100 | loss 0.6483 | val filtered_MRR 0.0090 | raw_MRR 0.0090 | H@1 0.0013 | H@3 0.0063 | H@10 0.0199 | 36s
+Epoch  110 | loss 0.2553 | val filtered_MRR 0.0106 | raw_MRR 0.0105 | H@1 0.0016 | H@3 0.0082 | H@10 0.0224 | 40s
+  --> New best (0.0106), checkpoint saved.
+Epoch  120 | loss 0.1745 | val filtered_MRR 0.0131 | raw_MRR 0.0131 | H@1 0.0038 | H@3 0.0084 | H@10 0.0244 | 43s
+  --> New best (0.0131), checkpoint saved.
+Epoch  130 | loss 0.1385 | val filtered_MRR 0.0161 | raw_MRR 0.0160 | H@1 0.0040 | H@3 0.0117 | H@10 0.0323 | 47s
+  --> New best (0.0161), checkpoint saved.
+Epoch  140 | loss 0.1496 | val filtered_MRR 0.0153 | raw_MRR 0.0151 | H@1 0.0040 | H@3 0.0092 | H@10 0.0315 | 51s
+Epoch  150 | loss 0.1444 | val filtered_MRR 0.0175 | raw_MRR 0.0172 | H@1 0.0044 | H@3 0.0132 | H@10 0.0366 | 54s
+  --> New best (0.0175), checkpoint saved.
+Epoch  160 | loss 0.1111 | val filtered_MRR 0.0246 | raw_MRR 0.0242 | H@1 0.0081 | H@3 0.0211 | H@10 0.0496 | 58s
+  --> New best (0.0246), checkpoint saved.
+Epoch  170 | loss 0.1470 | val filtered_MRR 0.0247 | raw_MRR 0.0241 | H@1 0.0074 | H@3 0.0181 | H@10 0.0513 | 62s
+  --> New best (0.0247), checkpoint saved.
+Epoch  180 | loss 0.4382 | val filtered_MRR 0.0354 | raw_MRR 0.0343 | H@1 0.0129 | H@3 0.0315 | H@10 0.0735 | 65s
+  --> New best (0.0354), checkpoint saved.
+Epoch  190 | loss 0.0801 | val filtered_MRR 0.0351 | raw_MRR 0.0344 | H@1 0.0107 | H@3 0.0292 | H@10 0.0793 | 69s
+Epoch  200 | loss 0.0670 | val filtered_MRR 0.0435 | raw_MRR 0.0423 | H@1 0.0145 | H@3 0.0379 | H@10 0.0969 | 73s
+  --> New best (0.0435), checkpoint saved.
+Epoch  210 | loss 0.0768 | val filtered_MRR 0.0543 | raw_MRR 0.0524 | H@1 0.0216 | H@3 0.0554 | H@10 0.1142 | 76s
+  --> New best (0.0543), checkpoint saved.
+Epoch  220 | loss 0.0586 | val filtered_MRR 0.0511 | raw_MRR 0.0497 | H@1 0.0191 | H@3 0.0458 | H@10 0.1154 | 80s
+Epoch  230 | loss 0.0479 | val filtered_MRR 0.0669 | raw_MRR 0.0644 | H@1 0.0283 | H@3 0.0667 | H@10 0.1455 | 84s
+  --> New best (0.0669), checkpoint saved.
+Epoch  240 | loss 0.0425 | val filtered_MRR 0.0724 | raw_MRR 0.0690 | H@1 0.0310 | H@3 0.0755 | H@10 0.1587 | 87s
+  --> New best (0.0724), checkpoint saved.
+Epoch  250 | loss 0.0695 | val filtered_MRR 0.0810 | raw_MRR 0.0756 | H@1 0.0361 | H@3 0.0900 | H@10 0.1740 | 91s
+  --> New best (0.0810), checkpoint saved.
+Epoch  260 | loss 0.6581 | val filtered_MRR 0.0632 | raw_MRR 0.0591 | H@1 0.0303 | H@3 0.0626 | H@10 0.1322 | 95s
+Epoch  270 | loss 0.5821 | val filtered_MRR 0.0233 | raw_MRR 0.0229 | H@1 0.0086 | H@3 0.0181 | H@10 0.0465 | 98s
+Epoch  280 | loss 0.1443 | val filtered_MRR 0.0258 | raw_MRR 0.0251 | H@1 0.0087 | H@3 0.0219 | H@10 0.0534 | 102s
+Epoch  290 | loss 0.1157 | val filtered_MRR 0.0352 | raw_MRR 0.0343 | H@1 0.0109 | H@3 0.0339 | H@10 0.0784 | 106s
+Epoch  300 | loss 0.0813 | val filtered_MRR 0.0567 | raw_MRR 0.0546 | H@1 0.0254 | H@3 0.0555 | H@10 0.1177 | 109s
+Epoch  310 | loss 0.0579 | val filtered_MRR 0.0807 | raw_MRR 0.0768 | H@1 0.0384 | H@3 0.0855 | H@10 0.1673 | 113s
+Epoch  320 | loss 0.0406 | val filtered_MRR 0.0963 | raw_MRR 0.0900 | H@1 0.0473 | H@3 0.1053 | H@10 0.2007 | 116s
+  --> New best (0.0963), checkpoint saved.
+Epoch  330 | loss 0.4480 | val filtered_MRR 0.0983 | raw_MRR 0.0900 | H@1 0.0489 | H@3 0.1078 | H@10 0.1996 | 120s
+  --> New best (0.0983), checkpoint saved.
+Epoch  340 | loss 0.0351 | val filtered_MRR 0.1059 | raw_MRR 0.0971 | H@1 0.0521 | H@3 0.1177 | H@10 0.2177 | 124s
+  --> New best (0.1059), checkpoint saved.
+Epoch  350 | loss 0.0332 | val filtered_MRR 0.1169 | raw_MRR 0.1055 | H@1 0.0606 | H@3 0.1300 | H@10 0.2345 | 127s
+  --> New best (0.1169), checkpoint saved.
+Epoch  360 | loss 0.0292 | val filtered_MRR 0.1298 | raw_MRR 0.1152 | H@1 0.0707 | H@3 0.1458 | H@10 0.2536 | 131s
+  --> New best (0.1298), checkpoint saved.
+Epoch  370 | loss 0.0317 | val filtered_MRR 0.1274 | raw_MRR 0.1137 | H@1 0.0679 | H@3 0.1435 | H@10 0.2482 | 135s
+Epoch  380 | loss 0.0290 | val filtered_MRR 0.1319 | raw_MRR 0.1161 | H@1 0.0702 | H@3 0.1518 | H@10 0.2571 | 138s
+  --> New best (0.1319), checkpoint saved.
+Epoch  390 | loss 0.0274 | val filtered_MRR 0.1379 | raw_MRR 0.1210 | H@1 0.0747 | H@3 0.1589 | H@10 0.2708 | 142s
+  --> New best (0.1379), checkpoint saved.
+Epoch  400 | loss 0.0258 | val filtered_MRR 0.1445 | raw_MRR 0.1257 | H@1 0.0798 | H@3 0.1671 | H@10 0.2775 | 146s
+  --> New best (0.1445), checkpoint saved.
+Epoch  410 | loss 0.0221 | val filtered_MRR 0.1431 | raw_MRR 0.1252 | H@1 0.0758 | H@3 0.1668 | H@10 0.2866 | 149s
+Epoch  420 | loss 0.3431 | val filtered_MRR 0.1505 | raw_MRR 0.1305 | H@1 0.0840 | H@3 0.1747 | H@10 0.2861 | 153s
+  --> New best (0.1505), checkpoint saved.
+Epoch  430 | loss 0.3323 | val filtered_MRR 0.1595 | raw_MRR 0.1362 | H@1 0.0898 | H@3 0.1870 | H@10 0.3009 | 157s
+  --> New best (0.1595), checkpoint saved.
+Epoch  440 | loss 0.0234 | val filtered_MRR 0.1643 | raw_MRR 0.1378 | H@1 0.0994 | H@3 0.1887 | H@10 0.2986 | 160s
+  --> New best (0.1643), checkpoint saved.
+Epoch  450 | loss 0.0210 | val filtered_MRR 0.1716 | raw_MRR 0.1457 | H@1 0.1023 | H@3 0.1983 | H@10 0.3087 | 164s
+  --> New best (0.1716), checkpoint saved.
+Epoch  460 | loss 0.3341 | val filtered_MRR 0.1759 | raw_MRR 0.1474 | H@1 0.1083 | H@3 0.2085 | H@10 0.3100 | 168s
+  --> New best (0.1759), checkpoint saved.
+Epoch  470 | loss 0.0259 | val filtered_MRR 0.1478 | raw_MRR 0.1268 | H@1 0.0794 | H@3 0.1730 | H@10 0.2968 | 171s
+Epoch  480 | loss 0.0315 | val filtered_MRR 0.1602 | raw_MRR 0.1382 | H@1 0.0890 | H@3 0.1920 | H@10 0.3034 | 175s
+Epoch  490 | loss 0.0452 | val filtered_MRR 0.1335 | raw_MRR 0.1174 | H@1 0.0679 | H@3 0.1562 | H@10 0.2718 | 179s
+Epoch  500 | loss 0.0248 | val filtered_MRR 0.1483 | raw_MRR 0.1317 | H@1 0.0803 | H@3 0.1706 | H@10 0.2932 | 182s
+Epoch  510 | loss 0.0215 | val filtered_MRR 0.1667 | raw_MRR 0.1421 | H@1 0.0943 | H@3 0.1981 | H@10 0.3166 | 186s
+Epoch  520 | loss 0.0196 | val filtered_MRR 0.1987 | raw_MRR 0.1654 | H@1 0.1289 | H@3 0.2330 | H@10 0.3385 | 189s
+  --> New best (0.1987), checkpoint saved.
+Epoch  530 | loss 0.0164 | val filtered_MRR 0.2142 | raw_MRR 0.1720 | H@1 0.1426 | H@3 0.2512 | H@10 0.3490 | 193s
+  --> New best (0.2142), checkpoint saved.
+Epoch  540 | loss 0.0170 | val filtered_MRR 0.2235 | raw_MRR 0.1779 | H@1 0.1531 | H@3 0.2607 | H@10 0.3594 | 197s
+  --> New best (0.2235), checkpoint saved.
+Epoch  550 | loss 0.0155 | val filtered_MRR 0.2246 | raw_MRR 0.1771 | H@1 0.1521 | H@3 0.2629 | H@10 0.3626 | 201s
+  --> New best (0.2246), checkpoint saved.
+Epoch  560 | loss 0.0167 | val filtered_MRR 0.2357 | raw_MRR 0.1834 | H@1 0.1663 | H@3 0.2757 | H@10 0.3667 | 204s
+  --> New best (0.2357), checkpoint saved.
+Epoch  570 | loss 0.0154 | val filtered_MRR 0.2337 | raw_MRR 0.1842 | H@1 0.1641 | H@3 0.2727 | H@10 0.3622 | 208s
+Epoch  580 | loss 0.0156 | val filtered_MRR 0.2303 | raw_MRR 0.1810 | H@1 0.1579 | H@3 0.2734 | H@10 0.3635 | 211s
+Epoch  590 | loss 0.0165 | val filtered_MRR 0.2319 | raw_MRR 0.1820 | H@1 0.1589 | H@3 0.2749 | H@10 0.3668 | 215s
+Epoch  600 | loss 0.0150 | val filtered_MRR 0.2337 | raw_MRR 0.1824 | H@1 0.1613 | H@3 0.2762 | H@10 0.3724 | 219s
+Epoch  610 | loss 0.3066 | val filtered_MRR 0.2338 | raw_MRR 0.1841 | H@1 0.1617 | H@3 0.2759 | H@10 0.3695 | 222s
+Epoch  620 | loss 0.0128 | val filtered_MRR 0.2419 | raw_MRR 0.1880 | H@1 0.1694 | H@3 0.2861 | H@10 0.3743 | 226s
+  --> New best (0.2419), checkpoint saved.
+Epoch  630 | loss 0.3084 | val filtered_MRR 0.2441 | raw_MRR 0.1895 | H@1 0.1735 | H@3 0.2866 | H@10 0.3746 | 230s
+  --> New best (0.2441), checkpoint saved.
+Epoch  640 | loss 0.0136 | val filtered_MRR 0.2395 | raw_MRR 0.1864 | H@1 0.1679 | H@3 0.2830 | H@10 0.3756 | 233s
+Epoch  650 | loss 0.0193 | val filtered_MRR 0.2312 | raw_MRR 0.1819 | H@1 0.1607 | H@3 0.2722 | H@10 0.3665 | 237s
+Epoch  660 | loss 0.0252 | val filtered_MRR 0.2173 | raw_MRR 0.1749 | H@1 0.1450 | H@3 0.2581 | H@10 0.3581 | 240s
+Epoch  670 | loss 0.3161 | val filtered_MRR 0.2069 | raw_MRR 0.1683 | H@1 0.1340 | H@3 0.2454 | H@10 0.3481 | 244s
+Epoch  680 | loss 0.0172 | val filtered_MRR 0.2214 | raw_MRR 0.1778 | H@1 0.1480 | H@3 0.2622 | H@10 0.3655 | 248s
+Epoch  690 | loss 0.0159 | val filtered_MRR 0.2190 | raw_MRR 0.1747 | H@1 0.1442 | H@3 0.2579 | H@10 0.3644 | 251s
+Epoch  700 | loss 0.0132 | val filtered_MRR 0.2465 | raw_MRR 0.1910 | H@1 0.1734 | H@3 0.2922 | H@10 0.3785 | 255s
+  --> New best (0.2465), checkpoint saved.
+Epoch  710 | loss 0.0112 | val filtered_MRR 0.2639 | raw_MRR 0.2019 | H@1 0.1958 | H@3 0.3075 | H@10 0.3876 | 259s
+  --> New best (0.2639), checkpoint saved.
+Epoch  720 | loss 0.2964 | val filtered_MRR 0.2675 | raw_MRR 0.2031 | H@1 0.1981 | H@3 0.3128 | H@10 0.3916 | 262s
+  --> New best (0.2675), checkpoint saved.
+Epoch  730 | loss 0.0110 | val filtered_MRR 0.2732 | raw_MRR 0.2053 | H@1 0.2042 | H@3 0.3210 | H@10 0.3954 | 266s
+  --> New best (0.2732), checkpoint saved.
+Epoch  740 | loss 0.0117 | val filtered_MRR 0.2775 | raw_MRR 0.2075 | H@1 0.2103 | H@3 0.3194 | H@10 0.3934 | 270s
+  --> New best (0.2775), checkpoint saved.
+Epoch  750 | loss 0.0141 | val filtered_MRR 0.2754 | raw_MRR 0.2039 | H@1 0.2086 | H@3 0.3166 | H@10 0.3934 | 273s
+Epoch  760 | loss 0.0104 | val filtered_MRR 0.2676 | raw_MRR 0.1996 | H@1 0.1958 | H@3 0.3166 | H@10 0.3963 | 277s
+Epoch  770 | loss 0.0110 | val filtered_MRR 0.2729 | raw_MRR 0.2032 | H@1 0.2040 | H@3 0.3179 | H@10 0.3944 | 281s
+Epoch  780 | loss 0.0105 | val filtered_MRR 0.2763 | raw_MRR 0.2050 | H@1 0.2080 | H@3 0.3230 | H@10 0.3927 | 284s
+Epoch  790 | loss 0.0089 | val filtered_MRR 0.2719 | raw_MRR 0.2046 | H@1 0.2014 | H@3 0.3172 | H@10 0.3963 | 288s
+Epoch  800 | loss 0.0094 | val filtered_MRR 0.2785 | raw_MRR 0.2065 | H@1 0.2093 | H@3 0.3253 | H@10 0.3982 | 291s
+  --> New best (0.2785), checkpoint saved.
+Epoch  810 | loss 0.0085 | val filtered_MRR 0.2829 | raw_MRR 0.2102 | H@1 0.2149 | H@3 0.3291 | H@10 0.4010 | 295s
+  --> New best (0.2829), checkpoint saved.
+Epoch  820 | loss 0.0091 | val filtered_MRR 0.2873 | raw_MRR 0.2120 | H@1 0.2200 | H@3 0.3345 | H@10 0.4008 | 299s
+  --> New best (0.2873), checkpoint saved.
+Epoch  830 | loss 0.1800 | val filtered_MRR 0.2629 | raw_MRR 0.1979 | H@1 0.2022 | H@3 0.3029 | H@10 0.3685 | 302s
+Epoch  840 | loss 0.1232 | val filtered_MRR 0.1369 | raw_MRR 0.1151 | H@1 0.0806 | H@3 0.1564 | H@10 0.2507 | 306s
+Epoch  850 | loss 0.0577 | val filtered_MRR 0.1049 | raw_MRR 0.0923 | H@1 0.0555 | H@3 0.1149 | H@10 0.2073 | 310s
+Epoch  860 | loss 0.0392 | val filtered_MRR 0.1291 | raw_MRR 0.1101 | H@1 0.0722 | H@3 0.1455 | H@10 0.2485 | 313s
+Epoch  870 | loss 0.0240 | val filtered_MRR 0.2025 | raw_MRR 0.1635 | H@1 0.1365 | H@3 0.2365 | H@10 0.3311 | 317s
+Epoch  880 | loss 0.0172 | val filtered_MRR 0.2188 | raw_MRR 0.1748 | H@1 0.1521 | H@3 0.2520 | H@10 0.3507 | 320s
+Epoch  890 | loss 0.0145 | val filtered_MRR 0.2427 | raw_MRR 0.1877 | H@1 0.1744 | H@3 0.2841 | H@10 0.3678 | 324s
+Epoch  900 | loss 0.0162 | val filtered_MRR 0.2510 | raw_MRR 0.1920 | H@1 0.1824 | H@3 0.2940 | H@10 0.3729 | 328s
+Epoch  910 | loss 0.0106 | val filtered_MRR 0.2679 | raw_MRR 0.2001 | H@1 0.2032 | H@3 0.3098 | H@10 0.3832 | 331s
+Epoch  920 | loss 0.0144 | val filtered_MRR 0.2687 | raw_MRR 0.2010 | H@1 0.2009 | H@3 0.3130 | H@10 0.3868 | 335s
+Epoch  930 | loss 0.0135 | val filtered_MRR 0.2741 | raw_MRR 0.2038 | H@1 0.2073 | H@3 0.3181 | H@10 0.3929 | 338s
+Epoch  940 | loss 0.0093 | val filtered_MRR 0.2834 | raw_MRR 0.2088 | H@1 0.2189 | H@3 0.3265 | H@10 0.3927 | 342s
+Epoch  950 | loss 0.3003 | val filtered_MRR 0.2836 | raw_MRR 0.2087 | H@1 0.2179 | H@3 0.3268 | H@10 0.3950 | 346s
+Epoch  960 | loss 0.0097 | val filtered_MRR 0.2938 | raw_MRR 0.2128 | H@1 0.2307 | H@3 0.3362 | H@10 0.4000 | 349s
+  --> New best (0.2938), checkpoint saved.
+Epoch  970 | loss 0.0103 | val filtered_MRR 0.2910 | raw_MRR 0.2123 | H@1 0.2268 | H@3 0.3368 | H@10 0.4003 | 353s
+Epoch  980 | loss 0.0100 | val filtered_MRR 0.2905 | raw_MRR 0.2109 | H@1 0.2273 | H@3 0.3332 | H@10 0.3985 | 357s
+Epoch  990 | loss 0.0110 | val filtered_MRR 0.2964 | raw_MRR 0.2136 | H@1 0.2334 | H@3 0.3406 | H@10 0.4018 | 360s
+  --> New best (0.2964), checkpoint saved.
+Epoch 1000 | loss 0.2876 | val filtered_MRR 0.3018 | raw_MRR 0.2168 | H@1 0.2418 | H@3 0.3428 | H@10 0.4043 | 364s
+  --> New best (0.3018), checkpoint saved.
+Epoch 1010 | loss 0.0083 | val filtered_MRR 0.3012 | raw_MRR 0.2164 | H@1 0.2385 | H@3 0.3443 | H@10 0.4047 | 367s
+Epoch 1020 | loss 0.0085 | val filtered_MRR 0.3094 | raw_MRR 0.2212 | H@1 0.2492 | H@3 0.3522 | H@10 0.4056 | 371s
+  --> New best (0.3094), checkpoint saved.
+Epoch 1030 | loss 0.2890 | val filtered_MRR 0.3085 | raw_MRR 0.2201 | H@1 0.2482 | H@3 0.3509 | H@10 0.4077 | 375s
+Epoch 1040 | loss 0.0084 | val filtered_MRR 0.3081 | raw_MRR 0.2211 | H@1 0.2467 | H@3 0.3525 | H@10 0.4066 | 378s
+Epoch 1050 | loss 0.0077 | val filtered_MRR 0.3112 | raw_MRR 0.2227 | H@1 0.2513 | H@3 0.3548 | H@10 0.4087 | 382s
+  --> New best (0.3112), checkpoint saved.
+Epoch 1060 | loss 0.0096 | val filtered_MRR 0.3017 | raw_MRR 0.2179 | H@1 0.2378 | H@3 0.3482 | H@10 0.4084 | 386s
+Epoch 1070 | loss 0.0091 | val filtered_MRR 0.3093 | raw_MRR 0.2205 | H@1 0.2480 | H@3 0.3563 | H@10 0.4056 | 389s
+Epoch 1080 | loss 0.0108 | val filtered_MRR 0.3068 | raw_MRR 0.2214 | H@1 0.2446 | H@3 0.3512 | H@10 0.4075 | 393s
+Epoch 1090 | loss 0.0089 | val filtered_MRR 0.3081 | raw_MRR 0.2207 | H@1 0.2462 | H@3 0.3537 | H@10 0.4084 | 396s
+Epoch 1100 | loss 0.0121 | val filtered_MRR 0.3020 | raw_MRR 0.2173 | H@1 0.2376 | H@3 0.3476 | H@10 0.4079 | 400s
+Epoch 1110 | loss 0.0082 | val filtered_MRR 0.3057 | raw_MRR 0.2207 | H@1 0.2419 | H@3 0.3522 | H@10 0.4089 | 404s
+Epoch 1120 | loss 0.2822 | val filtered_MRR 0.2940 | raw_MRR 0.2121 | H@1 0.2284 | H@3 0.3410 | H@10 0.4049 | 407s
+Epoch 1130 | loss 0.0108 | val filtered_MRR 0.3097 | raw_MRR 0.2232 | H@1 0.2490 | H@3 0.3538 | H@10 0.4132 | 411s
+Epoch 1140 | loss 0.2959 | val filtered_MRR 0.3032 | raw_MRR 0.2205 | H@1 0.2442 | H@3 0.3405 | H@10 0.4059 | 414s
+Epoch 1150 | loss 0.3006 | val filtered_MRR 0.3056 | raw_MRR 0.2222 | H@1 0.2451 | H@3 0.3453 | H@10 0.4100 | 418s
+Epoch 1160 | loss 0.0694 | val filtered_MRR 0.2787 | raw_MRR 0.2061 | H@1 0.2149 | H@3 0.3166 | H@10 0.3967 | 422s
+Epoch 1170 | loss 0.0171 | val filtered_MRR 0.2701 | raw_MRR 0.2014 | H@1 0.1989 | H@3 0.3187 | H@10 0.3975 | 425s
+Epoch 1180 | loss 0.0125 | val filtered_MRR 0.2442 | raw_MRR 0.1871 | H@1 0.1707 | H@3 0.2894 | H@10 0.3789 | 429s
+Epoch 1190 | loss 0.0101 | val filtered_MRR 0.2807 | raw_MRR 0.2093 | H@1 0.2116 | H@3 0.3268 | H@10 0.4001 | 433s
+Epoch 1200 | loss 0.0098 | val filtered_MRR 0.2994 | raw_MRR 0.2198 | H@1 0.2343 | H@3 0.3441 | H@10 0.4066 | 436s
+Epoch 1210 | loss 0.2867 | val filtered_MRR 0.3080 | raw_MRR 0.2240 | H@1 0.2462 | H@3 0.3517 | H@10 0.4110 | 440s
+Epoch 1220 | loss 0.2884 | val filtered_MRR 0.3221 | raw_MRR 0.2297 | H@1 0.2662 | H@3 0.3612 | H@10 0.4127 | 443s
+  --> New best (0.3221), checkpoint saved.
+Epoch 1230 | loss 0.0069 | val filtered_MRR 0.3151 | raw_MRR 0.2266 | H@1 0.2553 | H@3 0.3563 | H@10 0.4143 | 447s
+Epoch 1240 | loss 0.0059 | val filtered_MRR 0.3243 | raw_MRR 0.2307 | H@1 0.2681 | H@3 0.3639 | H@10 0.4128 | 451s
+  --> New best (0.3243), checkpoint saved.
+Epoch 1250 | loss 0.0068 | val filtered_MRR 0.3252 | raw_MRR 0.2303 | H@1 0.2711 | H@3 0.3598 | H@10 0.4113 | 454s
+  --> New best (0.3252), checkpoint saved.
+Epoch 1260 | loss 0.0060 | val filtered_MRR 0.3321 | raw_MRR 0.2330 | H@1 0.2816 | H@3 0.3680 | H@10 0.4130 | 458s
+  --> New best (0.3321), checkpoint saved.
+Epoch 1270 | loss 0.2883 | val filtered_MRR 0.3345 | raw_MRR 0.2328 | H@1 0.2835 | H@3 0.3688 | H@10 0.4146 | 462s
+  --> New best (0.3345), checkpoint saved.
+Epoch 1280 | loss 0.0065 | val filtered_MRR 0.3322 | raw_MRR 0.2328 | H@1 0.2787 | H@3 0.3695 | H@10 0.4186 | 465s
+Epoch 1290 | loss 0.0063 | val filtered_MRR 0.3305 | raw_MRR 0.2315 | H@1 0.2762 | H@3 0.3678 | H@10 0.4166 | 469s
+Epoch 1300 | loss 0.0059 | val filtered_MRR 0.3304 | raw_MRR 0.2314 | H@1 0.2750 | H@3 0.3703 | H@10 0.4178 | 473s
+Epoch 1310 | loss 0.0067 | val filtered_MRR 0.3299 | raw_MRR 0.2314 | H@1 0.2754 | H@3 0.3682 | H@10 0.4176 | 476s
+Epoch 1320 | loss 0.0059 | val filtered_MRR 0.3380 | raw_MRR 0.2334 | H@1 0.2869 | H@3 0.3743 | H@10 0.4211 | 480s
+  --> New best (0.3380), checkpoint saved.
+Epoch 1330 | loss 0.0062 | val filtered_MRR 0.3311 | raw_MRR 0.2318 | H@1 0.2769 | H@3 0.3688 | H@10 0.4192 | 483s
+Epoch 1340 | loss 0.0058 | val filtered_MRR 0.3340 | raw_MRR 0.2314 | H@1 0.2798 | H@3 0.3721 | H@10 0.4197 | 487s
+Epoch 1350 | loss 0.0061 | val filtered_MRR 0.3350 | raw_MRR 0.2323 | H@1 0.2813 | H@3 0.3728 | H@10 0.4204 | 491s
+Epoch 1360 | loss 0.0054 | val filtered_MRR 0.3376 | raw_MRR 0.2342 | H@1 0.2854 | H@3 0.3734 | H@10 0.4192 | 494s
+Epoch 1370 | loss 0.0058 | val filtered_MRR 0.3361 | raw_MRR 0.2338 | H@1 0.2820 | H@3 0.3743 | H@10 0.4216 | 498s
+Epoch 1380 | loss 0.0060 | val filtered_MRR 0.3323 | raw_MRR 0.2315 | H@1 0.2760 | H@3 0.3734 | H@10 0.4192 | 502s
+Epoch 1390 | loss 0.0055 | val filtered_MRR 0.3336 | raw_MRR 0.2309 | H@1 0.2787 | H@3 0.3733 | H@10 0.4216 | 505s
+Epoch 1400 | loss 0.0061 | val filtered_MRR 0.3358 | raw_MRR 0.2320 | H@1 0.2802 | H@3 0.3769 | H@10 0.4221 | 509s
+Epoch 1410 | loss 0.2768 | val filtered_MRR 0.3351 | raw_MRR 0.2317 | H@1 0.2808 | H@3 0.3731 | H@10 0.4192 | 512s
+Epoch 1420 | loss 0.0070 | val filtered_MRR 0.3389 | raw_MRR 0.2337 | H@1 0.2851 | H@3 0.3771 | H@10 0.4234 | 516s
+  --> New best (0.3389), checkpoint saved.
+Epoch 1430 | loss 0.0046 | val filtered_MRR 0.3383 | raw_MRR 0.2336 | H@1 0.2868 | H@3 0.3728 | H@10 0.4202 | 520s
+Epoch 1440 | loss 0.0081 | val filtered_MRR 0.3329 | raw_MRR 0.2319 | H@1 0.2797 | H@3 0.3688 | H@10 0.4206 | 523s
+Epoch 1450 | loss 0.0076 | val filtered_MRR 0.3401 | raw_MRR 0.2353 | H@1 0.2891 | H@3 0.3741 | H@10 0.4224 | 527s
+  --> New best (0.3401), checkpoint saved.
+Epoch 1460 | loss 0.0075 | val filtered_MRR 0.3354 | raw_MRR 0.2313 | H@1 0.2807 | H@3 0.3751 | H@10 0.4196 | 531s
+Epoch 1470 | loss 0.0077 | val filtered_MRR 0.3275 | raw_MRR 0.2288 | H@1 0.2690 | H@3 0.3696 | H@10 0.4194 | 534s
+Epoch 1480 | loss 0.0094 | val filtered_MRR 0.3244 | raw_MRR 0.2288 | H@1 0.2648 | H@3 0.3657 | H@10 0.4219 | 538s
+Epoch 1490 | loss 0.0306 | val filtered_MRR 0.3098 | raw_MRR 0.2196 | H@1 0.2464 | H@3 0.3525 | H@10 0.4155 | 541s
+Epoch 1500 | loss 0.0108 | val filtered_MRR 0.2975 | raw_MRR 0.2151 | H@1 0.2314 | H@3 0.3457 | H@10 0.4057 | 545s
+Epoch 1510 | loss 0.3202 | val filtered_MRR 0.3027 | raw_MRR 0.2169 | H@1 0.2398 | H@3 0.3446 | H@10 0.4061 | 549s
+Epoch 1520 | loss 0.0175 | val filtered_MRR 0.3150 | raw_MRR 0.2245 | H@1 0.2553 | H@3 0.3574 | H@10 0.4115 | 552s
+Epoch 1530 | loss 0.0105 | val filtered_MRR 0.3068 | raw_MRR 0.2199 | H@1 0.2411 | H@3 0.3527 | H@10 0.4135 | 556s
+Epoch 1540 | loss 0.0078 | val filtered_MRR 0.3103 | raw_MRR 0.2228 | H@1 0.2465 | H@3 0.3545 | H@10 0.4128 | 559s
+Epoch 1550 | loss 0.0058 | val filtered_MRR 0.3220 | raw_MRR 0.2273 | H@1 0.2619 | H@3 0.3652 | H@10 0.4155 | 563s
+Epoch 1560 | loss 0.0413 | val filtered_MRR 0.3239 | raw_MRR 0.2295 | H@1 0.2668 | H@3 0.3642 | H@10 0.4181 | 567s
+Epoch 1570 | loss 0.0491 | val filtered_MRR 0.2864 | raw_MRR 0.2131 | H@1 0.2193 | H@3 0.3334 | H@10 0.3975 | 570s
+Epoch 1580 | loss 0.0151 | val filtered_MRR 0.2696 | raw_MRR 0.2031 | H@1 0.1983 | H@3 0.3167 | H@10 0.3939 | 574s
+Epoch 1590 | loss 0.0115 | val filtered_MRR 0.2782 | raw_MRR 0.2103 | H@1 0.2093 | H@3 0.3247 | H@10 0.3955 | 577s
+Epoch 1600 | loss 0.0091 | val filtered_MRR 0.2924 | raw_MRR 0.2136 | H@1 0.2256 | H@3 0.3395 | H@10 0.4026 | 581s
+Epoch 1610 | loss 0.0074 | val filtered_MRR 0.3101 | raw_MRR 0.2230 | H@1 0.2472 | H@3 0.3553 | H@10 0.4092 | 585s
+Epoch 1620 | loss 0.0081 | val filtered_MRR 0.3290 | raw_MRR 0.2316 | H@1 0.2741 | H@3 0.3683 | H@10 0.4166 | 588s
+Epoch 1630 | loss 0.0051 | val filtered_MRR 0.3349 | raw_MRR 0.2341 | H@1 0.2815 | H@3 0.3715 | H@10 0.4191 | 592s
+Epoch 1640 | loss 0.0059 | val filtered_MRR 0.3416 | raw_MRR 0.2406 | H@1 0.2930 | H@3 0.3736 | H@10 0.4186 | 595s
+  --> New best (0.3416), checkpoint saved.
+Epoch 1650 | loss 0.0054 | val filtered_MRR 0.3433 | raw_MRR 0.2415 | H@1 0.2927 | H@3 0.3776 | H@10 0.4221 | 599s
+  --> New best (0.3433), checkpoint saved.
+Epoch 1660 | loss 0.0047 | val filtered_MRR 0.3320 | raw_MRR 0.2361 | H@1 0.2739 | H@3 0.3731 | H@10 0.4232 | 603s
+Epoch 1670 | loss 0.0053 | val filtered_MRR 0.3254 | raw_MRR 0.2336 | H@1 0.2637 | H@3 0.3693 | H@10 0.4221 | 606s
+Epoch 1680 | loss 0.0093 | val filtered_MRR 0.3408 | raw_MRR 0.2396 | H@1 0.2884 | H@3 0.3766 | H@10 0.4249 | 610s
+Epoch 1690 | loss 0.0059 | val filtered_MRR 0.3482 | raw_MRR 0.2425 | H@1 0.2998 | H@3 0.3810 | H@10 0.4260 | 614s
+  --> New best (0.3482), checkpoint saved.
+Epoch 1700 | loss 0.0058 | val filtered_MRR 0.3406 | raw_MRR 0.2388 | H@1 0.2864 | H@3 0.3779 | H@10 0.4247 | 617s
+Epoch 1710 | loss 0.0055 | val filtered_MRR 0.3412 | raw_MRR 0.2388 | H@1 0.2881 | H@3 0.3794 | H@10 0.4234 | 621s
+Epoch 1720 | loss 0.0051 | val filtered_MRR 0.3377 | raw_MRR 0.2373 | H@1 0.2825 | H@3 0.3746 | H@10 0.4244 | 625s
+Epoch 1730 | loss 0.0053 | val filtered_MRR 0.3425 | raw_MRR 0.2377 | H@1 0.2897 | H@3 0.3784 | H@10 0.4258 | 628s
+Epoch 1740 | loss 0.0055 | val filtered_MRR 0.3412 | raw_MRR 0.2362 | H@1 0.2869 | H@3 0.3797 | H@10 0.4255 | 632s
+Epoch 1750 | loss 0.0050 | val filtered_MRR 0.3451 | raw_MRR 0.2394 | H@1 0.2935 | H@3 0.3823 | H@10 0.4272 | 635s
+Epoch 1760 | loss 0.2782 | val filtered_MRR 0.3416 | raw_MRR 0.2371 | H@1 0.2868 | H@3 0.3807 | H@10 0.4283 | 639s
+Epoch 1770 | loss 0.2742 | val filtered_MRR 0.3414 | raw_MRR 0.2379 | H@1 0.2872 | H@3 0.3782 | H@10 0.4273 | 643s
+Epoch 1780 | loss 0.0056 | val filtered_MRR 0.3421 | raw_MRR 0.2376 | H@1 0.2881 | H@3 0.3784 | H@10 0.4258 | 646s
+Epoch 1790 | loss 0.0053 | val filtered_MRR 0.3402 | raw_MRR 0.2369 | H@1 0.2841 | H@3 0.3800 | H@10 0.4268 | 650s
+Epoch 1800 | loss 0.0051 | val filtered_MRR 0.3495 | raw_MRR 0.2401 | H@1 0.2985 | H@3 0.3853 | H@10 0.4285 | 653s
+  --> New best (0.3495), checkpoint saved.
+Epoch 1810 | loss 0.2715 | val filtered_MRR 0.3507 | raw_MRR 0.2410 | H@1 0.3004 | H@3 0.3848 | H@10 0.4306 | 657s
+  --> New best (0.3507), checkpoint saved.
+Epoch 1820 | loss 0.0054 | val filtered_MRR 0.3442 | raw_MRR 0.2346 | H@1 0.2907 | H@3 0.3815 | H@10 0.4275 | 661s
+Epoch 1830 | loss 0.0076 | val filtered_MRR 0.3469 | raw_MRR 0.2391 | H@1 0.2952 | H@3 0.3823 | H@10 0.4277 | 664s
+Epoch 1840 | loss 0.2741 | val filtered_MRR 0.3407 | raw_MRR 0.2362 | H@1 0.2868 | H@3 0.3782 | H@10 0.4265 | 668s
+Epoch 1850 | loss 0.0055 | val filtered_MRR 0.3330 | raw_MRR 0.2344 | H@1 0.2764 | H@3 0.3716 | H@10 0.4240 | 672s
+Epoch 1860 | loss 0.0051 | val filtered_MRR 0.3418 | raw_MRR 0.2384 | H@1 0.2887 | H@3 0.3795 | H@10 0.4252 | 675s
+Epoch 1870 | loss 0.2714 | val filtered_MRR 0.3454 | raw_MRR 0.2405 | H@1 0.2932 | H@3 0.3817 | H@10 0.4252 | 679s
+Epoch 1880 | loss 0.2737 | val filtered_MRR 0.3380 | raw_MRR 0.2385 | H@1 0.2810 | H@3 0.3797 | H@10 0.4270 | 682s
+Epoch 1890 | loss 0.0049 | val filtered_MRR 0.3397 | raw_MRR 0.2390 | H@1 0.2841 | H@3 0.3780 | H@10 0.4288 | 686s
+Epoch 1900 | loss 0.0051 | val filtered_MRR 0.3503 | raw_MRR 0.2428 | H@1 0.3008 | H@3 0.3863 | H@10 0.4270 | 690s
+Epoch 1910 | loss 0.0055 | val filtered_MRR 0.3468 | raw_MRR 0.2407 | H@1 0.2938 | H@3 0.3845 | H@10 0.4288 | 693s
+Epoch 1920 | loss 0.0049 | val filtered_MRR 0.3552 | raw_MRR 0.2448 | H@1 0.3074 | H@3 0.3888 | H@10 0.4300 | 697s
+  --> New best (0.3552), checkpoint saved.
+Epoch 1930 | loss 0.0050 | val filtered_MRR 0.3554 | raw_MRR 0.2442 | H@1 0.3080 | H@3 0.3888 | H@10 0.4296 | 701s
+  --> New best (0.3554), checkpoint saved.
+Epoch 1940 | loss 0.0046 | val filtered_MRR 0.3503 | raw_MRR 0.2419 | H@1 0.2999 | H@3 0.3861 | H@10 0.4300 | 704s
+Epoch 1950 | loss 0.2905 | val filtered_MRR 0.3480 | raw_MRR 0.2402 | H@1 0.2963 | H@3 0.3830 | H@10 0.4283 | 708s
+Epoch 1960 | loss 0.0052 | val filtered_MRR 0.3553 | raw_MRR 0.2461 | H@1 0.3039 | H@3 0.3906 | H@10 0.4354 | 711s
+Epoch 1970 | loss 0.2732 | val filtered_MRR 0.3469 | raw_MRR 0.2410 | H@1 0.2905 | H@3 0.3889 | H@10 0.4319 | 715s
+Epoch 1980 | loss 0.0052 | val filtered_MRR 0.3579 | raw_MRR 0.2453 | H@1 0.3087 | H@3 0.3911 | H@10 0.4354 | 719s
+  --> New best (0.3579), checkpoint saved.
+Epoch 1990 | loss 0.2717 | val filtered_MRR 0.3572 | raw_MRR 0.2447 | H@1 0.3092 | H@3 0.3899 | H@10 0.4329 | 722s
+Epoch 2000 | loss 0.0037 | val filtered_MRR 0.3504 | raw_MRR 0.2402 | H@1 0.2989 | H@3 0.3865 | H@10 0.4331 | 726s
+Epoch 2010 | loss 0.0045 | val filtered_MRR 0.3527 | raw_MRR 0.2425 | H@1 0.3017 | H@3 0.3873 | H@10 0.4336 | 729s
+Epoch 2020 | loss 0.2716 | val filtered_MRR 0.3492 | raw_MRR 0.2410 | H@1 0.2953 | H@3 0.3871 | H@10 0.4318 | 733s
+Epoch 2030 | loss 0.0042 | val filtered_MRR 0.3520 | raw_MRR 0.2423 | H@1 0.2994 | H@3 0.3897 | H@10 0.4303 | 737s
+Epoch 2040 | loss 0.0048 | val filtered_MRR 0.3499 | raw_MRR 0.2420 | H@1 0.2958 | H@3 0.3901 | H@10 0.4333 | 740s
+Epoch 2050 | loss 0.2777 | val filtered_MRR 0.3538 | raw_MRR 0.2429 | H@1 0.3011 | H@3 0.3911 | H@10 0.4336 | 744s
+Epoch 2060 | loss 0.0566 | val filtered_MRR 0.3443 | raw_MRR 0.2381 | H@1 0.2904 | H@3 0.3813 | H@10 0.4291 | 747s
+Epoch 2070 | loss 0.2917 | val filtered_MRR 0.3236 | raw_MRR 0.2264 | H@1 0.2701 | H@3 0.3571 | H@10 0.4141 | 751s
+Epoch 2080 | loss 0.0270 | val filtered_MRR 0.2499 | raw_MRR 0.1907 | H@1 0.1758 | H@3 0.2928 | H@10 0.3911 | 755s
+Epoch 2090 | loss 0.0982 | val filtered_MRR 0.2319 | raw_MRR 0.1828 | H@1 0.1594 | H@3 0.2757 | H@10 0.3632 | 758s
+Epoch 2100 | loss 0.3999 | val filtered_MRR 0.1750 | raw_MRR 0.1443 | H@1 0.1116 | H@3 0.1978 | H@10 0.3019 | 762s
+Epoch 2110 | loss 0.0459 | val filtered_MRR 0.2299 | raw_MRR 0.1813 | H@1 0.1643 | H@3 0.2655 | H@10 0.3556 | 765s/nfs/hpc/share/tinw/idealab/INV-GNN/src/baselines/RGCN/rgcn_data_augmentation/run_wordnet_lp.py:376: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict(torch.load(ckpt_path, map_location=device))
+
+Epoch 2120 | loss 0.0187 | val filtered_MRR 0.2402 | raw_MRR 0.1885 | H@1 0.1716 | H@3 0.2785 | H@10 0.3708 | 769s
+Epoch 2130 | loss 0.0203 | val filtered_MRR 0.2684 | raw_MRR 0.2048 | H@1 0.2012 | H@3 0.3105 | H@10 0.3922 | 773s
+Epoch 2140 | loss 0.2811 | val filtered_MRR 0.3036 | raw_MRR 0.2213 | H@1 0.2409 | H@3 0.3484 | H@10 0.4043 | 776s
+Epoch 2150 | loss 0.0077 | val filtered_MRR 0.3198 | raw_MRR 0.2298 | H@1 0.2629 | H@3 0.3581 | H@10 0.4125 | 780s
+Epoch 2160 | loss 0.0090 | val filtered_MRR 0.3300 | raw_MRR 0.2358 | H@1 0.2734 | H@3 0.3680 | H@10 0.4207 | 783s
+Epoch 2170 | loss 0.2837 | val filtered_MRR 0.3341 | raw_MRR 0.2348 | H@1 0.2788 | H@3 0.3718 | H@10 0.4204 | 787s
+Epoch 2180 | loss 0.0061 | val filtered_MRR 0.3367 | raw_MRR 0.2357 | H@1 0.2810 | H@3 0.3762 | H@10 0.4229 | 791s
+Epoch 2190 | loss 0.2814 | val filtered_MRR 0.3421 | raw_MRR 0.2391 | H@1 0.2889 | H@3 0.3792 | H@10 0.4240 | 794s
+Epoch 2200 | loss 0.2792 | val filtered_MRR 0.3470 | raw_MRR 0.2409 | H@1 0.2965 | H@3 0.3812 | H@10 0.4255 | 798s
+Epoch 2210 | loss 0.0047 | val filtered_MRR 0.3503 | raw_MRR 0.2425 | H@1 0.3008 | H@3 0.3837 | H@10 0.4272 | 801s
+Epoch 2220 | loss 0.0049 | val filtered_MRR 0.3495 | raw_MRR 0.2392 | H@1 0.3004 | H@3 0.3809 | H@10 0.4267 | 805s
+Epoch 2230 | loss 0.0043 | val filtered_MRR 0.3517 | raw_MRR 0.2400 | H@1 0.3021 | H@3 0.3835 | H@10 0.4288 | 809s
+Epoch 2240 | loss 0.0068 | val filtered_MRR 0.3541 | raw_MRR 0.2413 | H@1 0.3059 | H@3 0.3860 | H@10 0.4319 | 812s
+Epoch 2250 | loss 0.0051 | val filtered_MRR 0.3549 | raw_MRR 0.2415 | H@1 0.3070 | H@3 0.3876 | H@10 0.4283 | 816s
+Epoch 2260 | loss 0.0047 | val filtered_MRR 0.3571 | raw_MRR 0.2424 | H@1 0.3118 | H@3 0.3860 | H@10 0.4288 | 820s
+Epoch 2270 | loss 0.2688 | val filtered_MRR 0.3553 | raw_MRR 0.2421 | H@1 0.3085 | H@3 0.3845 | H@10 0.4306 | 823s
+Epoch 2280 | loss 0.0037 | val filtered_MRR 0.3541 | raw_MRR 0.2414 | H@1 0.3054 | H@3 0.3868 | H@10 0.4288 | 827s
+Early stopping at epoch 2280 (patience=300)
+
+Loaded best checkpoint: best_model_R2087_seed_20251017_variant_no_changes.pt
+
+  Epochs trained: 2280  Run time: 826.7s
+  Final val:  filtered_MRR=0.3579  raw_MRR=0.2453  H@1=0.3087  H@3=0.3911  H@10=0.4354  Acc=0.9888  Prec=0.9624  Rec=0.7291  F1=0.8050
+  Final test: filtered_MRR=0.3585  raw_MRR=0.2462  H@1=0.3109  H@3=0.3902  H@10=0.4306  Acc=0.9890  Prec=0.9659  Rec=0.7323  F1=0.8087
+
+================================================================================
+SUMMARY
+================================================================================
+
+  Variant: no_changes
+    RunTime(s): 861.7 ± 171.5
+    Epochs:     2376.7 ± 474.4  (seed=1566911444: 3000, seed=20241017: 1850, seed=20251017: 2280)
+    val: filtered_MRR=0.3592±0.0076  raw_MRR=0.2463±0.0029  Hits@1=0.3119±0.0097  Hits@3=0.3899±0.0052  Hits@10=0.4342±0.0051  accuracy=0.9885±0.0002  precision=0.9630±0.0068  recall=0.7214±0.0054  macro_f1=0.7980±0.0051
+    test: filtered_MRR=0.3577±0.0087  raw_MRR=0.2462±0.0030  Hits@1=0.3119±0.0117  Hits@3=0.3879±0.0055  Hits@10=0.4288±0.0029  accuracy=0.9886±0.0003  precision=0.9680±0.0067  recall=0.7224±0.0071  macro_f1=0.7999±0.0063

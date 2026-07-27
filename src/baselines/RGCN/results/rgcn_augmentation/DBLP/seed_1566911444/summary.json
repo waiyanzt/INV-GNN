@@ -1,0 +1,149 @@
+{
+  "best_mean_val_loss": 1.1445670525232952,
+  "dataset": "DBLP",
+  "epoch_accounting": {
+    "batches_per_variant": 10,
+    "definition": "one super-epoch visits every variant and all positive-edge batches within each variant",
+    "expected_optimizer_steps": 600,
+    "optimizer_steps": 600,
+    "single_variant_epoch_equivalents": 60,
+    "super_epochs_ran": 20,
+    "test_graph_forwards": 3,
+    "train_graph_forwards": 600,
+    "validation_graph_forwards": 60,
+    "variant_epochs_ran": 60
+  },
+  "global_native_relations": [
+    "author-paper",
+    "paper-author",
+    "paper-conference",
+    "conference-paper",
+    "paper-term",
+    "term-paper",
+    "paper-area",
+    "area-paper",
+    "conference-area",
+    "area-conference",
+    "author-area",
+    "area-author"
+  ],
+  "mean_test_metrics": {
+    "AP": 0.23976715536095594,
+    "AUC": 0.4681338736159409,
+    "Accuracy": 0.24924981245311328,
+    "F1": 0.3652077386615921,
+    "Hits@1": 0.8582145536384096,
+    "Hits@3": 0.859964991247812,
+    "Hits@5": 1.0,
+    "MRR": 0.8938067850295908,
+    "Precision": 0.2315503720088478,
+    "Recall": 0.86384096024006,
+    "edge_count": 279998.0,
+    "ranking_queries": 2666.0
+  },
+  "memory": {
+    "buffer_bytes": 0,
+    "checkpoint_bytes": 21880239,
+    "inference_gpu": {
+      "gpu_allocated_bytes": 111519744,
+      "gpu_peak_allocated_bytes": 1377079808,
+      "gpu_peak_reserved_bytes": 1736441856,
+      "gpu_reserved_bytes": 1736441856
+    },
+    "parameter_bytes": 21875392,
+    "process_peak_rss_bytes": 1496616960,
+    "static_model_bytes": 21875392,
+    "training_gpu": {
+      "gpu_allocated_bytes": 89208832,
+      "gpu_peak_allocated_bytes": 1929641984,
+      "gpu_peak_reserved_bytes": 2499805184,
+      "gpu_reserved_bytes": 2499805184
+    }
+  },
+  "negative_candidates_per_paper_cap": 3,
+  "pairwise_invariance": [
+    {
+      "kendall_tau_scores": 0.5946762075989823,
+      "max_abs_score_diff": 0.03818231821060181,
+      "mean_abs_score_diff": 0.01165292039513588,
+      "prediction_agreement": 1.0,
+      "variant_a": "v1",
+      "variant_b": "v2"
+    },
+    {
+      "kendall_tau_scores": 0.5136856789516131,
+      "max_abs_score_diff": 0.4679561257362366,
+      "mean_abs_score_diff": 0.015649408102035522,
+      "prediction_agreement": 1.0,
+      "variant_a": "v1",
+      "variant_b": "v3"
+    },
+    {
+      "kendall_tau_scores": 0.39416317528731026,
+      "max_abs_score_diff": 0.45556676387786865,
+      "mean_abs_score_diff": 0.0240180641412735,
+      "prediction_agreement": 1.0,
+      "variant_a": "v2",
+      "variant_b": "v3"
+    }
+  ],
+  "per_variant_test_metrics": {
+    "v1": {
+      "AP": 0.2323911985263069,
+      "AUC": 0.45009805996135194,
+      "Accuracy": 0.24924981245311328,
+      "F1": 0.3652077386615921,
+      "Hits@1": 0.86384096024006,
+      "Hits@3": 0.86384096024006,
+      "Hits@5": 1.0,
+      "MRR": 0.897880720180045,
+      "Precision": 0.2315503720088478,
+      "Recall": 0.86384096024006,
+      "edge_count": 295264.0,
+      "ranking_queries": 2666.0
+    },
+    "v2": {
+      "AP": 0.24778204230795434,
+      "AUC": 0.48912197573024174,
+      "Accuracy": 0.24924981245311328,
+      "F1": 0.3652077386615921,
+      "Hits@1": 0.8469617404351087,
+      "Hits@3": 0.8522130532633159,
+      "Hits@5": 1.0,
+      "MRR": 0.8856589147286821,
+      "Precision": 0.2315503720088478,
+      "Recall": 0.86384096024006,
+      "edge_count": 268494.0,
+      "ranking_queries": 2666.0
+    },
+    "v3": {
+      "AP": 0.2391282252486065,
+      "AUC": 0.46518158515622904,
+      "Accuracy": 0.24924981245311328,
+      "F1": 0.3652077386615921,
+      "Hits@1": 0.86384096024006,
+      "Hits@3": 0.86384096024006,
+      "Hits@5": 1.0,
+      "MRR": 0.897880720180045,
+      "Precision": 0.2315503720088478,
+      "Recall": 0.86384096024006,
+      "edge_count": 276236.0,
+      "ranking_queries": 2666.0
+    }
+  },
+  "seed": 1566911444,
+  "shared_split_sizes": {
+    "test_neg": 7998,
+    "test_pos": 2666,
+    "train_neg": 28344,
+    "train_pos": 9448,
+    "val_neg": 4044,
+    "val_pos": 1348
+  },
+  "training_seconds": 51.118088964838535,
+  "variants": [
+    "v1",
+    "v2",
+    "v3"
+  ]
+}

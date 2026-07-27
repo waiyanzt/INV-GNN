@@ -1,0 +1,451 @@
+{
+  "runs": [
+    {
+      "best_mean_val_loss": 1.1445670525232952,
+      "dataset": "DBLP",
+      "epoch_accounting": {
+        "batches_per_variant": 10,
+        "definition": "one super-epoch visits every variant and all positive-edge batches within each variant",
+        "expected_optimizer_steps": 600,
+        "optimizer_steps": 600,
+        "single_variant_epoch_equivalents": 60,
+        "super_epochs_ran": 20,
+        "test_graph_forwards": 3,
+        "train_graph_forwards": 600,
+        "validation_graph_forwards": 60,
+        "variant_epochs_ran": 60
+      },
+      "global_native_relations": [
+        "author-paper",
+        "paper-author",
+        "paper-conference",
+        "conference-paper",
+        "paper-term",
+        "term-paper",
+        "paper-area",
+        "area-paper",
+        "conference-area",
+        "area-conference",
+        "author-area",
+        "area-author"
+      ],
+      "mean_test_metrics": {
+        "AP": 0.23976715536095594,
+        "AUC": 0.4681338736159409,
+        "Accuracy": 0.24924981245311328,
+        "F1": 0.3652077386615921,
+        "Hits@1": 0.8582145536384096,
+        "Hits@3": 0.859964991247812,
+        "Hits@5": 1.0,
+        "MRR": 0.8938067850295908,
+        "Precision": 0.2315503720088478,
+        "Recall": 0.86384096024006,
+        "edge_count": 279998.0,
+        "ranking_queries": 2666.0
+      },
+      "memory": {
+        "buffer_bytes": 0,
+        "checkpoint_bytes": 21880239,
+        "inference_gpu": {
+          "gpu_allocated_bytes": 111519744,
+          "gpu_peak_allocated_bytes": 1377079808,
+          "gpu_peak_reserved_bytes": 1736441856,
+          "gpu_reserved_bytes": 1736441856
+        },
+        "parameter_bytes": 21875392,
+        "process_peak_rss_bytes": 1496616960,
+        "static_model_bytes": 21875392,
+        "training_gpu": {
+          "gpu_allocated_bytes": 89208832,
+          "gpu_peak_allocated_bytes": 1929641984,
+          "gpu_peak_reserved_bytes": 2499805184,
+          "gpu_reserved_bytes": 2499805184
+        }
+      },
+      "negative_candidates_per_paper_cap": 3,
+      "pairwise_invariance": [
+        {
+          "kendall_tau_scores": 0.5946762075989823,
+          "max_abs_score_diff": 0.03818231821060181,
+          "mean_abs_score_diff": 0.01165292039513588,
+          "prediction_agreement": 1.0,
+          "variant_a": "v1",
+          "variant_b": "v2"
+        },
+        {
+          "kendall_tau_scores": 0.5136856789516131,
+          "max_abs_score_diff": 0.4679561257362366,
+          "mean_abs_score_diff": 0.015649408102035522,
+          "prediction_agreement": 1.0,
+          "variant_a": "v1",
+          "variant_b": "v3"
+        },
+        {
+          "kendall_tau_scores": 0.39416317528731026,
+          "max_abs_score_diff": 0.45556676387786865,
+          "mean_abs_score_diff": 0.0240180641412735,
+          "prediction_agreement": 1.0,
+          "variant_a": "v2",
+          "variant_b": "v3"
+        }
+      ],
+      "per_variant_test_metrics": {
+        "v1": {
+          "AP": 0.2323911985263069,
+          "AUC": 0.45009805996135194,
+          "Accuracy": 0.24924981245311328,
+          "F1": 0.3652077386615921,
+          "Hits@1": 0.86384096024006,
+          "Hits@3": 0.86384096024006,
+          "Hits@5": 1.0,
+          "MRR": 0.897880720180045,
+          "Precision": 0.2315503720088478,
+          "Recall": 0.86384096024006,
+          "edge_count": 295264.0,
+          "ranking_queries": 2666.0
+        },
+        "v2": {
+          "AP": 0.24778204230795434,
+          "AUC": 0.48912197573024174,
+          "Accuracy": 0.24924981245311328,
+          "F1": 0.3652077386615921,
+          "Hits@1": 0.8469617404351087,
+          "Hits@3": 0.8522130532633159,
+          "Hits@5": 1.0,
+          "MRR": 0.8856589147286821,
+          "Precision": 0.2315503720088478,
+          "Recall": 0.86384096024006,
+          "edge_count": 268494.0,
+          "ranking_queries": 2666.0
+        },
+        "v3": {
+          "AP": 0.2391282252486065,
+          "AUC": 0.46518158515622904,
+          "Accuracy": 0.24924981245311328,
+          "F1": 0.3652077386615921,
+          "Hits@1": 0.86384096024006,
+          "Hits@3": 0.86384096024006,
+          "Hits@5": 1.0,
+          "MRR": 0.897880720180045,
+          "Precision": 0.2315503720088478,
+          "Recall": 0.86384096024006,
+          "edge_count": 276236.0,
+          "ranking_queries": 2666.0
+        }
+      },
+      "seed": 1566911444,
+      "shared_split_sizes": {
+        "test_neg": 7998,
+        "test_pos": 2666,
+        "train_neg": 28344,
+        "train_pos": 9448,
+        "val_neg": 4044,
+        "val_pos": 1348
+      },
+      "training_seconds": 51.118088964838535,
+      "variants": [
+        "v1",
+        "v2",
+        "v3"
+      ]
+    },
+    {
+      "best_mean_val_loss": 0.6943599979082743,
+      "dataset": "DBLP",
+      "epoch_accounting": {
+        "batches_per_variant": 10,
+        "definition": "one super-epoch visits every variant and all positive-edge batches within each variant",
+        "expected_optimizer_steps": 1530,
+        "optimizer_steps": 1530,
+        "single_variant_epoch_equivalents": 153,
+        "super_epochs_ran": 51,
+        "test_graph_forwards": 3,
+        "train_graph_forwards": 1530,
+        "validation_graph_forwards": 153,
+        "variant_epochs_ran": 153
+      },
+      "global_native_relations": [
+        "author-paper",
+        "paper-author",
+        "paper-conference",
+        "conference-paper",
+        "paper-term",
+        "term-paper",
+        "paper-area",
+        "area-paper",
+        "conference-area",
+        "area-conference",
+        "author-area",
+        "area-author"
+      ],
+      "mean_test_metrics": {
+        "AP": 0.25,
+        "AUC": 0.5,
+        "Accuracy": 0.25,
+        "F1": 0.4000000000000001,
+        "Hits@1": 1.0,
+        "Hits@3": 1.0,
+        "Hits@5": 1.0,
+        "MRR": 1.0,
+        "Precision": 0.25,
+        "Recall": 1.0,
+        "edge_count": 279998.0,
+        "ranking_queries": 2666.0
+      },
+      "memory": {
+        "buffer_bytes": 0,
+        "checkpoint_bytes": 21880239,
+        "inference_gpu": {
+          "gpu_allocated_bytes": 110920704,
+          "gpu_peak_allocated_bytes": 1377174016,
+          "gpu_peak_reserved_bytes": 1858076672,
+          "gpu_reserved_bytes": 1858076672
+        },
+        "parameter_bytes": 21875392,
+        "process_peak_rss_bytes": 1552089088,
+        "static_model_bytes": 21875392,
+        "training_gpu": {
+          "gpu_allocated_bytes": 88406528,
+          "gpu_peak_allocated_bytes": 1929690624,
+          "gpu_peak_reserved_bytes": 3569352704,
+          "gpu_reserved_bytes": 3569352704
+        }
+      },
+      "negative_candidates_per_paper_cap": 3,
+      "pairwise_invariance": [
+        {
+          "kendall_tau_scores": -0.052593099483251866,
+          "max_abs_score_diff": 0.00015813112258911133,
+          "mean_abs_score_diff": 2.5534307042107685e-06,
+          "prediction_agreement": 1.0,
+          "variant_a": "v1",
+          "variant_b": "v2"
+        },
+        {
+          "kendall_tau_scores": -0.007322525007017442,
+          "max_abs_score_diff": 0.00015813112258911133,
+          "mean_abs_score_diff": 2.5485569494776428e-06,
+          "prediction_agreement": 1.0,
+          "variant_a": "v1",
+          "variant_b": "v3"
+        },
+        {
+          "kendall_tau_scores": 0.9779178530346254,
+          "max_abs_score_diff": 4.947185516357422e-06,
+          "mean_abs_score_diff": 8.674644114137209e-09,
+          "prediction_agreement": 1.0,
+          "variant_a": "v2",
+          "variant_b": "v3"
+        }
+      ],
+      "per_variant_test_metrics": {
+        "v1": {
+          "AP": 0.25,
+          "AUC": 0.5,
+          "Accuracy": 0.25,
+          "F1": 0.4,
+          "Hits@1": 1.0,
+          "Hits@3": 1.0,
+          "Hits@5": 1.0,
+          "MRR": 1.0,
+          "Precision": 0.25,
+          "Recall": 1.0,
+          "edge_count": 295264.0,
+          "ranking_queries": 2666.0
+        },
+        "v2": {
+          "AP": 0.25,
+          "AUC": 0.5,
+          "Accuracy": 0.25,
+          "F1": 0.4,
+          "Hits@1": 1.0,
+          "Hits@3": 1.0,
+          "Hits@5": 1.0,
+          "MRR": 1.0,
+          "Precision": 0.25,
+          "Recall": 1.0,
+          "edge_count": 268494.0,
+          "ranking_queries": 2666.0
+        },
+        "v3": {
+          "AP": 0.25,
+          "AUC": 0.49999999999999994,
+          "Accuracy": 0.25,
+          "F1": 0.4,
+          "Hits@1": 1.0,
+          "Hits@3": 1.0,
+          "Hits@5": 1.0,
+          "MRR": 1.0,
+          "Precision": 0.25,
+          "Recall": 1.0,
+          "edge_count": 276236.0,
+          "ranking_queries": 2666.0
+        }
+      },
+      "seed": 20241017,
+      "shared_split_sizes": {
+        "test_neg": 7998,
+        "test_pos": 2666,
+        "train_neg": 28344,
+        "train_pos": 9448,
+        "val_neg": 4044,
+        "val_pos": 1348
+      },
+      "training_seconds": 129.46857081493363,
+      "variants": [
+        "v1",
+        "v2",
+        "v3"
+      ]
+    },
+    {
+      "best_mean_val_loss": 4.685345490773519,
+      "dataset": "DBLP",
+      "epoch_accounting": {
+        "batches_per_variant": 10,
+        "definition": "one super-epoch visits every variant and all positive-edge batches within each variant",
+        "expected_optimizer_steps": 1020,
+        "optimizer_steps": 1020,
+        "single_variant_epoch_equivalents": 102,
+        "super_epochs_ran": 34,
+        "test_graph_forwards": 3,
+        "train_graph_forwards": 1020,
+        "validation_graph_forwards": 102,
+        "variant_epochs_ran": 102
+      },
+      "global_native_relations": [
+        "author-paper",
+        "paper-author",
+        "paper-conference",
+        "conference-paper",
+        "paper-term",
+        "term-paper",
+        "paper-area",
+        "area-paper",
+        "conference-area",
+        "area-conference",
+        "author-area",
+        "area-author"
+      ],
+      "mean_test_metrics": {
+        "AP": 0.21317403763537981,
+        "AUC": 0.41287290283436073,
+        "Accuracy": 0.41363465866466614,
+        "F1": 0.29336616810764804,
+        "Hits@1": 0.4713678419604901,
+        "Hits@3": 0.6286571642910728,
+        "Hits@5": 1.0,
+        "MRR": 0.621301158622987,
+        "Precision": 0.2099304336868232,
+        "Recall": 0.48687171792948236,
+        "edge_count": 279998.0,
+        "ranking_queries": 2666.0
+      },
+      "memory": {
+        "buffer_bytes": 0,
+        "checkpoint_bytes": 21880239,
+        "inference_gpu": {
+          "gpu_allocated_bytes": 111872000,
+          "gpu_peak_allocated_bytes": 1377442304,
+          "gpu_peak_reserved_bytes": 1971322880,
+          "gpu_reserved_bytes": 1971322880
+        },
+        "parameter_bytes": 21875392,
+        "process_peak_rss_bytes": 1552089088,
+        "static_model_bytes": 21875392,
+        "training_gpu": {
+          "gpu_allocated_bytes": 89778176,
+          "gpu_peak_allocated_bytes": 1930479616,
+          "gpu_peak_reserved_bytes": 3523215360,
+          "gpu_reserved_bytes": 3523215360
+        }
+      },
+      "negative_candidates_per_paper_cap": 3,
+      "pairwise_invariance": [
+        {
+          "kendall_tau_scores": 0.9455812428752322,
+          "max_abs_score_diff": 1.0,
+          "mean_abs_score_diff": 0.005360000766813755,
+          "prediction_agreement": 0.9969992498124531,
+          "variant_a": "v1",
+          "variant_b": "v2"
+        },
+        {
+          "kendall_tau_scores": 0.9303966599094448,
+          "max_abs_score_diff": 1.0,
+          "mean_abs_score_diff": 0.005984109360724688,
+          "prediction_agreement": 0.9967179294823706,
+          "variant_a": "v1",
+          "variant_b": "v3"
+        },
+        {
+          "kendall_tau_scores": 0.9717828906071518,
+          "max_abs_score_diff": 0.5887967944145203,
+          "mean_abs_score_diff": 0.001120494562201202,
+          "prediction_agreement": 0.9997186796699175,
+          "variant_a": "v2",
+          "variant_b": "v3"
+        }
+      ],
+      "per_variant_test_metrics": {
+        "v1": {
+          "AP": 0.21108518704355206,
+          "AUC": 0.409387816759141,
+          "Accuracy": 0.41260315078769694,
+          "F1": 0.2936400541271989,
+          "Hits@1": 0.44111027756939236,
+          "Hits@3": 0.6207801950487621,
+          "Hits@5": 1.0,
+          "MRR": 0.6025568892223028,
+          "Precision": 0.20993227990970656,
+          "Recall": 0.4883720930232558,
+          "edge_count": 295264.0,
+          "ranking_queries": 2666.0
+        },
+        "v2": {
+          "AP": 0.2142812840481342,
+          "AUC": 0.41480747156031317,
+          "Accuracy": 0.41410352588147037,
+          "F1": 0.2930527268612808,
+          "Hits@1": 0.486496624156039,
+          "Hits@3": 0.6339084771192798,
+          "Hits@5": 1.0,
+          "MRR": 0.6310327581895455,
+          "Precision": 0.20981853532080363,
+          "Recall": 0.4857464366091523,
+          "edge_count": 268494.0,
+          "ranking_queries": 2666.0
+        },
+        "v3": {
+          "AP": 0.2141556418144533,
+          "AUC": 0.414423420183628,
+          "Accuracy": 0.4141972993248312,
+          "F1": 0.2934057233344644,
+          "Hits@1": 0.486496624156039,
+          "Hits@3": 0.6312828207051763,
+          "Hits@5": 1.0,
+          "MRR": 0.6303138284571125,
+          "Precision": 0.21004048582995952,
+          "Recall": 0.486496624156039,
+          "edge_count": 276236.0,
+          "ranking_queries": 2666.0
+        }
+      },
+      "seed": 20251017,
+      "shared_split_sizes": {
+        "test_neg": 7998,
+        "test_pos": 2666,
+        "train_neg": 28344,
+        "train_pos": 9448,
+        "val_neg": 4044,
+        "val_pos": 1348
+      },
+      "training_seconds": 86.06043602409773,
+      "variants": [
+        "v1",
+        "v2",
+        "v3"
+      ]
+    }
+  ]
+}

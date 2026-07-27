@@ -1,0 +1,90 @@
+{
+  "runs": [
+    {
+      "aggregation_backend": "chunked_recompute_exact_mean",
+      "best_mean_val_loss": 2.0485458374023438,
+      "dataset": "FREEBASE",
+      "edge_chunk_size": 250000,
+      "epoch_accounting": {
+        "batches_per_variant": 1,
+        "definition": "one super-epoch visits every variant; each label batch performs one complete graph forward and one optimizer update",
+        "expected_optimizer_steps": 2,
+        "optimizer_steps": 2,
+        "super_epochs_ran": 1,
+        "test_graph_forwards": 2,
+        "train_graph_forwards": 2,
+        "updates_per_super_epoch": 2,
+        "validation_graph_forwards": 2,
+        "variant_epochs_ran": 2
+      },
+      "mean_test_metrics": {
+        "Accuracy": 0.5584538026398491,
+        "Macro_F1": 0.23177672719950246,
+        "Micro_F1": 0.5584538026398491,
+        "NLL": 2.047582745552063,
+        "Precision_macro": 0.6117952302870069,
+        "Recall_macro": 0.22462411568703045,
+        "edge_count": 48426679.0
+      },
+      "memory": {
+        "buffer_bytes": 0,
+        "checkpoint_bytes": 46700156,
+        "inference_gpu": {
+          "gpu_allocated_bytes": 2462309888,
+          "gpu_peak_allocated_bytes": 5378764800,
+          "gpu_peak_reserved_bytes": 5484052480,
+          "gpu_reserved_bytes": 5484052480
+        },
+        "parameter_bytes": 46696928,
+        "process_peak_rss_bytes": 3572592640,
+        "static_model_bytes": 46696928,
+        "training_gpu": {
+          "gpu_allocated_bytes": 2468073472,
+          "gpu_peak_allocated_bytes": 5384528384,
+          "gpu_peak_reserved_bytes": 5507121152,
+          "gpu_reserved_bytes": 5507121152
+        }
+      },
+      "model": "legacy_RGCNFeatureless_chunked_recompute_v1",
+      "pairwise_invariance": [
+        {
+          "kendall_tau_confidence": 0.9273631447455805,
+          "kendall_tau_flat_logits": 0.938298679857398,
+          "max_abs_logit_diff": 0.0509946346282959,
+          "mean_abs_logit_diff": 0.0019766318146139383,
+          "mean_l2_logit_diff": 0.006942917592823505,
+          "prediction_agreement": 0.9560025141420491,
+          "variant_a": "unchanged",
+          "variant_b": "exact_2"
+        }
+      ],
+      "per_variant_test_metrics": {
+        "exact_2": {
+          "Accuracy": 0.5587680703959774,
+          "Macro_F1": 0.2298112581685621,
+          "Micro_F1": 0.5587680703959774,
+          "NLL": 2.046454429626465,
+          "Precision_macro": 0.5996069382982713,
+          "Recall_macro": 0.2235029185579945,
+          "edge_count": 94737982.0
+        },
+        "unchanged": {
+          "Accuracy": 0.5581395348837209,
+          "Macro_F1": 0.23374219623044282,
+          "Micro_F1": 0.5581395348837209,
+          "NLL": 2.048711061477661,
+          "Precision_macro": 0.6239835222757424,
+          "Recall_macro": 0.2257453128160664,
+          "edge_count": 2115376.0
+        }
+      },
+      "seed": 1566911444,
+      "selection_metric": "mean_validation_nll",
+      "training_seconds": 14.76791210914962,
+      "variants": [
+        "unchanged",
+        "exact_2"
+      ]
+    }
+  ]
+}

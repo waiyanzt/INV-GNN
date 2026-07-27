@@ -1,0 +1,86 @@
+{
+  "aggregation_backend": "chunked_recompute_exact_mean",
+  "best_mean_val_loss": 0.9821488559246063,
+  "dataset": "FREEBASE",
+  "edge_chunk_size": 250000,
+  "epoch_accounting": {
+    "batches_per_variant": 1,
+    "definition": "one super-epoch visits every variant; each label batch performs one complete graph forward and one optimizer update",
+    "expected_optimizer_steps": 186,
+    "optimizer_steps": 186,
+    "super_epochs_ran": 93,
+    "test_graph_forwards": 2,
+    "train_graph_forwards": 186,
+    "updates_per_super_epoch": 2,
+    "validation_graph_forwards": 186,
+    "variant_epochs_ran": 186
+  },
+  "mean_test_metrics": {
+    "Accuracy": 0.690131992457574,
+    "Macro_F1": 0.5610600600195712,
+    "Micro_F1": 0.690131992457574,
+    "NLL": 0.9687568247318268,
+    "Precision_macro": 0.6213588981344401,
+    "Recall_macro": 0.5324954317626631,
+    "edge_count": 48426679.0
+  },
+  "memory": {
+    "buffer_bytes": 0,
+    "checkpoint_bytes": 46700156,
+    "inference_gpu": {
+      "gpu_allocated_bytes": 239367680,
+      "gpu_peak_allocated_bytes": 3155822592,
+      "gpu_peak_reserved_bytes": 3240099840,
+      "gpu_reserved_bytes": 3240099840
+    },
+    "parameter_bytes": 46696928,
+    "process_peak_rss_bytes": 3572658176,
+    "static_model_bytes": 46696928,
+    "training_gpu": {
+      "gpu_allocated_bytes": 245131264,
+      "gpu_peak_allocated_bytes": 5384528384,
+      "gpu_peak_reserved_bytes": 5611978752,
+      "gpu_reserved_bytes": 5611978752
+    }
+  },
+  "model": "legacy_RGCNFeatureless_chunked_recompute_v1",
+  "pairwise_invariance": [
+    {
+      "kendall_tau_confidence": 0.9722321268331326,
+      "kendall_tau_flat_logits": 0.9789125592162876,
+      "max_abs_logit_diff": 0.8146476745605469,
+      "mean_abs_logit_diff": 0.06986799836158752,
+      "mean_l2_logit_diff": 0.2362460494041443,
+      "prediction_agreement": 0.9893148962916405,
+      "variant_a": "unchanged",
+      "variant_b": "exact_2"
+    }
+  ],
+  "per_variant_test_metrics": {
+    "exact_2": {
+      "Accuracy": 0.6895034569453174,
+      "Macro_F1": 0.5609241397931174,
+      "Micro_F1": 0.6895034569453174,
+      "NLL": 0.967171311378479,
+      "Precision_macro": 0.6173594184521124,
+      "Recall_macro": 0.5334371847254967,
+      "edge_count": 94737982.0
+    },
+    "unchanged": {
+      "Accuracy": 0.6907605279698303,
+      "Macro_F1": 0.561195980246025,
+      "Micro_F1": 0.6907605279698303,
+      "NLL": 0.9703423380851746,
+      "Precision_macro": 0.6253583778167678,
+      "Recall_macro": 0.5315536787998295,
+      "edge_count": 2115376.0
+    }
+  },
+  "seed": 20241017,
+  "selection_metric": "mean_validation_nll",
+  "training_seconds": 1332.3461839731317,
+  "variants": [
+    "unchanged",
+    "exact_2"
+  ]
+}

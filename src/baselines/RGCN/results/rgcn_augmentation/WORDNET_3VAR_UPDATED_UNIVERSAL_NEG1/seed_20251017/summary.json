@@ -1,0 +1,174 @@
+{
+  "best_mean_val_filtered_MRR": 0.37869611382484436,
+  "checkpoint_kind": "best_validation_filtered_MRR",
+  "dataset": "WORDNET",
+  "epoch_accounting": {
+    "batches_per_variant": {
+      "all_inverse_edges": 1,
+      "no_changes": 1,
+      "universal_edges": 1
+    },
+    "definition": "one super-epoch visits every variant and every supervised triple batch in that variant",
+    "expected_optimizer_steps": 6630,
+    "optimizer_steps": 6630,
+    "super_epochs_ran": 2210,
+    "test_graph_forwards": 3,
+    "train_graph_forwards": 6630,
+    "updates_per_super_epoch": 3,
+    "validation_checks": 221,
+    "validation_graph_forwards": 663,
+    "variant_epochs_ran": 6630
+  },
+  "evaluation_protocols": {
+    "legacy": "legacy metric implementation with variant-specific filters and deterministic binary negatives; compare with per-variant runs made from the same leakage-free NPZ",
+    "shared_candidate": "identical fixed candidate triples across variants; used for invariance only"
+  },
+  "mean_legacy_test_metrics": {
+    "Hits@1": 0.33663050414805357,
+    "Hits@10": 0.44697936609232075,
+    "Hits@3": 0.39145926398638586,
+    "accuracy": 0.9888738733102261,
+    "edge_count": 384711.3333333333,
+    "filtered_MRR": 0.3755690058072408,
+    "macro_f1": 0.8070072327680746,
+    "precision": 0.9647212439528793,
+    "raw_MRR": 0.2582690119743347,
+    "recall": 0.7309285258455648,
+    "training_triples": 384711.3333333333
+  },
+  "mean_shared_candidate_metrics": {
+    "AP": 0.6266458311338501,
+    "AUC": 0.8726865925008557,
+    "Accuracy": 0.9887758549495101,
+    "F1": 0.6175925546003095,
+    "Precision": 0.9303629982087358,
+    "Recall": 0.46245479685173363,
+    "candidate_BCE": 0.22786516944567362
+  },
+  "memory": {
+    "buffer_bytes": 0,
+    "checkpoint_bytes": 39638152,
+    "inference_gpu": {
+      "gpu_allocated_bytes": 302470656,
+      "gpu_peak_allocated_bytes": 14876242432,
+      "gpu_peak_reserved_bytes": 21242052608,
+      "gpu_reserved_bytes": 21242052608
+    },
+    "parameter_bytes": 39635240,
+    "process_peak_rss_bytes": 2721853440,
+    "static_model_bytes": 39635240,
+    "training_gpu": {
+      "gpu_allocated_bytes": 302470656,
+      "gpu_peak_allocated_bytes": 14933352448,
+      "gpu_peak_reserved_bytes": 22601007104,
+      "gpu_reserved_bytes": 21239955456
+    }
+  },
+  "model": "legacy_WordNetRGCNLinkPredictor",
+  "pairwise_invariance": [
+    {
+      "kendall_tau_scores": 0.5890149965536847,
+      "max_abs_score_diff": 0.9953214526176453,
+      "mean_abs_score_diff": 0.0012184141669422388,
+      "prediction_agreement": 0.9989363965113806,
+      "variant_a": "no_changes",
+      "variant_b": "all_inverse_edges"
+    },
+    {
+      "kendall_tau_scores": 0.5231609850130665,
+      "max_abs_score_diff": 0.9999891519546509,
+      "mean_abs_score_diff": 0.002051381394267082,
+      "prediction_agreement": 0.9982481824893327,
+      "variant_a": "no_changes",
+      "variant_b": "universal_edges"
+    },
+    {
+      "kendall_tau_scores": 0.8132885022280447,
+      "max_abs_score_diff": 0.9999891519546509,
+      "mean_abs_score_diff": 0.0015226699179038405,
+      "prediction_agreement": 0.9986485979203423,
+      "variant_a": "all_inverse_edges",
+      "variant_b": "universal_edges"
+    }
+  ],
+  "per_variant_legacy_test_metrics": {
+    "all_inverse_edges": {
+      "Hits@1": 0.35561582641991063,
+      "Hits@10": 0.45979578813018507,
+      "Hits@3": 0.40299936183790686,
+      "accuracy": 0.9889635496827959,
+      "edge_count": 173670.0,
+      "filtered_MRR": 0.3916779160499573,
+      "macro_f1": 0.806785812191412,
+      "precision": 0.973269853607019,
+      "raw_MRR": 0.2678789496421814,
+      "recall": 0.7285768985322272,
+      "training_triples": 173670.0
+    },
+    "no_changes": {
+      "Hits@1": 0.34189534141671984,
+      "Hits@10": 0.4390555201021059,
+      "Hits@3": 0.3908742820676452,
+      "accuracy": 0.988725803020634,
+      "edge_count": 86835.0,
+      "filtered_MRR": 0.37624430656433105,
+      "macro_f1": 0.8022028435769724,
+      "precision": 0.9683465475563313,
+      "raw_MRR": 0.25268107652664185,
+      "recall": 0.7247032546266752,
+      "training_triples": 86835.0
+    },
+    "universal_edges": {
+      "Hits@1": 0.31238034460753034,
+      "Hits@10": 0.44208679004467133,
+      "Hits@3": 0.3805041480536056,
+      "accuracy": 0.9889322672272483,
+      "edge_count": 893629.0,
+      "filtered_MRR": 0.3587847948074341,
+      "macro_f1": 0.8120330425358395,
+      "precision": 0.9525473306952876,
+      "raw_MRR": 0.2542470097541809,
+      "recall": 0.739505424377792,
+      "training_triples": 893629.0
+    }
+  },
+  "per_variant_shared_candidate_metrics": {
+    "all_inverse_edges": {
+      "AP": 0.6439241839597372,
+      "AUC": 0.8778583074491477,
+      "Accuracy": 0.9888634458250435,
+      "F1": 0.617039586919105,
+      "Precision": 0.9471598414795245,
+      "Recall": 0.45756222080408426,
+      "candidate_BCE": 0.24399572610855103
+    },
+    "no_changes": {
+      "AP": 0.5932122252219447,
+      "AUC": 0.8545190794990325,
+      "Accuracy": 0.9885631342517862,
+      "F1": 0.6067125645438899,
+      "Precision": 0.9313077939233818,
+      "Recall": 0.44990427568602426,
+      "candidate_BCE": 0.22443240880966187
+    },
+    "universal_edges": {
+      "AP": 0.6428010842198685,
+      "AUC": 0.8856823905543866,
+      "Accuracy": 0.9889009847717006,
+      "F1": 0.6290255123379339,
+      "Precision": 0.912621359223301,
+      "Recall": 0.47989789406509253,
+      "candidate_BCE": 0.21516737341880798
+    }
+  },
+  "seed": 20251017,
+  "selection_metric": "mean_legacy_filtered_MRR",
+  "split_protocol": "official_leakage_free_four_variant_wordnet_splits",
+  "splits_npz": "/nfs/hpc/share/tinw/idealab/INV-GNN/data/raw/wordnet_3hops_augmented_full/wordnet_splits.npz",
+  "training_seconds": 14566.728355326224,
+  "variants": [
+    "no_changes",
+    "all_inverse_edges",
+    "universal_edges"
+  ]
+}
