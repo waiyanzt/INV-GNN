@@ -139,35 +139,22 @@ def classification_ranking_metrics(
 
 @torch.no_grad()
 def evaluate_variant(model, cpu_bundle, device, split: str, prepared_bundle=None):
-    owns_device_bundle = prepared_bundle is None
     bundle = (
         prepared_bundle
         if prepared_bundle is not None
         else device_bundle(cpu_bundle, device)
     )
-    try:
-        model.eval()
-        log_probabilities = model(bundle["edge_index"], bundle["edge_type"])
-        indices = bundle[f"{split}_idx"]
-        loss = float(
-            F.nll_loss(
-                log_probabilities[indices], bundle["labels"][indices]
-            ).cpu()
-        )
-        metrics = classification_metrics(
+    model.eval()
+    log_probabilities = model(bundle["edge_index"], bundle["edge_type"])
+    indices = bundle[f"{split}_idx"]
+    loss = float(F.nll_loss(log_probabilities[indices], bundle["labels"][indices]).cpu())
+    metrics = classification_metrics(log_probabilities, bundle["labels"], indices)
+    metrics.update(
+        classification_ranking_metrics(
             log_probabilities, bundle["labels"], indices
         )
-        metrics.update(
-            classification_ranking_metrics(
-                log_probabilities, bundle["labels"], indices
-            )
-        )
-        cpu_probabilities = log_probabilities.detach().cpu()
-        cpu_indices = cpu_bundle[f"{split}_idx"].cpu()
-    finally:
-        if owns_device_bundle and hasattr(model, "clear_graph_cache"):
-            model.clear_graph_cache()
-    return loss, metrics, cpu_probabilities, cpu_indices
+    )
+    return loss, metrics, log_probabilities.detach().cpu(), cpu_bundle[f"{split}_idx"].cpu()
 
 
 def build_model(args, reference: Mapping[str, Any], device: torch.device):
@@ -319,10 +306,16 @@ def run_seed(args, variants: List[str], seed: int, output_root: Path) -> Dict[st
         prior_peak_rss = int(resume_state.get("process_peak_rss_bytes", 0))
         prior_training_gpu = dict(resume_state.get("training_gpu", {}))
 
-    # Keep only the active SlotGAT variant on the GPU.  Freebase variants have
-    # very large edge tensors and DGL graph storage, and joint training does
-    # not require them to be resident simultaneously.
-    prepared_bundles: Dict[str, Dict[str, Any]] = {}
+    # SlotGAT caches DGL graphs by tensor identity, so keep one stable device
+    # tensor bundle per variant. RGCN retains its legacy on-demand transfers.
+    prepared_bundles = (
+        {
+            variant: device_bundle(bundle, device)
+            for variant, bundle in bundles.items()
+        }
+        if args.encoder == "slotgat"
+        else {}
+    )
 
     reset_cuda_peak(device)
     training_start = time.perf_counter()
@@ -336,7 +329,11 @@ def run_seed(args, variants: List[str], seed: int, output_root: Path) -> Dict[st
         train_losses: Dict[str, float] = {}
 
         for variant in order:
-            bundle = device_bundle(bundles[variant], device)
+            bundle = (
+                prepared_bundles[variant]
+                if args.encoder == "slotgat"
+                else device_bundle(bundles[variant], device)
+            )
             losses = []
             for batch_cpu in index_batches(
                 bundle["train_idx"].cpu(), args.label_batch_size, rng
@@ -355,14 +352,8 @@ def run_seed(args, variants: List[str], seed: int, output_root: Path) -> Dict[st
                 optimizer.step()
                 optimizer_steps += 1
                 losses.append(float(loss.detach().cpu()))
-                del log_probabilities, loss, batch
             variant_epochs += 1
             train_losses[variant] = float(np.mean(losses))
-            if args.encoder == "slotgat":
-                model.clear_graph_cache()
-                del bundle
-                if device.type == "cuda":
-                    torch.cuda.empty_cache()
 
         val_losses: Dict[str, float] = {}
         val_metrics: Dict[str, Dict[str, float]] = {}
@@ -523,7 +514,11 @@ def run_seed(args, variants: List[str], seed: int, output_root: Path) -> Dict[st
         "dataset": "FREEBASE",
         "model": run_config["model"],
         "aggregation_backend": (
-            "chunked_recompute_exact_slotgat_attention"
+            (
+                "chunked_recompute_exact_slotgat_attention"
+                if args.slotgat_edge_chunk_size > 0
+                else "dgl_slotgat_exact_relation_score_fusion"
+            )
             if args.encoder == "slotgat"
             else (
                 "chunked_recompute_exact_mean"
@@ -617,10 +612,10 @@ def main() -> None:
     parser.add_argument(
         "--slotgat-edge-chunk-size",
         type=int,
-        default=250000,
+        default=0,
         help=(
             "Maximum edges processed at once by exact recomputing SlotGAT "
-            "attention; only used with --encoder slotgat"
+            "attention; 0 uses the original DGL SlotGAT convolution"
         ),
     )
     parser.add_argument(
@@ -646,13 +641,13 @@ def main() -> None:
         args.num_layers <= 0
         or args.num_heads <= 0
         or args.edge_feats < 0
-        or args.slotgat_edge_chunk_size <= 0
+        or args.slotgat_edge_chunk_size < 0
         or args.slotgat_decomposed_layers <= 0
     ):
         raise SystemExit(
             "SlotGAT requires positive --num-layers/--num-heads and "
-            "--slotgat-edge-chunk-size/--slotgat-decomposed-layers, plus "
-            "nonnegative --edge-feats"
+            "--slotgat-decomposed-layers, plus nonnegative "
+            "--edge-feats/--slotgat-edge-chunk-size"
         )
 
     variants = parse_csv(args.variants)

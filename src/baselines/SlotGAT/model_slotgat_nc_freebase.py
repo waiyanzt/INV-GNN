@@ -180,9 +180,10 @@ class FreebaseSlotGATClassifier(nn.Module):
             device=edge_index.device,
         )
         graph.num_ntypes = self.num_ntypes
-        # Reuse one stable COO tensor in every chunked SlotGAT layer instead of
-        # restacking DGL endpoints (about 1.4 GiB for exact_2) per layer.
-        graph.slotgat_edge_index = torch.stack((src, dst), dim=0)
+        if self.edge_chunk_size > 0:
+            # Reuse one stable COO tensor in every chunked SlotGAT layer
+            # instead of restacking DGL endpoints per layer.
+            graph.slotgat_edge_index = torch.stack((src, dst), dim=0)
         self._graph_cache[cache_key] = (graph, graph_edge_types)
         return graph, graph_edge_types
 
@@ -200,9 +201,3 @@ class FreebaseSlotGATClassifier(nn.Module):
             graph_edge_types,
         )
         return F.log_softmax(logits, dim=1)
-
-    def clear_graph_cache(self) -> None:
-        """Release variant-specific GPU graph storage between forwards."""
-        self._graph_cache.clear()
-        # slotGAT.forward receives a replacement graph before using this field.
-        self.network.g = None

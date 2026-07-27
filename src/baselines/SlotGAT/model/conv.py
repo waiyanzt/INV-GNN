@@ -110,94 +110,6 @@ class slotGATConv(nn.Module):
     def set_allow_zero_in_degree(self, set_value):
         self._allow_zero_in_degree = set_value
 
-    def _project_slots(self, h_src, weight):
-        """Project slots without materializing the full type-major result.
-
-        The historical bmm/permute/flatten sequence first creates
-        ``[T, N, H * O]`` and then copies it into ``[N, H, T * O]``.  Both
-        tensors can be several GiB on Freebase.  Filling the final layout in
-        feature slices is algebraically identical and bounds the temporary
-        projection by ``decomposed_layers``.
-        """
-        num_nodes = h_src.shape[1]
-        projected = h_src.new_empty(
-            (num_nodes, self._num_heads, self.num_ntype * self._out_feats)
-        )
-        projected_width = self._num_heads * self._out_feats
-        projection_chunk_size = (
-            projected_width + self.decomposed_layers - 1
-        ) // self.decomposed_layers
-        for ntype in range(self.num_ntype):
-            slot_start = ntype * self._out_feats
-            for projection_start in range(
-                0, projected_width, projection_chunk_size
-            ):
-                projection_end = min(
-                    projection_start + projection_chunk_size,
-                    projected_width,
-                )
-                projection = h_src[ntype].matmul(
-                    weight[ntype, :, projection_start:projection_end]
-                )
-                cursor = projection_start
-                local_start = 0
-                while cursor < projection_end:
-                    head = cursor // self._out_feats
-                    out_start = cursor % self._out_feats
-                    width = min(
-                        self._out_feats - out_start,
-                        projection_end - cursor,
-                    )
-                    projected[
-                        :,
-                        head,
-                        slot_start + out_start : slot_start + out_start + width,
-                    ] = projection[:, local_start : local_start + width]
-                    cursor += width
-                    local_start += width
-        return projected
-
-    def _add_projected_residual(self, rst, h_src):
-        """Add the exact learned residual directly into the output buffer."""
-        projected_width = self._num_heads * self._out_feats
-        projection_chunk_size = (
-            projected_width + self.decomposed_layers - 1
-        ) // self.decomposed_layers
-        for ntype in range(self.num_ntype):
-            slot_start = ntype * self._out_feats
-            for projection_start in range(
-                0, projected_width, projection_chunk_size
-            ):
-                projection_end = min(
-                    projection_start + projection_chunk_size,
-                    projected_width,
-                )
-                projection = h_src[ntype].matmul(
-                    self.res_fc[
-                        ntype, :, projection_start:projection_end
-                    ]
-                )
-                cursor = projection_start
-                local_start = 0
-                while cursor < projection_end:
-                    head = cursor // self._out_feats
-                    out_start = cursor % self._out_feats
-                    width = min(
-                        self._out_feats - out_start,
-                        projection_end - cursor,
-                    )
-                    output_slice = slice(
-                        slot_start + out_start,
-                        slot_start + out_start + width,
-                    )
-                    rst[:, head, output_slice] = (
-                        rst[:, head, output_slice]
-                        + projection[:, local_start : local_start + width]
-                    )
-                    cursor += width
-                    local_start += width
-        return rst
-
     def forward(self, graph, feat, e_feat, get_out=[""], res_attn=None):
         with graph.local_scope():
             if not self._allow_zero_in_degree:
@@ -222,12 +134,9 @@ class slotGATConv(nn.Module):
                 h_dst = h_src = h_src.permute(2, 0, 1, 3).flatten(2)
                 if "getEmb" in get_out:
                     self.emb = h_dst.cpu().detach()
-                if self.edge_chunk_size > 0:
-                    feat_src = feat_dst = self._project_slots(h_src, self.fc)
-                else:
-                    feat_dst = torch.bmm(h_src, self.fc)
-                    feat_src = feat_dst = feat_dst.permute(1, 0, 2).view(
-                        -1, self.num_ntype, self._num_heads, self._out_feats).permute(0, 2, 1, 3).flatten(2)
+                feat_dst = torch.bmm(h_src, self.fc)
+                feat_src = feat_dst = feat_dst.permute(1, 0, 2).view(
+                    -1, self.num_ntype, self._num_heads, self._out_feats).permute(0, 2, 1, 3).flatten(2)
                 if graph.is_block:
                     feat_dst = feat_src[:graph.number_of_dst_nodes()]
                 relation_edge_scores = None
@@ -250,17 +159,8 @@ class slotGATConv(nn.Module):
                     relation_edge_scores = (
                         relation_edge_features * self.attn_e
                     ).sum(dim=-1)
-                if self.edge_chunk_size > 0:
-                    # Avoid the full N x H x (T * O) multiply temporary.
-                    el = torch.einsum(
-                        "nhf,hf->nh", feat_src, self.attn_l.squeeze(0)
-                    )
-                    er = torch.einsum(
-                        "nhf,hf->nh", feat_dst, self.attn_r.squeeze(0)
-                    )
-                else:
-                    el = (feat_src * self.attn_l).sum(dim=-1)
-                    er = (feat_dst * self.attn_r).sum(dim=-1)
+                el = (feat_src * self.attn_l).sum(dim=-1)
+                er = (feat_dst * self.attn_r).sum(dim=-1)
 
             if self.edge_chunk_size > 0:
                 if graph.is_block:
@@ -347,17 +247,12 @@ class slotGATConv(nn.Module):
 
             if self.res_fc is not None:
                 if self._in_dst_feats != self._out_feats:
-                    if self.edge_chunk_size > 0:
-                        rst = self._add_projected_residual(rst, h_src)
-                        resval = None
-                    else:
-                        resval = torch.bmm(h_src, self.res_fc)
-                        resval = resval.permute(1, 0, 2).view(
-                            -1, self.num_ntype, self._num_heads, self._out_feats).permute(0, 2, 1, 3).flatten(2)
+                    resval = torch.bmm(h_src, self.res_fc)
+                    resval = resval.permute(1, 0, 2).view(
+                        -1, self.num_ntype, self._num_heads, self._out_feats).permute(0, 2, 1, 3).flatten(2)
                 else:
                     resval = self.res_fc(h_src).view(h_dst.shape[0], -1, self._out_feats * self.num_ntype)
-                if resval is not None:
-                    rst = rst + resval
+                rst = rst + resval
             if self.bias:
                 rst = rst + self.bias_param
             if self.activation:

@@ -41,7 +41,7 @@ def main() -> None:
         str(SLOTGAT_ROOT / "results" / "slotgat_augmentation" / "FREEBASE"),
     )
     add_default("--hidden-dim", "64")
-    add_default("--slotgat-edge-chunk-size", "250000")
+    add_default("--slotgat-edge-chunk-size", "0")
     add_default("--slotgat-decomposed-layers", "4")
     add_default("--lr", "0.005")
     add_default("--weight-decay", "0.001")

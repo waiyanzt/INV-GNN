@@ -44,8 +44,7 @@ python slotgat_data_augmentation/run_FREEBASE_slotgat_augmentation.py \
   --alpha 0.05 \
   --aggregator SA \
   --sa-att-dim 3 \
-  --slotgat-edge-chunk-size 250000 \
-  --slotgat-decomposed-layers 4 \
+  --slotgat-edge-chunk-size 0 \
   --lr 0.005 \
   --weight-decay 0.001 \
   --grad-clip 0 \
@@ -54,24 +53,14 @@ python slotgat_data_augmentation/run_FREEBASE_slotgat_augmentation.py \
   --resume
 ```
 
-The convolution computes edge-attention contributions per relation and performs
-the complete destination softmax/aggregation in bounded edge chunks. Its custom
-backward recomputes chunk attention rather than retaining per-edge autograd
-graphs across layers. This is the SlotGAT analogue of `ChunkedRGCNConv`: all
-edges contribute, relation-aware attention and residual attention are
-preserved, and only normal floating-point reduction-order differences are
-expected. It also avoids the reference implementation's roughly 181 GiB
-`E x heads x edge_features` intermediate on `exact_2`.
+`--slotgat-edge-chunk-size 0` selects the original DGL SlotGAT convolution used
+by the initial Freebase data-augmentation runner. The shared model, randomized
+per-super-epoch variant order, mean validation loss checkpoint selection, and
+per-variant test reporting are unchanged.
 
-Within each edge chunk, `--slotgat-decomposed-layers 4` divides the slot feature
-axis into four slices. This is analogous to PyG feature decomposition and
-reduces the largest chunk message tensor by another factor of four without
-changing model parameters.
-
-Start with `--slotgat-edge-chunk-size 250000` on an 80 GB accelerator. Reduce
-it to `100000` or `50000` if peak memory is still too high. The complete
-94.7-million-edge graph tensors remain resident, but edge-sized attention and
-message intermediates are bounded by the configured chunk.
+The optional exact chunked backend remains available by setting a positive
+`--slotgat-edge-chunk-size` and, optionally,
+`--slotgat-decomposed-layers`. It is not used by the production command above.
 
 Each `seed_<seed>/` directory receives the best checkpoint, exact resume state,
 training history, per-variant metrics and score tables, pairwise invariance
