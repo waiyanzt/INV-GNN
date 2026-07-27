@@ -165,6 +165,19 @@ class slotGATConv(nn.Module):
                 rst = rst + self.bias_param
             if self.activation:
                 rst = self.activation(rst)
-            self.attentions = graph.edata.pop('a').detach()
+            attention = graph.edata.pop('a').detach()
+            retain_attention = (
+                self.dataRecorder is not None
+                and self.dataRecorder.get("meta", {}).get(
+                    "retainLayerAttention", False
+                )
+            )
+            # Keeping every layer's detached E x H attention tensor is
+            # unnecessary for ordinary training and is especially costly for
+            # augmented WordNet/Freebase graphs. The returned tensor still
+            # preserves SlotGAT's residual-attention behavior. Callers that
+            # explicitly inspect layer.attentions can opt in through the
+            # recorder metadata.
+            self.attentions = attention if retain_attention else None
             torch.cuda.empty_cache()
-            return rst, self.attentions
+            return rst, attention
