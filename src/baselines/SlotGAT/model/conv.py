@@ -126,9 +126,28 @@ class slotGATConv(nn.Module):
                     -1, self.num_ntype, self._num_heads, self._out_feats).permute(0, 2, 1, 3).flatten(2)
                 if graph.is_block:
                     feat_dst = feat_src[:graph.number_of_dst_nodes()]
-                e_feat = self.edge_emb(e_feat) if self._edge_feats else None
-                e_feat = self.fc_e(e_feat).view(-1, self._num_heads, self._edge_feats) if self._edge_feats else None
-                ee = (e_feat * self.attn_e).sum(dim=-1).unsqueeze(-1) if self._edge_feats else 0
+                if self._edge_feats:
+                    # Algebraically fuse edge embedding, projection, and the
+                    # final attention-vector dot product per relation type:
+                    #
+                    #   dot(fc_e(edge_emb[e]), attn_e)
+                    #
+                    # The original implementation materialized an
+                    # E x heads x edge_feats tensor. Freebase exact_2 has about
+                    # 94.7M directed edges, making that intermediate roughly
+                    # 181 GiB for 8 heads and 64 edge dimensions. Computing the
+                    # same scalar table for each relation first reduces the
+                    # edge-sized tensor to E x heads without changing the
+                    # learned function or gradients.
+                    relation_edge_features = self.fc_e(
+                        self.edge_emb.weight
+                    ).view(-1, self._num_heads, self._edge_feats)
+                    relation_edge_scores = (
+                        relation_edge_features * self.attn_e
+                    ).sum(dim=-1)
+                    ee = relation_edge_scores[e_feat].unsqueeze(-1)
+                else:
+                    ee = 0
                 el = (feat_src * self.attn_l).sum(dim=-1).unsqueeze(-1)
                 er = (feat_dst * self.attn_r).sum(dim=-1).unsqueeze(-1)
                 graph.srcdata.update({'ft': feat_src, 'el': el})

@@ -1,14 +1,16 @@
 #!/usr/bin/env python3
-"""Joint graph-variant augmentation for the legacy Freebase RGCN model.
+"""Joint graph-variant augmentation for Freebase RGCN and SlotGAT encoders.
 
-The model architecture, loss, optimizer, and checkpoint-selection criterion
-match run_freebase_nc.py/model_RGCN_freebase_nc.py. One model and optimizer are
-shared across graph variants. A super-epoch visits every selected variant once.
+One model and optimizer are shared across graph variants. A super-epoch visits
+every selected variant once, and mean validation NLL selects the checkpoint.
+The RGCN defaults retain the legacy model exactly; SlotGAT uses the supplied
+Freebase node-classification architecture with globally aligned edge types.
 """
 
 from __future__ import annotations
 
 import argparse
+import sys
 import time
 from pathlib import Path
 from typing import Any, Dict, List, Mapping
@@ -18,7 +20,6 @@ import pandas as pd
 import torch
 import torch.nn.functional as F
 
-from model_RGCN_freebase_nc import RGCNFeatureless
 from rgcn_aug_common import (
     EarlyStopper,
     assert_same_tensor,
@@ -40,6 +41,8 @@ from rgcn_aug_common import (
     torch_load_full,
     write_json,
 )
+
+SLOTGAT_ROOT = Path(__file__).resolve().parents[2] / "SlotGAT"
 
 
 def parse_csv(value: str) -> List[str]:
@@ -109,34 +112,106 @@ def index_batches(indices: torch.Tensor, batch_size: int, rng: np.random.RandomS
         yield torch.from_numpy(order[start : start + batch_size]).long()
 
 
+def classification_ranking_metrics(
+    log_probabilities: torch.Tensor,
+    labels: torch.Tensor,
+    indices: torch.Tensor,
+) -> Dict[str, float]:
+    selected = log_probabilities[indices]
+    true_labels = labels[indices].long()
+    top_k = min(3, selected.shape[1])
+    top = torch.topk(selected, k=top_k, dim=1).indices
+    sorted_classes = torch.argsort(selected, dim=1, descending=True)
+    ranks = (
+        (sorted_classes == true_labels.unsqueeze(1))
+        .nonzero(as_tuple=False)[:, 1]
+        .float()
+        + 1.0
+    )
+    return {
+        "Hits@1": float((top[:, 0] == true_labels).float().mean().cpu()),
+        "Hits@3": float(
+            (top == true_labels.unsqueeze(1)).any(dim=1).float().mean().cpu()
+        ),
+        "MRR": float((1.0 / ranks).mean().cpu()),
+    }
+
+
 @torch.no_grad()
-def evaluate_variant(model, cpu_bundle, device, split: str):
-    bundle = device_bundle(cpu_bundle, device)
+def evaluate_variant(model, cpu_bundle, device, split: str, prepared_bundle=None):
+    bundle = (
+        prepared_bundle
+        if prepared_bundle is not None
+        else device_bundle(cpu_bundle, device)
+    )
     model.eval()
     log_probabilities = model(bundle["edge_index"], bundle["edge_type"])
     indices = bundle[f"{split}_idx"]
     loss = float(F.nll_loss(log_probabilities[indices], bundle["labels"][indices]).cpu())
     metrics = classification_metrics(log_probabilities, bundle["labels"], indices)
+    metrics.update(
+        classification_ranking_metrics(
+            log_probabilities, bundle["labels"], indices
+        )
+    )
     return loss, metrics, log_probabilities.detach().cpu(), cpu_bundle[f"{split}_idx"].cpu()
+
+
+def build_model(args, reference: Mapping[str, Any], device: torch.device):
+    if args.encoder == "rgcn":
+        from model_RGCN_freebase_nc import RGCNFeatureless
+
+        return RGCNFeatureless(
+            num_nodes=reference["num_nodes"],
+            num_relations=reference["num_relations"],
+            hidden_dim=args.hidden_dim,
+            num_classes=reference["num_classes"],
+            num_bases=args.num_bases,
+            dropout=args.dropout,
+            edge_chunk_size=args.edge_chunk_size,
+        ).to(device)
+
+    slotgat_root = str(SLOTGAT_ROOT)
+    if slotgat_root not in sys.path:
+        sys.path.insert(0, slotgat_root)
+    from model_slotgat_nc_freebase import FreebaseSlotGATClassifier
+
+    return FreebaseSlotGATClassifier(
+        node_type=reference["node_type"],
+        num_relations=reference["num_relations"],
+        num_classes=reference["num_classes"],
+        hidden_dim=args.hidden_dim,
+        num_layers=args.num_layers,
+        num_heads=args.num_heads,
+        edge_feats=args.edge_feats,
+        dropout_feat=args.dropout_feat,
+        dropout_attn=args.dropout_attn,
+        negative_slope=args.slope,
+        alpha=args.alpha,
+        aggregator=args.aggregator,
+        sa_att_dim=args.sa_att_dim,
+    ).to(device)
+
+
+def model_name(args) -> str:
+    if args.encoder == "slotgat":
+        return "FreebaseSlotGATClassifier"
+    return (
+        "legacy_RGCNFeatureless_chunked_recompute_v1"
+        if args.edge_chunk_size > 0
+        else "legacy_RGCNFeatureless_pyg"
+    )
 
 
 def run_seed(args, variants: List[str], seed: int, output_root: Path) -> Dict[str, Any]:
     set_determinism(seed)
+    if args.encoder == "slotgat":
+        torch.use_deterministic_algorithms(True, warn_only=True)
     device = resolve_device(args.device)
     bundles = prepare_bundles(Path(args.data_root), variants)
     reference = bundles[variants[0]]
 
-    # Exact legacy parameters and computation. A positive edge chunk size uses
-    # an equivalent memory-bounded evaluation of relation mean aggregation.
-    model = RGCNFeatureless(
-        num_nodes=reference["num_nodes"],
-        num_relations=reference["num_relations"],
-        hidden_dim=args.hidden_dim,
-        num_classes=reference["num_classes"],
-        num_bases=args.num_bases,
-        dropout=args.dropout,
-        edge_chunk_size=args.edge_chunk_size,
-    ).to(device)
+    model = build_model(args, reference, device)
     optimizer = torch.optim.Adam(
         model.parameters(), lr=args.lr, weight_decay=args.weight_decay
     )
@@ -156,11 +231,7 @@ def run_seed(args, variants: List[str], seed: int, output_root: Path) -> Dict[st
     updates_per_super_epoch = len(variants) * batches_per_variant
     run_config = {
         "dataset": "FREEBASE",
-        "model": (
-            "legacy_RGCNFeatureless_chunked_recompute_v1"
-            if args.edge_chunk_size > 0
-            else "legacy_RGCNFeatureless_pyg"
-        ),
+        "model": model_name(args),
         "seed": seed,
         "variants": variants,
         "hidden_dim": args.hidden_dim,
@@ -177,6 +248,31 @@ def run_seed(args, variants: List[str], seed: int, output_root: Path) -> Dict[st
         "patience": args.patience,
         "data_root": str(Path(args.data_root).resolve()),
     }
+    if args.encoder == "slotgat":
+        # Preserve the historical RGCN resume configuration when the default
+        # encoder is used.
+        for key in (
+            "num_bases",
+            "dropout",
+            "edge_chunk_size",
+            "chunked_backend_version",
+        ):
+            run_config.pop(key)
+        run_config.update(
+            {
+                "encoder": "slotgat",
+                "num_layers": args.num_layers,
+                "num_heads": args.num_heads,
+                "edge_feats": args.edge_feats,
+                "dropout_feat": args.dropout_feat,
+                "dropout_attn": args.dropout_attn,
+                "slope": args.slope,
+                "alpha": args.alpha,
+                "aggregator": args.aggregator,
+                "sa_att_dim": args.sa_att_dim,
+                "relation_layout": "global_forward_reverse_plus_structural_self",
+            }
+        )
     history: List[Dict[str, Any]] = []
     super_epochs_ran = variant_epochs = optimizer_steps = 0
     train_graph_forwards = validation_graph_forwards = 0
@@ -206,6 +302,17 @@ def run_seed(args, variants: List[str], seed: int, output_root: Path) -> Dict[st
         prior_peak_rss = int(resume_state.get("process_peak_rss_bytes", 0))
         prior_training_gpu = dict(resume_state.get("training_gpu", {}))
 
+    # SlotGAT caches DGL graphs by tensor identity, so keep one stable device
+    # tensor bundle per variant. RGCN retains its legacy on-demand transfers.
+    prepared_bundles = (
+        {
+            variant: device_bundle(bundle, device)
+            for variant, bundle in bundles.items()
+        }
+        if args.encoder == "slotgat"
+        else {}
+    )
+
     reset_cuda_peak(device)
     training_start = time.perf_counter()
     for super_epoch in range(super_epochs_ran, args.super_epochs):
@@ -218,7 +325,11 @@ def run_seed(args, variants: List[str], seed: int, output_root: Path) -> Dict[st
         train_losses: Dict[str, float] = {}
 
         for variant in order:
-            bundle = device_bundle(bundles[variant], device)
+            bundle = (
+                prepared_bundles[variant]
+                if args.encoder == "slotgat"
+                else device_bundle(bundles[variant], device)
+            )
             losses = []
             for batch_cpu in index_batches(
                 bundle["train_idx"].cpu(), args.label_batch_size, rng
@@ -244,7 +355,11 @@ def run_seed(args, variants: List[str], seed: int, output_root: Path) -> Dict[st
         val_metrics: Dict[str, Dict[str, float]] = {}
         for variant in variants:
             val_loss, metrics, _, _ = evaluate_variant(
-                model, bundles[variant], device, "val"
+                model,
+                bundles[variant],
+                device,
+                "val",
+                prepared_bundles.get(variant),
             )
             validation_graph_forwards += 1
             val_losses[variant] = val_loss
@@ -340,7 +455,11 @@ def run_seed(args, variants: List[str], seed: int, output_root: Path) -> Dict[st
     test_graph_forwards = 0
     for variant in variants:
         test_loss, metrics, log_probabilities, test_idx = evaluate_variant(
-            model, bundles[variant], device, "test"
+            model,
+            bundles[variant],
+            device,
+            "test",
+            prepared_bundles.get(variant),
         )
         test_graph_forwards += 1
         selected = log_probabilities[test_idx]
@@ -391,11 +510,18 @@ def run_seed(args, variants: List[str], seed: int, output_root: Path) -> Dict[st
         "dataset": "FREEBASE",
         "model": run_config["model"],
         "aggregation_backend": (
-            "chunked_recompute_exact_mean"
-            if args.edge_chunk_size > 0
-            else "pyg_rgcn_conv"
+            "dgl_slotgat_exact_relation_score_fusion"
+            if args.encoder == "slotgat"
+            else (
+                "chunked_recompute_exact_mean"
+                if args.edge_chunk_size > 0
+                else "pyg_rgcn_conv"
+            )
         ),
-        "edge_chunk_size": args.edge_chunk_size,
+        "edge_chunk_size": (
+            None if args.encoder == "slotgat" else args.edge_chunk_size
+        ),
+        "encoder": args.encoder,
         "seed": seed,
         "variants": variants,
         "epoch_accounting": {
@@ -430,8 +556,9 @@ def run_seed(args, variants: List[str], seed: int, output_root: Path) -> Dict[st
 
 def main() -> None:
     parser = argparse.ArgumentParser(
-        description="Freebase joint augmentation using the legacy PyG RGCN model"
+        description="Freebase joint graph-variant augmentation for RGCN or SlotGAT"
     )
+    parser.add_argument("--encoder", choices=("rgcn", "slotgat"), default="rgcn")
     parser.add_argument("--variants", default="unchanged,exact_2")
     parser.add_argument("--seeds", default="1566911444,20241017,20251017")
     parser.add_argument("--data-root", default="data/rgcn_augmentation/freebase")
@@ -454,6 +581,19 @@ def main() -> None:
     parser.add_argument("--hidden-dim", type=int, default=64)
     parser.add_argument("--num-bases", type=int, default=30)
     parser.add_argument("--dropout", type=float, default=0.0)
+    parser.add_argument("--num-layers", type=int, default=2)
+    parser.add_argument("--num-heads", type=int, default=8)
+    parser.add_argument("--edge-feats", type=int, default=64)
+    parser.add_argument("--dropout-feat", type=float, default=0.5)
+    parser.add_argument("--dropout-attn", type=float, default=0.2)
+    parser.add_argument("--slope", type=float, default=0.05)
+    parser.add_argument("--alpha", type=float, default=0.05)
+    parser.add_argument(
+        "--aggregator",
+        choices=("SA", "average", "last_fc", "max", "onedimconv"),
+        default="SA",
+    )
+    parser.add_argument("--sa-att-dim", type=int, default=3)
     parser.add_argument("--lr", type=float, default=0.001)
     parser.add_argument("--weight-decay", type=float, default=0.001)
     parser.add_argument(
@@ -464,6 +604,13 @@ def main() -> None:
     args = parser.parse_args()
     if args.edge_chunk_size < 0:
         raise SystemExit("--edge-chunk-size must be 0 or a positive integer")
+    if args.encoder == "slotgat" and (
+        args.num_layers <= 0 or args.num_heads <= 0 or args.edge_feats < 0
+    ):
+        raise SystemExit(
+            "SlotGAT requires positive --num-layers/--num-heads and "
+            "nonnegative --edge-feats"
+        )
 
     variants = parse_csv(args.variants)
     seeds = [int(value) for value in parse_csv(args.seeds)]
