@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
-"""Joint graph-variant augmentation for the legacy WordNet RGCN model.
+"""Joint graph-variant augmentation for WordNet RGCN and SlotGAT encoders.
 
-The encoder/decoder, c_i normalization, edge dropout, root dropout, optimizer
-parameter groups, negative sampling, filtered ranking, and checkpoint selection
-match run_wordnet_lp.py/model_RGCN_lp_wordnet.py. One model/optimizer is shared
-across variants.
+The training/evaluation protocol is shared across encoders: one model and
+optimizer visit every selected graph variant per super-epoch, and mean legacy
+filtered MRR selects the checkpoint. RGCN retains its exact standalone model
+settings; SlotGAT uses a one-slot relation-aware attention encoder and the same
+DistMult link decoder/evaluation contract.
 
 Two evaluation families are reported:
 1. legacy-compatible per-variant metrics, for comparison with old runs;
@@ -14,6 +15,7 @@ Two evaluation families are reported:
 from __future__ import annotations
 
 import argparse
+import sys
 import time
 from collections import defaultdict
 from pathlib import Path
@@ -25,7 +27,6 @@ import torch
 import torch.nn.functional as F
 from sklearn.metrics import accuracy_score, f1_score, precision_score, recall_score
 
-from model_RGCN_lp_wordnet import WordNetRGCNLinkPredictor
 from wordnet_lp import (
     CANONICAL_VARIANTS,
     VARIANT_ALIASES,
@@ -54,6 +55,7 @@ from rgcn_aug_common import (
 )
 
 BINARY_K = 50
+SLOTGAT_ROOT = Path(__file__).resolve().parents[2] / "SlotGAT"
 
 
 def parse_csv(value: str) -> List[str]:
@@ -226,6 +228,7 @@ def prepare_bundles(
     variants: List[str],
     fixed_negatives: int,
     candidate_seed: int,
+    candidate_known_scope: str = "all",
 ):
     """Load variants through the same WordNetLPDataset used by single-variant runs."""
     shared = load_wordnet_splits(splits_path)
@@ -271,12 +274,17 @@ def prepare_bundles(
             "format_version": dataset.format_version,
         }
 
-    # Use every available graph plus validation/test positives when excluding
-    # false negatives. This keeps invariance candidates identical regardless of
-    # whether an optional subset of variants is selected for an ablation.
+    # RGCN's historical default uses every available graph when excluding false
+    # negatives. Selected-only scope is available for experiments that
+    # intentionally exclude a graph family from every reported calculation.
+    known_variants = (
+        DEFAULT_VARIANTS
+        if candidate_known_scope == "all"
+        else canonical_variants
+    )
     all_known = [
         np.asarray(shared[f"train_pos_{variant}"], dtype=np.int64)
-        for variant in DEFAULT_VARIANTS
+        for variant in known_variants
     ] + [
         np.asarray(shared["val_pos"], dtype=np.int64),
         np.asarray(shared["test_pos"], dtype=np.int64),
@@ -498,40 +506,93 @@ def shared_candidate_frame(
     return bce, metrics, frame
 
 
+def build_model(args, reference: Mapping[str, Any], device: torch.device):
+    """Construct the requested encoder behind the shared WordNet LP interface."""
+    if args.encoder == "rgcn":
+        # Keep PyG optional for SlotGAT-only environments.
+        from model_RGCN_lp_wordnet import WordNetRGCNLinkPredictor
+
+        return WordNetRGCNLinkPredictor(
+            num_entities=reference["num_entities"],
+            num_relations=reference["num_relations"],
+            hidden_dim=args.hidden_dim,
+            num_bases=args.num_bases,
+            edge_dropout_other=args.edge_dropout_other,
+            root_dropout_loop=args.root_dropout_loop,
+        ).to(device)
+
+    if args.encoder == "slotgat":
+        slotgat_root = str(SLOTGAT_ROOT)
+        if slotgat_root not in sys.path:
+            sys.path.insert(0, slotgat_root)
+        from model_slotgat_lp_wordnet import WordNetSlotGATLinkPredictor
+
+        return WordNetSlotGATLinkPredictor(
+            num_entities=reference["num_entities"],
+            num_relations=reference["num_relations"],
+            hidden_dim=args.hidden_dim,
+            num_layers=args.num_layers,
+            num_heads=args.num_heads,
+            edge_feats=args.edge_feats,
+            dropout_feat=args.dropout_feat,
+            dropout_attn=args.dropout_attn,
+            negative_slope=args.slope,
+            alpha=args.alpha,
+        ).to(device)
+
+    raise ValueError(f"Unsupported encoder: {args.encoder}")
+
+
+def model_name(encoder: str) -> str:
+    return (
+        "legacy_WordNetRGCNLinkPredictor"
+        if encoder == "rgcn"
+        else "WordNetSlotGATLinkPredictor"
+    )
+
+
 def run_seed(args, variants: List[str], seed: int, output_root: Path) -> Dict[str, Any]:
     set_determinism(seed)
+    if args.encoder == "slotgat":
+        # DGL attention reductions may not have a strict deterministic CUDA
+        # implementation on every cluster build. Match SlotGAT's standalone
+        # runner by warning instead of aborting in that case.
+        torch.use_deterministic_algorithms(True, warn_only=True)
     device = resolve_device(args.device)
     splits_path = resolve_splits_path(Path(args.data_root), args.splits_npz)
     bundles, shared, variants = prepare_bundles(
-        splits_path, variants, args.fixed_negatives, args.candidate_seed
+        splits_path,
+        variants,
+        args.fixed_negatives,
+        args.candidate_seed,
+        args.candidate_known_scope,
     )
     reference = bundles[variants[0]]
 
-    model = WordNetRGCNLinkPredictor(
-        num_entities=reference["num_entities"],
-        num_relations=reference["num_relations"],
-        hidden_dim=args.hidden_dim,
-        num_bases=args.num_bases,
-        edge_dropout_other=args.edge_dropout_other,
-        root_dropout_loop=args.root_dropout_loop,
-    ).to(device)
-    optimizer = torch.optim.Adam(
-        [
-            {
-                "params": [
-                    parameter
-                    for name, parameter in model.named_parameters()
-                    if "rel_emb" not in name
-                ],
-                "weight_decay": 0.0,
-            },
-            {
-                "params": model.rel_emb.parameters(),
-                "weight_decay": args.weight_decay,
-            },
-        ],
-        lr=args.lr,
-    )
+    model = build_model(args, reference, device)
+    if args.encoder == "rgcn":
+        optimizer = torch.optim.Adam(
+            [
+                {
+                    "params": [
+                        parameter
+                        for name, parameter in model.named_parameters()
+                        if "rel_emb" not in name
+                    ],
+                    "weight_decay": 0.0,
+                },
+                {
+                    "params": model.rel_emb.parameters(),
+                    "weight_decay": args.weight_decay,
+                },
+            ],
+            lr=args.lr,
+        )
+    else:
+        # Match the SlotGAT node-classification runner's Adam configuration.
+        optimizer = torch.optim.Adam(
+            model.parameters(), lr=args.lr, weight_decay=args.weight_decay
+        )
 
     batch_sizes = {
         variant: len(bundle["train_pos"])
@@ -568,7 +629,7 @@ def run_seed(args, variants: List[str], seed: int, output_root: Path) -> Dict[st
     }
     run_config = {
         "dataset": "WORDNET",
-        "model": "legacy_WordNetRGCNLinkPredictor",
+        "model": model_name(args.encoder),
         "seed": seed,
         "variants": variants,
         "hidden_dim": args.hidden_dim,
@@ -598,6 +659,29 @@ def run_seed(args, variants: List[str], seed: int, output_root: Path) -> Dict[st
             ).tolist()
         ],
     }
+    if args.encoder == "slotgat":
+        # RGCN's configuration remains byte-for-byte compatible with existing
+        # exact-resume states. Replace only its architecture-specific fields
+        # for new SlotGAT runs.
+        for key in ("num_bases", "edge_dropout_other", "root_dropout_loop"):
+            run_config.pop(key)
+        run_config.update(
+            {
+                "encoder": "slotgat",
+                "num_layers": args.num_layers,
+                "num_heads": args.num_heads,
+                "edge_feats": args.edge_feats,
+                "dropout_feat": args.dropout_feat,
+                "dropout_attn": args.dropout_attn,
+                "slope": args.slope,
+                "alpha": args.alpha,
+                "directed_graph": True,
+                "self_loop_edge_type": "num_relations",
+                "candidate_known_scope": args.candidate_known_scope,
+            }
+        )
+    elif args.candidate_known_scope != "all":
+        run_config["candidate_known_scope"] = args.candidate_known_scope
 
     history: List[Dict[str, Any]] = []
     super_epochs_ran = variant_epochs = optimizer_steps = 0
@@ -665,8 +749,8 @@ def run_seed(args, variants: List[str], seed: int, output_root: Path) -> Dict[st
 
                 model.train()
                 optimizer.zero_grad(set_to_none=True)
-                # The model performs edge dropout, c_i recomputation, and root
-                # dropout internally exactly as the legacy code did.
+                # Both encoders expose the same full-graph encoding interface.
+                # Encoder-specific dropout follows model.train()/eval().
                 entity_embs = model.encode(edge_index, edge_type, training=True)
                 train_graph_forwards += 1
                 positive_scores = model.score(
@@ -906,7 +990,8 @@ def run_seed(args, variants: List[str], seed: int, output_root: Path) -> Dict[st
 
     summary = {
         "dataset": "WORDNET",
-        "model": "legacy_WordNetRGCNLinkPredictor",
+        "model": model_name(args.encoder),
+        "encoder": args.encoder,
         "seed": seed,
         "variants": variants,
         "epoch_accounting": {
@@ -926,6 +1011,7 @@ def run_seed(args, variants: List[str], seed: int, output_root: Path) -> Dict[st
         "selection_metric": "mean_legacy_filtered_MRR",
         "splits_npz": str(splits_path.resolve()),
         "split_protocol": "official_leakage_free_four_variant_wordnet_splits",
+        "candidate_known_scope": args.candidate_known_scope,
         "best_mean_val_filtered_MRR": (
             early_stopper.best if np.isfinite(early_stopper.best) else None
         ),
@@ -957,8 +1043,9 @@ def run_seed(args, variants: List[str], seed: int, output_root: Path) -> Dict[st
 
 def main() -> None:
     parser = argparse.ArgumentParser(
-        description="WordNet joint augmentation using the legacy RGCN model"
+        description="WordNet joint graph-variant augmentation for RGCN or SlotGAT"
     )
+    parser.add_argument("--encoder", choices=("rgcn", "slotgat"), default="rgcn")
     parser.add_argument("--variants", default=",".join(DEFAULT_VARIANTS))
     parser.add_argument("--seeds", default="1566911444,20241017,20251017")
     parser.add_argument("--data-root", default="data/wordnet_3hops_augmented_full")
@@ -1008,6 +1095,13 @@ def main() -> None:
         "--root-dropout-loop", "--root_dropout_loop",
         dest="root_dropout_loop", type=float, default=0.2,
     )
+    parser.add_argument("--num-layers", type=int, default=2)
+    parser.add_argument("--num-heads", type=int, default=8)
+    parser.add_argument("--edge-feats", type=int, default=64)
+    parser.add_argument("--dropout-feat", type=float, default=0.5)
+    parser.add_argument("--dropout-attn", type=float, default=0.2)
+    parser.add_argument("--slope", type=float, default=0.05)
+    parser.add_argument("--alpha", type=float, default=0.05)
     parser.add_argument("--lr", type=float, default=0.01)
     parser.add_argument(
         "--weight-decay", "--weight_decay",
@@ -1024,9 +1118,29 @@ def main() -> None:
     parser.add_argument("--score-batch-size", type=int, default=65536)
     parser.add_argument("--fixed-negatives", type=int, default=50)
     parser.add_argument("--candidate-seed", type=int, default=1566911444)
+    parser.add_argument(
+        "--candidate-known-scope",
+        choices=("all", "selected"),
+        default="all",
+        help=(
+            "Relations used to exclude false negatives from shared invariance "
+            "candidates; RGCN compatibility default is all variants"
+        ),
+    )
     parser.add_argument("--device", default="auto")
     parser.add_argument("--resume", action="store_true")
     args = parser.parse_args()
+    if args.eval_interval <= 0:
+        parser.error("--eval-interval must be positive")
+    if args.super_epochs <= 0:
+        parser.error("--super-epochs must be positive")
+    if args.neg_per_pos <= 0:
+        parser.error("--neg-per-pos must be positive")
+    if args.encoder == "slotgat":
+        if args.num_layers <= 0 or args.num_heads <= 0:
+            parser.error("--num-layers and --num-heads must be positive")
+        if args.edge_feats < 0:
+            parser.error("--edge-feats must be nonnegative")
 
     requested_variants = parse_csv(args.variants)
     try:
