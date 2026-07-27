@@ -190,6 +190,8 @@ def build_model(args, reference: Mapping[str, Any], device: torch.device):
         alpha=args.alpha,
         aggregator=args.aggregator,
         sa_att_dim=args.sa_att_dim,
+        edge_chunk_size=args.slotgat_edge_chunk_size,
+        decomposed_layers=args.slotgat_decomposed_layers,
     ).to(device)
 
 
@@ -270,6 +272,8 @@ def run_seed(args, variants: List[str], seed: int, output_root: Path) -> Dict[st
                 "alpha": args.alpha,
                 "aggregator": args.aggregator,
                 "sa_att_dim": args.sa_att_dim,
+                "slotgat_edge_chunk_size": args.slotgat_edge_chunk_size,
+                "slotgat_decomposed_layers": args.slotgat_decomposed_layers,
                 "relation_layout": "global_forward_reverse_plus_structural_self",
             }
         )
@@ -510,7 +514,7 @@ def run_seed(args, variants: List[str], seed: int, output_root: Path) -> Dict[st
         "dataset": "FREEBASE",
         "model": run_config["model"],
         "aggregation_backend": (
-            "dgl_slotgat_exact_relation_score_fusion"
+            "chunked_recompute_exact_slotgat_attention"
             if args.encoder == "slotgat"
             else (
                 "chunked_recompute_exact_mean"
@@ -519,7 +523,14 @@ def run_seed(args, variants: List[str], seed: int, output_root: Path) -> Dict[st
             )
         ),
         "edge_chunk_size": (
-            None if args.encoder == "slotgat" else args.edge_chunk_size
+            args.slotgat_edge_chunk_size
+            if args.encoder == "slotgat"
+            else args.edge_chunk_size
+        ),
+        "decomposed_layers": (
+            args.slotgat_decomposed_layers
+            if args.encoder == "slotgat"
+            else None
         ),
         "encoder": args.encoder,
         "seed": seed,
@@ -594,6 +605,24 @@ def main() -> None:
         default="SA",
     )
     parser.add_argument("--sa-att-dim", type=int, default=3)
+    parser.add_argument(
+        "--slotgat-edge-chunk-size",
+        type=int,
+        default=250000,
+        help=(
+            "Maximum edges processed at once by exact recomputing SlotGAT "
+            "attention; only used with --encoder slotgat"
+        ),
+    )
+    parser.add_argument(
+        "--slotgat-decomposed-layers",
+        type=int,
+        default=4,
+        help=(
+            "Number of feature slices used inside each chunked SlotGAT "
+            "message aggregation"
+        ),
+    )
     parser.add_argument("--lr", type=float, default=0.001)
     parser.add_argument("--weight-decay", type=float, default=0.001)
     parser.add_argument(
@@ -605,10 +634,15 @@ def main() -> None:
     if args.edge_chunk_size < 0:
         raise SystemExit("--edge-chunk-size must be 0 or a positive integer")
     if args.encoder == "slotgat" and (
-        args.num_layers <= 0 or args.num_heads <= 0 or args.edge_feats < 0
+        args.num_layers <= 0
+        or args.num_heads <= 0
+        or args.edge_feats < 0
+        or args.slotgat_edge_chunk_size <= 0
+        or args.slotgat_decomposed_layers <= 0
     ):
         raise SystemExit(
             "SlotGAT requires positive --num-layers/--num-heads and "
+            "--slotgat-edge-chunk-size/--slotgat-decomposed-layers, plus "
             "nonnegative --edge-feats"
         )
 
@@ -624,6 +658,7 @@ def main() -> None:
                 "seed": summary["seed"],
                 "aggregation_backend": summary["aggregation_backend"],
                 "edge_chunk_size": summary["edge_chunk_size"],
+                "decomposed_layers": summary["decomposed_layers"],
                 "super_epochs_ran": summary["epoch_accounting"]["super_epochs_ran"],
                 "variant_epochs_ran": summary["epoch_accounting"]["variant_epochs_ran"],
                 "optimizer_steps": summary["epoch_accounting"]["optimizer_steps"],

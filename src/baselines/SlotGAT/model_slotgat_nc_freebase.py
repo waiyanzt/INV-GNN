@@ -30,6 +30,8 @@ class FreebaseSlotGATClassifier(nn.Module):
         alpha: float = 0.05,
         aggregator: str = "SA",
         sa_att_dim: int = 3,
+        edge_chunk_size: int = 0,
+        decomposed_layers: int = 1,
     ) -> None:
         super().__init__()
         node_type = node_type.detach().cpu().long()
@@ -99,6 +101,15 @@ class FreebaseSlotGATClassifier(nn.Module):
             dataRecorder=recorder,
             vis_data_saver=None,
         )
+        if edge_chunk_size < 0:
+            raise ValueError("edge_chunk_size must be nonnegative")
+        if decomposed_layers <= 0:
+            raise ValueError("decomposed_layers must be positive")
+        for layer in self.network.gat_layers:
+            layer.edge_chunk_size = int(edge_chunk_size)
+            layer.decomposed_layers = int(decomposed_layers)
+        self.edge_chunk_size = int(edge_chunk_size)
+        self.decomposed_layers = int(decomposed_layers)
         self.data_recorder = recorder
         self._feature_cache: Dict[str, List[torch.Tensor]] = {}
         self._graph_cache: Dict[
@@ -169,6 +180,9 @@ class FreebaseSlotGATClassifier(nn.Module):
             device=edge_index.device,
         )
         graph.num_ntypes = self.num_ntypes
+        # Reuse one stable COO tensor in every chunked SlotGAT layer instead of
+        # restacking DGL endpoints (about 1.4 GiB for exact_2) per layer.
+        graph.slotgat_edge_index = torch.stack((src, dst), dim=0)
         self._graph_cache[cache_key] = (graph, graph_edge_types)
         return graph, graph_edge_types
 

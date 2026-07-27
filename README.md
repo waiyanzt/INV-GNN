@@ -10,6 +10,8 @@ The paper evaluates the method on IMDb and DBLP variants using node classificati
 | IMDB node classification |   ✓   |  ✓   |       |   ✓    |    ✓    |
 | DBLP link prediction     |   ✓   |  ✓   |   ✓   |        |         |
 | IMDB link prediction     |   ✓   |  ✓   |   ✓   |        |         |
+| WordNet link prediction (joint augmentation) | | ✓ | | | ✓ |
+| Freebase node classification (joint augmentation) | | ✓ | | | ✓ |
 
 ## Data
 Download the experiment data from:
@@ -33,7 +35,7 @@ After downloading, place or extract the data so that each baseline can find its 
 │   ├── RGCN/         # RGCN preprocess + run scripts (IMDB, DBLP)
 │   ├── CMPNN/        # CMPNN preprocess + run scripts, cmpnn/ package
 │   ├── SeHGNN/       # SeHGNN preprocess + run scripts (IMDB NC)
-│   └── SlotGAT/      # SlotGAT preprocess + run scripts (IMDB NC)
+│   └── SlotGAT/      # SlotGAT scripts (IMDB NC, WordNet LP augmentation)
 ├── requirements/
 │   ├── gnn.txt       # base stack (torch 2.4 + DGL + sklearn + ...)
 │   ├── cmpnn.txt     # adds torchdrug 0.2.1
@@ -142,6 +144,22 @@ python preprocess_DBLP_cmpnn_skip.py --variant v1,v2,v3
 python run_DBLP_cmpnn_pc.py --variants v1,v2,v3
 python run_DBLP_cmpnn_skip.py --variants v1,v2,v3
 ```
+
+### WordNet joint-augmentation link prediction
+
+The initial SlotGAT experiment jointly trains on `no_changes`,
+`universal_edges`, and `all_inverse_edges`; it intentionally excludes the
+available `transitive_edges` graph. See
+[`src/baselines/SlotGAT/slotgat_data_augmentation/README_WORDNET.md`](src/baselines/SlotGAT/slotgat_data_augmentation/README_WORDNET.md)
+for preprocessing, smoke-test, production, resume, and output commands.
+
+### Freebase joint-augmentation node classification
+
+The SlotGAT experiment jointly trains one shared model on `unchanged` and
+`exact_2`. See
+[`src/baselines/SlotGAT/slotgat_data_augmentation/README_FREEBASE.md`](src/baselines/SlotGAT/slotgat_data_augmentation/README_FREEBASE.md)
+for preprocessing, the production command, memory requirements, resume
+behavior, and outputs.
 
 ### IMDB link prediction
 

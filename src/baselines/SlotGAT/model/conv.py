@@ -16,6 +16,11 @@ from dgl.utils import expand_as_pair
 import torch.nn.functional as F
 import numpy as np
 
+from .chunked_attention import (
+    ChunkedAttentionState,
+    chunked_attention_aggregate,
+)
+
 
 class slotGATConv(nn.Module):
     """
@@ -37,13 +42,15 @@ class slotGATConv(nn.Module):
                  bias=False,
                  alpha=0.,
                  num_ntype=None, eindexer=None, inputhead=False,
-                 dataRecorder=None):
+                 dataRecorder=None, edge_chunk_size=0,
+                 decomposed_layers=1):
         super(slotGATConv, self).__init__()
         self._edge_feats = edge_feats
         self._num_heads = num_heads
         self._in_src_feats, self._in_dst_feats = expand_as_pair(in_feats)
         self._out_feats = out_feats
         self._allow_zero_in_degree = allow_zero_in_degree
+        self.num_etypes = int(num_etypes)
         self.edge_emb = nn.Embedding(num_etypes, edge_feats) if edge_feats else None
         self.eindexer = eindexer
         self.num_ntype = num_ntype
@@ -74,6 +81,12 @@ class slotGATConv(nn.Module):
         self.bias = bias
         self.alpha = alpha
         self.inputhead = inputhead
+        self.edge_chunk_size = int(edge_chunk_size)
+        if self.edge_chunk_size < 0:
+            raise ValueError("edge_chunk_size must be nonnegative")
+        self.decomposed_layers = int(decomposed_layers)
+        if self.decomposed_layers <= 0:
+            raise ValueError("decomposed_layers must be positive")
 
     def reset_parameters(self):
         gain = nn.init.calculate_gain('relu')
@@ -126,6 +139,7 @@ class slotGATConv(nn.Module):
                     -1, self.num_ntype, self._num_heads, self._out_feats).permute(0, 2, 1, 3).flatten(2)
                 if graph.is_block:
                     feat_dst = feat_src[:graph.number_of_dst_nodes()]
+                relation_edge_scores = None
                 if self._edge_feats:
                     # Algebraically fuse edge embedding, projection, and the
                     # final attention-vector dot product per relation type:
@@ -145,33 +159,92 @@ class slotGATConv(nn.Module):
                     relation_edge_scores = (
                         relation_edge_features * self.attn_e
                     ).sum(dim=-1)
-                    ee = relation_edge_scores[e_feat].unsqueeze(-1)
-                else:
-                    ee = 0
-                el = (feat_src * self.attn_l).sum(dim=-1).unsqueeze(-1)
-                er = (feat_dst * self.attn_r).sum(dim=-1).unsqueeze(-1)
-                graph.srcdata.update({'ft': feat_src, 'el': el})
-                graph.dstdata.update({'er': er})
+                el = (feat_src * self.attn_l).sum(dim=-1)
+                er = (feat_dst * self.attn_r).sum(dim=-1)
+
+            if self.edge_chunk_size > 0:
+                if graph.is_block:
+                    raise NotImplementedError(
+                        "Chunked SlotGAT does not support DGL blocks"
+                    )
+                if res_attn is not None and not isinstance(
+                    res_attn, ChunkedAttentionState
+                ):
+                    raise TypeError(
+                        "Chunked SlotGAT residual attention requires a "
+                        "ChunkedAttentionState"
+                    )
+                if relation_edge_scores is None:
+                    relation_edge_scores = feat_src.new_zeros(
+                        (self.num_etypes, self._num_heads)
+                    )
+                edge_index = getattr(graph, "slotgat_edge_index", None)
+                if edge_index is None:
+                    source, target = graph.edges(order="eid")
+                    edge_index = torch.stack((source, target), dim=0)
+                active_attn_dropout = (
+                    float(self.attn_drop.p) if self.training else 0.0
+                )
+                rst, attention = chunked_attention_aggregate(
+                    feat_src=feat_src,
+                    el=el,
+                    er=er,
+                    relation_scores=relation_edge_scores,
+                    edge_index=edge_index,
+                    edge_type=e_feat,
+                    negative_slope=float(self.leaky_relu.negative_slope),
+                    alpha=float(self.alpha),
+                    dropout_p=active_attn_dropout,
+                    edge_chunk_size=self.edge_chunk_size,
+                    decomposed_layers=self.decomposed_layers,
+                    previous_state=res_attn,
+                )
+                self.attentions = None
+            else:
+                if isinstance(res_attn, ChunkedAttentionState):
+                    raise TypeError(
+                        "Standard SlotGAT cannot consume chunked attention state"
+                    )
+                ee = (
+                    relation_edge_scores[e_feat].unsqueeze(-1)
+                    if self._edge_feats
+                    else 0
+                )
+                el_dgl = el.unsqueeze(-1)
+                er_dgl = er.unsqueeze(-1)
+                graph.srcdata.update({'ft': feat_src, 'el': el_dgl})
+                graph.dstdata.update({'er': er_dgl})
                 if self._edge_feats:
                     graph.edata.update({'ee': ee})
                 graph.apply_edges(fn.u_add_v('el', 'er', 'e'))
                 e_ = graph.edata.pop('e')
                 ee = graph.edata.pop('ee') if self._edge_feats else 0
-                e = e_ + ee
+                e = self.leaky_relu(e_ + ee)
+                a = self.attn_drop(edge_softmax(graph, e))
+                if res_attn is not None:
+                    a = a * (1 - self.alpha) + res_attn * self.alpha
+                if self.dataRecorder["status"] == "FinalTesting":
+                    if "attention" not in self.dataRecorder["data"]:
+                        self.dataRecorder["data"]["attention"] = []
+                    self.dataRecorder["data"]["attention"].append(a)
+                graph.edata['a'] = a
+                graph.update_all(
+                    fn.u_mul_e('ft', 'a', 'm'),
+                    fn.sum('m', 'ft'),
+                )
+                rst = graph.dstdata['ft']
+                attention = graph.edata.pop('a').detach()
+                retain_attention = (
+                    self.dataRecorder is not None
+                    and self.dataRecorder.get("meta", {}).get(
+                        "retainLayerAttention", False
+                    )
+                )
+                # Keeping every layer's detached E x H attention tensor is
+                # unnecessary for ordinary training and is especially costly
+                # for augmented WordNet/Freebase graphs.
+                self.attentions = attention if retain_attention else None
 
-                e = self.leaky_relu(e)
-            a = self.attn_drop(edge_softmax(graph, e))
-            if res_attn is not None:
-                a = a * (1 - self.alpha) + res_attn * self.alpha
-            if self.dataRecorder["status"] == "FinalTesting":
-                if "attention" not in self.dataRecorder["data"]:
-                    self.dataRecorder["data"]["attention"] = []
-                self.dataRecorder["data"]["attention"].append(a)
-            graph.edata['a'] = a
-            graph.update_all(fn.u_mul_e('ft', 'a', 'm'),
-                             fn.sum('m', 'ft'))
-
-            rst = graph.dstdata['ft']
             if self.res_fc is not None:
                 if self._in_dst_feats != self._out_feats:
                     resval = torch.bmm(h_src, self.res_fc)
@@ -184,19 +257,5 @@ class slotGATConv(nn.Module):
                 rst = rst + self.bias_param
             if self.activation:
                 rst = self.activation(rst)
-            attention = graph.edata.pop('a').detach()
-            retain_attention = (
-                self.dataRecorder is not None
-                and self.dataRecorder.get("meta", {}).get(
-                    "retainLayerAttention", False
-                )
-            )
-            # Keeping every layer's detached E x H attention tensor is
-            # unnecessary for ordinary training and is especially costly for
-            # augmented WordNet/Freebase graphs. The returned tensor still
-            # preserves SlotGAT's residual-attention behavior. Callers that
-            # explicitly inspect layer.attentions can opt in through the
-            # recorder metadata.
-            self.attentions = attention if retain_attention else None
             torch.cuda.empty_cache()
             return rst, attention
