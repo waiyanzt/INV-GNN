@@ -200,3 +200,9 @@ class FreebaseSlotGATClassifier(nn.Module):
             graph_edge_types,
         )
         return F.log_softmax(logits, dim=1)
+
+    def clear_graph_cache(self) -> None:
+        """Release variant-specific GPU graph storage between forwards."""
+        self._graph_cache.clear()
+        # slotGAT.forward receives a replacement graph before using this field.
+        self.network.g = None
