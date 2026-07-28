@@ -1,13 +1,16 @@
 #!/usr/bin/env python3
-"""Joint graph-variant augmentation for IMDb RGCN link prediction.
+"""Joint graph-variant augmentation for IMDb RGCN or SlotGAT link prediction.
 
 This runner follows the repository's ``run_IMDB_rgcn_lp.py`` modeling and
 metrics while replacing independent per-variant training with one shared
-encoder, optimizer, and best checkpoint.
+encoder, optimizer, and best checkpoint. SlotGAT uses the same graph variants,
+shared candidates, decoder, metrics, and output contract through its dedicated
+entry-point wrapper.
 
 A *super-epoch* visits every selected graph variant exactly once.  Within each
 variant, all positive training rows are processed in minibatches and each batch
-recomputes full-graph RGCN embeddings, matching the legacy runner.  Early
+recomputes full-graph embeddings, matching the legacy runner. A nonpositive
+batch size selects one full positive-row batch. Early
 stopping is checked only after the complete balanced super-epoch using mean
 validation BCE across variants.
 
@@ -23,6 +26,7 @@ from __future__ import annotations
 
 import argparse
 import os
+import sys
 import time
 from pathlib import Path
 from typing import Any, Dict, List, Mapping, Sequence, Tuple
@@ -60,6 +64,9 @@ from rgcn_aug_common import (
     torch_load_full,
     write_json,
 )
+
+
+SLOTGAT_ROOT = Path(__file__).resolve().parents[2] / "SlotGAT"
 
 
 VALID_VARIANTS: Mapping[str, Tuple[str, ...]] = {
@@ -168,6 +175,7 @@ def prepare_bundles(task: str, variants: Sequence[str], data_root: Path):
     num_nodes_by_variant: Dict[str, Dict[str, int]] = {}
     indexers_by_variant: Dict[str, Mapping[str, torch.Tensor]] = {}
     splits_by_name: Dict[str, Dict[str, torch.Tensor]] = {}
+    node_types_by_variant: Dict[str, torch.Tensor] = {}
 
     for variant in variants:
         graph_data, meta = load_preprocessed(base_dir(data_root, task, variant))
@@ -217,6 +225,7 @@ def prepare_bundles(task: str, variants: Sequence[str], data_root: Path):
             "variant": variant,
             "graph": homogeneous,
             "edge_types": edge_types,
+            "node_type": homogeneous.ndata[dgl.NTYPE].long().cpu(),
             "indexers": indexers,
             "movie_indexer": indexers["movie"],
             "tail_indexer": indexers[tail_type],
@@ -226,6 +235,7 @@ def prepare_bundles(task: str, variants: Sequence[str], data_root: Path):
         }
         num_nodes_by_variant[variant] = num_nodes
         indexers_by_variant[variant] = indexers
+        node_types_by_variant[variant] = bundles[variant]["node_type"]
         for name, value in splits.items():
             splits_by_name.setdefault(name, {})[variant] = value
 
@@ -241,6 +251,7 @@ def prepare_bundles(task: str, variants: Sequence[str], data_root: Path):
             raise ValueError("Homogeneous node counts differ across IMDb-LP variants")
 
     assert_same_indexers(indexers_by_variant)
+    assert_same_tensor("homogeneous node types", node_types_by_variant)
     for split_name, values in splits_by_name.items():
         assert_same_tensor(f"splits.{split_name}", values)
     return bundles
@@ -256,7 +267,7 @@ def device_bundle(cpu_bundle: Mapping[str, Any], device: torch.device) -> Dict[s
     }
 
 
-def node_type_embeddings(encoder: RGCNEncoder, bundle: Mapping[str, Any]):
+def node_type_embeddings(encoder: nn.Module, bundle: Mapping[str, Any]):
     all_embeddings = encoder(bundle["graph"], bundle["edge_types"])
     return (
         all_embeddings[bundle["movie_indexer"]],
@@ -287,7 +298,7 @@ def flatten_negative_matrix(positive_edges: np.ndarray, negative_tails: np.ndarr
 
 
 def evaluate_validation(
-    encoder: RGCNEncoder,
+    encoder: nn.Module,
     cpu_bundle: Mapping[str, Any],
     shared_splits: Mapping[str, np.ndarray],
     device: torch.device,
@@ -349,7 +360,7 @@ def rowwise_ranking_metrics(
 
 def evaluate_test(
     task: str,
-    encoder: RGCNEncoder,
+    encoder: nn.Module,
     cpu_bundle: Mapping[str, Any],
     shared_splits: Mapping[str, np.ndarray],
     device: torch.device,
@@ -475,6 +486,54 @@ def imdb_lp_invariance_rows(
     return rows
 
 
+def build_encoder(
+    args: argparse.Namespace,
+    reference: Mapping[str, Any],
+    device: torch.device,
+) -> nn.Module:
+    if args.encoder == "rgcn":
+        return RGCNEncoder(
+            num_nodes=int(reference["graph"].num_nodes()),
+            num_rels=len(IMDB_LP_RELATIONS),
+            in_dim=args.in_dim,
+            hid_dim=args.hid_dim,
+            out_dim=args.out_dim,
+            num_layers=args.layers,
+            num_bases=args.num_bases,
+            dropout=args.dropout,
+        ).to(device)
+
+    slotgat_root = str(SLOTGAT_ROOT)
+    if slotgat_root not in sys.path:
+        sys.path.insert(0, slotgat_root)
+    from model_slotgat_lp_imdb import IMDbSlotGATEncoder
+
+    return IMDbSlotGATEncoder(
+        node_type=reference["node_type"],
+        num_relations=len(IMDB_LP_RELATIONS),
+        hidden_dim=args.hidden_dim,
+        num_layers=args.num_layers,
+        num_heads=args.num_heads,
+        edge_feats=args.edge_feats,
+        dropout_feat=args.dropout_feat,
+        dropout_attn=args.dropout_attn,
+        negative_slope=args.slope,
+        alpha=args.alpha,
+        aggregator=args.aggregator,
+        sa_att_dim=args.sa_att_dim,
+        edge_chunk_size=args.slotgat_edge_chunk_size,
+        decomposed_layers=args.slotgat_decomposed_layers,
+    ).to(device)
+
+
+def encoder_name(encoder: str) -> str:
+    return (
+        "IMDbSlotGATEncoder"
+        if encoder == "slotgat"
+        else "legacy_RGCNEncoder"
+    )
+
+
 def run_seed(
     args: argparse.Namespace,
     task: str,
@@ -483,6 +542,11 @@ def run_seed(
     output_root: Path,
 ) -> Dict[str, Any]:
     set_determinism(seed)
+    if args.encoder == "slotgat":
+        # Some DGL attention reductions do not expose a strictly deterministic
+        # CUDA implementation. Match the standalone SlotGAT runners by warning
+        # rather than aborting when this occurs.
+        torch.use_deterministic_algorithms(True, warn_only=True)
     device = resolve_device(args.device)
     bundles = prepare_bundles(task, variants, Path(args.data_root))
     reference = bundles[variants[0]]
@@ -492,20 +556,18 @@ def run_seed(
 
     train_positive = shared_splits["train_pos"]
     train_negative = shared_splits["train_neg"]
-    batches_per_variant = int(np.ceil(len(train_positive) / args.batch_size))
-    if batches_per_variant <= 0:
+    if len(train_positive) == 0:
         raise ValueError("Training split is empty")
+    effective_batch_size = (
+        len(train_positive) if args.batch_size <= 0 else args.batch_size
+    )
+    batches_per_variant = int(
+        np.ceil(len(train_positive) / effective_batch_size)
+    )
+    if batches_per_variant <= 0:
+        raise AssertionError("No IMDb-LP training batches were created")
 
-    encoder = RGCNEncoder(
-        num_nodes=int(reference["graph"].num_nodes()),
-        num_rels=len(IMDB_LP_RELATIONS),
-        in_dim=args.in_dim,
-        hid_dim=args.hid_dim,
-        out_dim=args.out_dim,
-        num_layers=args.layers,
-        num_bases=args.num_bases,
-        dropout=args.dropout,
-    ).to(device)
+    encoder = build_encoder(args, reference, device)
     optimizer = torch.optim.Adam(
         encoder.parameters(), lr=args.lr, weight_decay=args.weight_decay
     )
@@ -516,7 +578,7 @@ def run_seed(
     latest_state_path = seed_dir / "latest_training_state.pt"
     early_stopper = EarlyStopper(mode="min", patience=args.patience)
     rng = np.random.RandomState(seed)
-    run_config = {
+    run_config: Dict[str, Any] = {
         "dataset": "IMDB_LP",
         "task": task,
         "seed": seed,
@@ -536,6 +598,31 @@ def run_seed(
         "patience": args.patience,
         "global_relations": list(IMDB_LP_RELATIONS),
     }
+    if args.encoder == "slotgat":
+        # Keep the historical RGCN resume fingerprint byte-for-byte compatible
+        # while fully fingerprinting new SlotGAT runs.
+        run_config.update(
+            {
+                "encoder": args.encoder,
+                "hidden_dim": args.hidden_dim,
+                "num_layers": args.num_layers,
+                "num_heads": args.num_heads,
+                "edge_feats": args.edge_feats,
+                "dropout_feat": args.dropout_feat,
+                "dropout_attn": args.dropout_attn,
+                "slope": args.slope,
+                "alpha": args.alpha,
+                "aggregator": args.aggregator,
+                "sa_att_dim": args.sa_att_dim,
+                "slotgat_edge_chunk_size": (
+                    args.slotgat_edge_chunk_size
+                ),
+                "slotgat_decomposed_layers": (
+                    args.slotgat_decomposed_layers
+                ),
+                "effective_batch_size": effective_batch_size,
+            }
+        )
 
     history: List[Dict[str, Any]] = []
     optimizer_steps = 0
@@ -592,7 +679,9 @@ def run_seed(
 
             for batch_index in range(batches_per_variant):
                 selected = positive_order[
-                    batch_index * args.batch_size : (batch_index + 1) * args.batch_size
+                    batch_index
+                    * effective_batch_size : (batch_index + 1)
+                    * effective_batch_size
                 ]
                 if len(selected) == 0:
                     continue
@@ -649,6 +738,8 @@ def run_seed(
                     "encoder": encoder.state_dict(),
                     "metadata": {
                         "dataset": "IMDB_LP",
+                        "encoder": args.encoder,
+                        "model": encoder_name(args.encoder),
                         "task": task,
                         "seed": seed,
                         "variants": variants,
@@ -656,6 +747,7 @@ def run_seed(
                         "optimizer_steps": optimizer_steps,
                         "variant_epochs": variant_epochs,
                         "batches_per_variant": batches_per_variant,
+                        "effective_batch_size": effective_batch_size,
                         "global_relations": list(IMDB_LP_RELATIONS),
                     },
                 },
@@ -755,7 +847,10 @@ def run_seed(
         score_frame.to_csv(seed_dir / f"test_scores_{variant}.csv", index=False)
         score_frame.to_csv(
             seed_dir
-            / f"IMDB_rgcn_lp_augmentation_{task}_{variant}_seed{seed}_scores.csv",
+            / (
+                f"IMDB_{args.encoder}_lp_augmentation_{task}_{variant}_"
+                f"seed{seed}_scores.csv"
+            ),
             index=False,
         )
 
@@ -791,6 +886,8 @@ def run_seed(
     memory = model_memory_bytes(encoder)
     summary = {
         "dataset": "IMDB_LP",
+        "encoder": args.encoder,
+        "model": encoder_name(args.encoder),
         "task": task,
         "seed": seed,
         "variants": variants,
@@ -802,6 +899,7 @@ def run_seed(
             "super_epochs_ran": super_epochs_ran,
             "variant_epochs_ran": variant_epochs,
             "batches_per_variant": batches_per_variant,
+            "effective_batch_size": effective_batch_size,
             "optimizer_steps": optimizer_steps,
             "expected_optimizer_steps": expected_optimizer_steps,
             "train_graph_forwards": train_graph_forwards,
@@ -828,6 +926,29 @@ def run_seed(
             "inference_gpu": inference_memory,
         },
         "global_native_relations": list(IMDB_LP_RELATIONS),
+        "structural_self_loop_edge_type": (
+            len(IMDB_LP_RELATIONS)
+            if args.encoder == "slotgat"
+            else None
+        ),
+        "slotgat": (
+            {
+                "hidden_dim": args.hidden_dim,
+                "num_layers": args.num_layers,
+                "num_heads": args.num_heads,
+                "edge_feats": args.edge_feats,
+                "dropout_feat": args.dropout_feat,
+                "dropout_attn": args.dropout_attn,
+                "slope": args.slope,
+                "alpha": args.alpha,
+                "aggregator": args.aggregator,
+                "sa_att_dim": args.sa_att_dim,
+                "edge_chunk_size": args.slotgat_edge_chunk_size,
+                "decomposed_layers": args.slotgat_decomposed_layers,
+            }
+            if args.encoder == "slotgat"
+            else None
+        ),
         "graph_keys_by_variant": {
             variant: bundles[variant]["graph_keys"] for variant in variants
         },
@@ -838,7 +959,15 @@ def run_seed(
 
 def main() -> None:
     parser = argparse.ArgumentParser(
-        description="IMDb RGCN link-prediction joint graph-variant augmentation"
+        description=(
+            "IMDb RGCN or SlotGAT link-prediction joint "
+            "graph-variant augmentation"
+        )
+    )
+    parser.add_argument(
+        "--encoder",
+        choices=("rgcn", "slotgat"),
+        default="rgcn",
     )
     parser.add_argument("--task", type=parse_task, required=True)
     parser.add_argument(
@@ -853,7 +982,12 @@ def main() -> None:
     parser.add_argument("--seeds", default="1566911444,20241017,20251017")
     parser.add_argument("--super-epochs", type=int, default=200)
     parser.add_argument("--patience", type=int, default=15)
-    parser.add_argument("--batch-size", type=int, default=1024)
+    parser.add_argument(
+        "--batch-size",
+        type=int,
+        default=1024,
+        help="Positive rows per graph encoding; 0 selects one full batch",
+    )
     parser.add_argument("--threshold", "--th", dest="threshold", type=float, default=0.5)
     parser.add_argument("--in-dim", type=int, default=128)
     parser.add_argument("--hid-dim", type=int, default=256)
@@ -861,6 +995,34 @@ def main() -> None:
     parser.add_argument("--layers", type=int, default=3)
     parser.add_argument("--num-bases", type=int, default=16)
     parser.add_argument("--dropout", type=float, default=0.1)
+    parser.add_argument("--hidden-dim", type=int, default=64)
+    parser.add_argument("--num-layers", type=int, default=2)
+    parser.add_argument("--num-heads", type=int, default=8)
+    parser.add_argument("--edge-feats", type=int, default=64)
+    parser.add_argument("--dropout-feat", type=float, default=0.5)
+    parser.add_argument("--dropout-attn", type=float, default=0.2)
+    parser.add_argument("--slope", type=float, default=0.05)
+    parser.add_argument("--alpha", type=float, default=0.05)
+    parser.add_argument(
+        "--aggregator",
+        choices=("SA", "average", "max"),
+        default="SA",
+    )
+    parser.add_argument("--sa-att-dim", type=int, default=3)
+    parser.add_argument(
+        "--slotgat-edge-chunk-size",
+        type=int,
+        default=0,
+        help=(
+            "Maximum edges handled per exact recomputing SlotGAT "
+            "attention chunk; 0 uses the original DGL convolution"
+        ),
+    )
+    parser.add_argument(
+        "--slotgat-decomposed-layers",
+        type=int,
+        default=1,
+    )
     parser.add_argument("--lr", type=float, default=2e-3)
     parser.add_argument("--weight-decay", type=float, default=1e-5)
     parser.add_argument("--emb-reg", type=float, default=1e-6)
@@ -875,6 +1037,21 @@ def main() -> None:
         "--output-dir", default="results/rgcn_augmentation/IMDB_LP"
     )
     args = parser.parse_args()
+    if args.batch_size < 0:
+        raise SystemExit("--batch-size must be zero or a positive integer")
+    if args.encoder == "slotgat" and (
+        args.hidden_dim <= 0
+        or args.num_layers <= 0
+        or args.num_heads <= 0
+        or args.edge_feats < 0
+        or args.sa_att_dim <= 0
+        or args.slotgat_edge_chunk_size < 0
+        or args.slotgat_decomposed_layers <= 0
+    ):
+        raise SystemExit(
+            "SlotGAT requires positive hidden/layer/head/SA dimensions and "
+            "decomposed layers, plus nonnegative edge dimensions/chunk size"
+        )
 
     task = args.task
     variants = parse_variants(args.variants, task)
@@ -890,6 +1067,7 @@ def main() -> None:
         rows.append(
             {
                 "task": task,
+                "encoder": summary["encoder"],
                 "seed": summary["seed"],
                 "super_epochs_ran": summary["epoch_accounting"]["super_epochs_ran"],
                 "variant_epochs_ran": summary["epoch_accounting"]["variant_epochs_ran"],

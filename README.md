@@ -9,7 +9,7 @@ The paper evaluates the method on IMDb and DBLP variants using node classificati
 |--------------------------|:-----:|:----:|:-----:|:------:|:-------:|
 | IMDB node classification |   ✓   |  ✓   |       |   ✓    |    ✓    |
 | DBLP link prediction     |   ✓   |  ✓   |   ✓   |        |         |
-| IMDB link prediction     |   ✓   |  ✓   |   ✓   |        |         |
+| IMDB link prediction     |   ✓   |  ✓   |   ✓   |        |    ✓    |
 | WordNet link prediction (joint augmentation) | | ✓ | | | ✓ |
 | Freebase node classification (joint augmentation) | | ✓ | | | ✓ |
 
@@ -172,6 +172,12 @@ resume behavior, and outputs.
 ### IMDB link prediction
 
 CMPNN owns the shared IMDB md/ml splits. Build them first:
+
+The joint SlotGAT experiment trains one shared model on `v1,v3` for `md` and
+on `v1,v2,v3,v4` for `ml`. See
+[`src/baselines/SlotGAT/slotgat_data_augmentation/README_IMDB_LP.md`](src/baselines/SlotGAT/slotgat_data_augmentation/README_IMDB_LP.md)
+for its shared preprocessing, production commands, resume behavior, and output
+contract.
 
 ```bash
 cd src/baselines/CMPNN
