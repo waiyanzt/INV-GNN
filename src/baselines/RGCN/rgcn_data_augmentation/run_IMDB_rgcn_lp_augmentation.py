@@ -604,6 +604,7 @@ def run_seed(
         run_config.update(
             {
                 "encoder": args.encoder,
+                "data_root": str(Path(args.data_root).resolve()),
                 "hidden_dim": args.hidden_dim,
                 "num_layers": args.num_layers,
                 "num_heads": args.num_heads,

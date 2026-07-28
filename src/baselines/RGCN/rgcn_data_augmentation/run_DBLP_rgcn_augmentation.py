@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Joint graph-variant data augmentation for DBLP RGCN link prediction.
+"""Joint graph-variant data augmentation for DBLP RGCN or SlotGAT LP.
 
 One encoder, optimizer, and checkpoint are shared across v1-v3.  A super-epoch
 visits every variant once and processes all positive training edges for each.
@@ -8,8 +8,9 @@ For B=ceil(num_train_positive/batch_size) batches per variant:
     variant_epochs = super_epochs * number_of_variants
     optimizer_steps = super_epochs * number_of_variants * B
 
-The RGCN still performs full-graph propagation inside every supervised edge
-batch, matching the original repository runner.  Early stopping is checked only
+The encoder performs full-graph propagation inside every supervised edge
+batch, matching the original repository runner. A nonpositive batch size uses
+one full positive-edge batch. Early stopping is checked only
 after a complete balanced super-epoch using mean validation BCE across variants.
 """
 
@@ -17,6 +18,7 @@ from __future__ import annotations
 
 import argparse
 import os
+import sys
 import time
 from pathlib import Path
 from typing import Any, Dict, List, Mapping
@@ -59,18 +61,15 @@ from rgcn_aug_common import (
 )
 
 
-BASE = {
-    "v1": "data/preprocessed/DBLP_rgcn_v1",
-    "v2": "data/preprocessed/DBLP_rgcn_v2",
-    "v3": "data/preprocessed/DBLP_rgcn_v3",
-}
+SLOTGAT_ROOT = Path(__file__).resolve().parents[2] / "SlotGAT"
+VALID_VARIANTS = ("v1", "v2", "v3")
 
 
 def parse_variants(spec: str) -> List[str]:
     variants = [item.strip().lower() for item in spec.split(",") if item.strip()]
     if not variants or len(set(variants)) != len(variants):
         raise SystemExit("--variants must contain distinct variant names")
-    unknown = set(variants) - set(BASE)
+    unknown = set(variants) - set(VALID_VARIANTS)
     if unknown:
         raise SystemExit(f"Unknown variants: {sorted(unknown)}")
     return variants
@@ -105,15 +104,18 @@ def build_graph(graph_data: Mapping[str, Any], num_nodes: Mapping[str, int], var
     return dgl.heterograph(data, num_nodes_dict={key: int(value) for key, value in num_nodes.items()})
 
 
-def prepare_bundles(variants: List[str]):
+def prepare_bundles(variants: List[str], data_root: Path):
     relation_ids = relation_to_id(DBLP_RELATIONS)
     bundles: Dict[str, Dict[str, Any]] = {}
     num_nodes_dicts = {}
     indexers_by_variant = {}
     splits_by_name: Dict[str, Dict[str, torch.Tensor]] = {}
+    node_types_by_variant: Dict[str, torch.Tensor] = {}
 
     for variant in variants:
-        graph_data, meta = load_preprocessed(BASE[variant])
+        graph_data, meta = load_preprocessed(
+            str(data_root / f"DBLP_rgcn_{variant}")
+        )
         num_nodes = {key: int(value) for key, value in meta["num_nodes"].items()}
         graph = build_graph(graph_data, num_nodes, variant)
         homogeneous, edge_types, indexers = to_homogeneous_with_global_relations(graph, relation_ids)
@@ -121,6 +123,7 @@ def prepare_bundles(variants: List[str]):
             "variant": variant,
             "graph": homogeneous,
             "edge_types": edge_types,
+            "node_type": homogeneous.ndata[dgl.NTYPE].long().cpu(),
             "indexers": indexers,
             "paper_indexer": indexers["paper"],
             "conference_indexer": indexers["conference"],
@@ -129,6 +132,7 @@ def prepare_bundles(variants: List[str]):
         }
         num_nodes_dicts[variant] = num_nodes
         indexers_by_variant[variant] = indexers
+        node_types_by_variant[variant] = bundles[variant]["node_type"]
         for key, value in bundles[variant]["splits"].items():
             splits_by_name.setdefault(key, {})[variant] = value
 
@@ -139,6 +143,7 @@ def prepare_bundles(variants: List[str]):
         if bundles[variant]["graph"].num_nodes() != bundles[reference_variant]["graph"].num_nodes():
             raise ValueError("Homogeneous node counts differ across variants")
     assert_same_indexers(indexers_by_variant)
+    assert_same_tensor("homogeneous node types", node_types_by_variant)
     for split_name, values in splits_by_name.items():
         assert_same_tensor(f"splits.{split_name}", values)
     return bundles
@@ -154,7 +159,7 @@ def device_bundle(cpu_bundle: Mapping[str, Any], device: torch.device) -> Dict[s
     }
 
 
-def node_type_embeddings(encoder: RGCNEncoder, bundle: Mapping[str, Any]):
+def node_type_embeddings(encoder: nn.Module, bundle: Mapping[str, Any]):
     all_embeddings = encoder(bundle["graph"], bundle["edge_types"])
     return (
         all_embeddings[bundle["paper_indexer"]],
@@ -229,10 +234,56 @@ def evaluate_test(encoder, cpu_bundle, shared_splits, device, threshold):
     return metrics, pd.concat([positive_frame, negative_frame], ignore_index=True)
 
 
+def build_encoder(args, reference: Mapping[str, Any], device: torch.device):
+    if args.encoder == "rgcn":
+        return RGCNEncoder(
+            num_nodes=int(reference["graph"].num_nodes()),
+            num_rels=len(DBLP_RELATIONS),
+            in_dim=args.in_dim,
+            hid_dim=args.hid_dim,
+            out_dim=args.out_dim,
+            num_layers=args.layers,
+            num_bases=args.num_bases,
+            dropout=args.dropout,
+        ).to(device)
+
+    slotgat_root = str(SLOTGAT_ROOT)
+    if slotgat_root not in sys.path:
+        sys.path.insert(0, slotgat_root)
+    from model_slotgat_lp_heterogeneous import HeterogeneousSlotGATEncoder
+
+    return HeterogeneousSlotGATEncoder(
+        node_type=reference["node_type"],
+        num_relations=len(DBLP_RELATIONS),
+        hidden_dim=args.hidden_dim,
+        num_layers=args.num_layers,
+        num_heads=args.num_heads,
+        edge_feats=args.edge_feats,
+        dropout_feat=args.dropout_feat,
+        dropout_attn=args.dropout_attn,
+        negative_slope=args.slope,
+        alpha=args.alpha,
+        aggregator=args.aggregator,
+        sa_att_dim=args.sa_att_dim,
+        edge_chunk_size=args.slotgat_edge_chunk_size,
+        decomposed_layers=args.slotgat_decomposed_layers,
+    ).to(device)
+
+
+def encoder_name(encoder: str) -> str:
+    return (
+        "HeterogeneousSlotGATEncoder"
+        if encoder == "slotgat"
+        else "legacy_RGCNEncoder"
+    )
+
+
 def run_seed(args, variants: List[str], seed: int, output_root: Path) -> Dict[str, Any]:
     set_determinism(seed)
+    if args.encoder == "slotgat":
+        torch.use_deterministic_algorithms(True, warn_only=True)
     device = resolve_device(args.device)
-    bundles = prepare_bundles(variants)
+    bundles = prepare_bundles(variants, Path(args.data_root))
     reference = bundles[variants[0]]
     shared_splits = {key: value.numpy() for key, value in reference["splits"].items()}
 
@@ -249,20 +300,18 @@ def run_seed(args, variants: List[str], seed: int, output_root: Path) -> Dict[st
 
     train_positive = shared_splits["train_pos"]
     negative_by_paper = group_negatives_by_query(shared_splits["train_neg"])
-    batches_per_variant = int(np.ceil(len(train_positive) / args.batch_size))
-    if batches_per_variant <= 0:
+    if len(train_positive) == 0:
         raise ValueError("Training split is empty")
+    effective_batch_size = (
+        len(train_positive) if args.batch_size <= 0 else args.batch_size
+    )
+    batches_per_variant = int(
+        np.ceil(len(train_positive) / effective_batch_size)
+    )
+    if batches_per_variant <= 0:
+        raise AssertionError("No DBLP training batches were created")
 
-    encoder = RGCNEncoder(
-        num_nodes=int(reference["graph"].num_nodes()),
-        num_rels=len(DBLP_RELATIONS),
-        in_dim=args.in_dim,
-        hid_dim=args.hid_dim,
-        out_dim=args.out_dim,
-        num_layers=args.layers,
-        num_bases=args.num_bases,
-        dropout=args.dropout,
-    ).to(device)
+    encoder = build_encoder(args, reference, device)
     optimizer = torch.optim.Adam(encoder.parameters(), lr=args.lr, weight_decay=args.weight_decay)
 
     seed_dir = output_root / f"seed_{seed}"
@@ -271,7 +320,7 @@ def run_seed(args, variants: List[str], seed: int, output_root: Path) -> Dict[st
     latest_state_path = seed_dir / "latest_training_state.pt"
     early_stopper = EarlyStopper(mode="min", patience=args.patience)
     rng = np.random.RandomState(seed)
-    run_config = {
+    run_config: Dict[str, Any] = {
         "dataset": "DBLP", "seed": seed, "variants": variants,
         "in_dim": args.in_dim, "hid_dim": args.hid_dim, "out_dim": args.out_dim,
         "layers": args.layers, "num_bases": args.num_bases, "dropout": args.dropout,
@@ -279,6 +328,33 @@ def run_seed(args, variants: List[str], seed: int, output_root: Path) -> Dict[st
         "emb_reg": args.emb_reg, "batch_size": args.batch_size,
         "neg_per_paper": args.neg_per_paper, "patience": args.patience,
     }
+    if args.encoder == "slotgat":
+        # Preserve the historical RGCN resume fingerprint while fully
+        # fingerprinting every SlotGAT architecture and batching choice.
+        run_config.update(
+            {
+                "encoder": args.encoder,
+                "data_root": str(Path(args.data_root).resolve()),
+                "hidden_dim": args.hidden_dim,
+                "num_layers": args.num_layers,
+                "num_heads": args.num_heads,
+                "edge_feats": args.edge_feats,
+                "dropout_feat": args.dropout_feat,
+                "dropout_attn": args.dropout_attn,
+                "slope": args.slope,
+                "alpha": args.alpha,
+                "aggregator": args.aggregator,
+                "sa_att_dim": args.sa_att_dim,
+                "slotgat_edge_chunk_size": (
+                    args.slotgat_edge_chunk_size
+                ),
+                "slotgat_decomposed_layers": (
+                    args.slotgat_decomposed_layers
+                ),
+                "effective_batch_size": effective_batch_size,
+                "global_relations": list(DBLP_RELATIONS),
+            }
+        )
 
     history: List[Dict[str, Any]] = []
     optimizer_steps = 0
@@ -329,7 +405,9 @@ def run_seed(args, variants: List[str], seed: int, output_root: Path) -> Dict[st
 
             for batch_index in range(batches_per_variant):
                 selected = positive_order[
-                    batch_index * args.batch_size : (batch_index + 1) * args.batch_size
+                    batch_index
+                    * effective_batch_size : (batch_index + 1)
+                    * effective_batch_size
                 ]
                 positive_batch = train_positive[selected]
                 negative_blocks = [
@@ -349,7 +427,10 @@ def run_seed(args, variants: List[str], seed: int, output_root: Path) -> Dict[st
                 loss = pairwise_loss(positive_logits, negative_logits)
                 loss = loss + args.emb_reg * encoder.emb.weight.pow(2).mean()
                 loss.backward()
-                torch.nn.utils.clip_grad_norm_(encoder.parameters(), args.grad_clip)
+                if args.grad_clip > 0:
+                    torch.nn.utils.clip_grad_norm_(
+                        encoder.parameters(), args.grad_clip
+                    )
                 optimizer.step()
 
                 optimizer_steps += 1
@@ -374,12 +455,15 @@ def run_seed(args, variants: List[str], seed: int, output_root: Path) -> Dict[st
                 {
                     "encoder": encoder.state_dict(),
                     "metadata": {
+                        "encoder": args.encoder,
+                        "model": encoder_name(args.encoder),
                         "seed": seed,
                         "variants": variants,
                         "best_super_epoch": super_epochs_ran,
                         "optimizer_steps": optimizer_steps,
                         "variant_epochs": variant_epochs,
                         "batches_per_variant": batches_per_variant,
+                        "effective_batch_size": effective_batch_size,
                         "global_relations": list(DBLP_RELATIONS),
                     },
                 },
@@ -481,6 +565,8 @@ def run_seed(args, variants: List[str], seed: int, output_root: Path) -> Dict[st
 
     summary = {
         "dataset": "DBLP",
+        "encoder": args.encoder,
+        "model": encoder_name(args.encoder),
         "seed": seed,
         "variants": variants,
         "epoch_accounting": {
@@ -488,6 +574,7 @@ def run_seed(args, variants: List[str], seed: int, output_root: Path) -> Dict[st
             "super_epochs_ran": super_epochs_ran,
             "variant_epochs_ran": variant_epochs,
             "batches_per_variant": batches_per_variant,
+            "effective_batch_size": effective_batch_size,
             "optimizer_steps": optimizer_steps,
             "expected_optimizer_steps": expected_optimizer_steps,
             "single_variant_epoch_equivalents": variant_epochs,
@@ -510,18 +597,54 @@ def run_seed(args, variants: List[str], seed: int, output_root: Path) -> Dict[st
             "inference_gpu": inference_memory,
         },
         "global_native_relations": list(DBLP_RELATIONS),
+        "structural_self_loop_edge_type": (
+            len(DBLP_RELATIONS)
+            if args.encoder == "slotgat"
+            else None
+        ),
+        "slotgat": (
+            {
+                "hidden_dim": args.hidden_dim,
+                "num_layers": args.num_layers,
+                "num_heads": args.num_heads,
+                "edge_feats": args.edge_feats,
+                "dropout_feat": args.dropout_feat,
+                "dropout_attn": args.dropout_attn,
+                "slope": args.slope,
+                "alpha": args.alpha,
+                "aggregator": args.aggregator,
+                "sa_att_dim": args.sa_att_dim,
+                "edge_chunk_size": args.slotgat_edge_chunk_size,
+                "decomposed_layers": args.slotgat_decomposed_layers,
+            }
+            if args.encoder == "slotgat"
+            else None
+        ),
     }
     write_json(seed_dir / "summary.json", summary)
     return summary
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="DBLP RGCN joint graph-variant augmentation")
+    parser = argparse.ArgumentParser(
+        description="DBLP RGCN or SlotGAT joint graph-variant augmentation"
+    )
+    parser.add_argument(
+        "--encoder",
+        choices=("rgcn", "slotgat"),
+        default="rgcn",
+    )
     parser.add_argument("--variants", default="v1,v2,v3")
+    parser.add_argument("--data-root", default="data/preprocessed")
     parser.add_argument("--seeds", default="1566911444,20241017,20251017")
     parser.add_argument("--super-epochs", type=int, default=200)
     parser.add_argument("--patience", type=int, default=15)
-    parser.add_argument("--batch-size", type=int, default=1024)
+    parser.add_argument(
+        "--batch-size",
+        type=int,
+        default=1024,
+        help="Positive edges per graph encoding; 0 selects one full batch",
+    )
     parser.add_argument("--neg-per-paper", type=int, default=3)
     parser.add_argument("--threshold", type=float, default=0.5)
     parser.add_argument("--in-dim", type=int, default=128)
@@ -530,6 +653,30 @@ def main() -> None:
     parser.add_argument("--layers", type=int, default=3)
     parser.add_argument("--num-bases", type=int, default=16)
     parser.add_argument("--dropout", type=float, default=0.1)
+    parser.add_argument("--hidden-dim", type=int, default=64)
+    parser.add_argument("--num-layers", type=int, default=2)
+    parser.add_argument("--num-heads", type=int, default=8)
+    parser.add_argument("--edge-feats", type=int, default=64)
+    parser.add_argument("--dropout-feat", type=float, default=0.5)
+    parser.add_argument("--dropout-attn", type=float, default=0.2)
+    parser.add_argument("--slope", type=float, default=0.05)
+    parser.add_argument("--alpha", type=float, default=0.05)
+    parser.add_argument(
+        "--aggregator",
+        choices=("SA", "average", "max"),
+        default="SA",
+    )
+    parser.add_argument("--sa-att-dim", type=int, default=3)
+    parser.add_argument(
+        "--slotgat-edge-chunk-size",
+        type=int,
+        default=0,
+    )
+    parser.add_argument(
+        "--slotgat-decomposed-layers",
+        type=int,
+        default=1,
+    )
     parser.add_argument("--lr", type=float, default=2e-3)
     parser.add_argument("--weight-decay", type=float, default=1e-5)
     parser.add_argument("--emb-reg", type=float, default=1e-6)
@@ -538,6 +685,21 @@ def main() -> None:
     parser.add_argument("--resume", action="store_true", help="Resume from latest_training_state.pt if present")
     parser.add_argument("--output-dir", default="results/rgcn_augmentation/DBLP")
     args = parser.parse_args()
+    if args.batch_size < 0:
+        raise SystemExit("--batch-size must be zero or a positive integer")
+    if args.encoder == "slotgat" and (
+        args.hidden_dim <= 0
+        or args.num_layers <= 0
+        or args.num_heads <= 0
+        or args.edge_feats < 0
+        or args.sa_att_dim <= 0
+        or args.slotgat_edge_chunk_size < 0
+        or args.slotgat_decomposed_layers <= 0
+    ):
+        raise SystemExit(
+            "SlotGAT requires positive hidden/layer/head/SA dimensions and "
+            "decomposed layers, plus nonnegative edge dimensions/chunk size"
+        )
 
     variants = parse_variants(args.variants)
     seeds = [int(value.strip()) for value in args.seeds.split(",") if value.strip()]
@@ -548,6 +710,7 @@ def main() -> None:
     rows = []
     for summary in summaries:
         row = {
+            "encoder": summary["encoder"],
             "seed": summary["seed"],
             "super_epochs_ran": summary["epoch_accounting"]["super_epochs_ran"],
             "variant_epochs_ran": summary["epoch_accounting"]["variant_epochs_ran"],

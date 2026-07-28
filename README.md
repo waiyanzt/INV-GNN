@@ -8,7 +8,7 @@ The paper evaluates the method on IMDb and DBLP variants using node classificati
 | Task                     | MAGNN | RGCN | CMPNN | SeHGNN | SlotGAT |
 |--------------------------|:-----:|:----:|:-----:|:------:|:-------:|
 | IMDB node classification |   ✓   |  ✓   |       |   ✓    |    ✓    |
-| DBLP link prediction     |   ✓   |  ✓   |   ✓   |        |         |
+| DBLP link prediction     |   ✓   |  ✓   |   ✓   |        |    ✓    |
 | IMDB link prediction     |   ✓   |  ✓   |   ✓   |        |    ✓    |
 | WordNet link prediction (joint augmentation) | | ✓ | | | ✓ |
 | Freebase node classification (joint augmentation) | | ✓ | | | ✓ |
@@ -117,6 +117,11 @@ python run_IMDB_nc.py
 ### DBLP link prediction
 
 Build the shared paper-venue splits first (consumed by RGCN and CMPNN):
+
+The joint SlotGAT experiment trains one shared model on `v1,v2,v3`. See
+[`src/baselines/SlotGAT/slotgat_data_augmentation/README_DBLP.md`](src/baselines/SlotGAT/slotgat_data_augmentation/README_DBLP.md)
+for shared preprocessing, the production command, balanced super-epoch
+accounting, resume behavior, and outputs.
 
 ```bash
 cd src/baselines/MAGNN
