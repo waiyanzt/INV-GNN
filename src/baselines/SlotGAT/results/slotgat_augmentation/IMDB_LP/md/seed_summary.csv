@@ -1,0 +1,4 @@
+task,encoder,seed,super_epochs_ran,variant_epochs_ran,batches_per_variant,optimizer_steps,training_seconds,best_mean_val_loss,mean_test_AUC,mean_test_AP,mean_test_Precision,mean_test_Recall,mean_test_F1,mean_test_Accuracy,mean_test_Hits@1,mean_test_Hits@3,mean_test_Hits@5,mean_test_MRR,mean_test_ranking_queries,mean_test_edge_count
+md,slotgat,1566911444,41,82,1,82,7.574845604132861,0.6931471824645996,0.5,0.05,0.05,1.0,0.09523809523809523,0.05,1.0,1.0,1.0,1.0,836.0,39280.0
+md,slotgat,20241017,41,82,1,82,6.212685544975102,0.6931471824645996,0.5,0.05,0.05,1.0,0.09523809523809523,0.05,1.0,1.0,1.0,1.0,836.0,39280.0
+md,slotgat,20251017,41,82,1,82,6.226648645941168,0.6931471824645996,0.5,0.05,0.05,1.0,0.09523809523809523,0.05,1.0,1.0,1.0,1.0,836.0,39280.0

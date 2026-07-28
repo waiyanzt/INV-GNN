@@ -1,0 +1,97 @@
+{
+  "aggregation_backend": "dgl_slotgat_exact_relation_score_fusion",
+  "best_mean_val_loss": 1.5443406701087952,
+  "dataset": "FREEBASE",
+  "decomposed_layers": 4,
+  "edge_chunk_size": 0,
+  "encoder": "slotgat",
+  "epoch_accounting": {
+    "batches_per_variant": 1,
+    "definition": "one super-epoch visits every variant; each label batch performs one complete graph forward and one optimizer update",
+    "expected_optimizer_steps": 102,
+    "optimizer_steps": 102,
+    "super_epochs_ran": 51,
+    "test_graph_forwards": 2,
+    "train_graph_forwards": 102,
+    "updates_per_super_epoch": 2,
+    "validation_graph_forwards": 102,
+    "variant_epochs_ran": 102
+  },
+  "mean_test_metrics": {
+    "Accuracy": 0.6640477686989315,
+    "Hits@1": 0.6640477776527405,
+    "Hits@3": 0.9013199508190155,
+    "MRR": 0.794491708278656,
+    "Macro_F1": 0.4510539659999666,
+    "Micro_F1": 0.6640477686989315,
+    "NLL": 1.5413941144943237,
+    "Precision_macro": 0.5919695569057071,
+    "Recall_macro": 0.4247091685878363,
+    "edge_count": 48426679.0
+  },
+  "memory": {
+    "buffer_bytes": 4,
+    "checkpoint_bytes": 64625883,
+    "inference_gpu": {
+      "gpu_allocated_bytes": 8023021568,
+      "gpu_peak_allocated_bytes": 43868695040,
+      "gpu_peak_reserved_bytes": 47173337088,
+      "gpu_reserved_bytes": 19960692736
+    },
+    "parameter_bytes": 64611448,
+    "process_peak_rss_bytes": 4434493440,
+    "static_model_bytes": 64611452,
+    "training_gpu": {
+      "gpu_allocated_bytes": 8028785152,
+      "gpu_peak_allocated_bytes": 64556287488,
+      "gpu_peak_reserved_bytes": 68321017856,
+      "gpu_reserved_bytes": 19960692736
+    }
+  },
+  "model": "FreebaseSlotGATClassifier",
+  "pairwise_invariance": [
+    {
+      "kendall_tau_confidence": 0.7721146198499933,
+      "kendall_tau_flat_logits": 0.7900165188968713,
+      "max_abs_logit_diff": 1.444505214691162,
+      "mean_abs_logit_diff": 0.04685769975185394,
+      "mean_l2_logit_diff": 0.17387919127941132,
+      "prediction_agreement": 0.8830923947203017,
+      "variant_a": "unchanged",
+      "variant_b": "exact_2"
+    }
+  ],
+  "per_variant_test_metrics": {
+    "exact_2": {
+      "Accuracy": 0.6599622878692646,
+      "Hits@1": 0.6599622964859009,
+      "Hits@3": 0.8981772661209106,
+      "MRR": 0.7910875082015991,
+      "Macro_F1": 0.44364434166146977,
+      "Micro_F1": 0.6599622878692646,
+      "NLL": 1.5472488403320312,
+      "Precision_macro": 0.5742065056215627,
+      "Recall_macro": 0.41837341681157464,
+      "edge_count": 94737982.0
+    },
+    "unchanged": {
+      "Accuracy": 0.6681332495285983,
+      "Hits@1": 0.6681332588195801,
+      "Hits@3": 0.9044626355171204,
+      "MRR": 0.7978959083557129,
+      "Macro_F1": 0.4584635903384634,
+      "Micro_F1": 0.6681332495285983,
+      "NLL": 1.5355393886566162,
+      "Precision_macro": 0.6097326081898514,
+      "Recall_macro": 0.43104492036409797,
+      "edge_count": 2115376.0
+    }
+  },
+  "seed": 20251017,
+  "selection_metric": "mean_validation_nll",
+  "training_seconds": 1732.6285830650013,
+  "variants": [
+    "unchanged",
+    "exact_2"
+  ]
+}

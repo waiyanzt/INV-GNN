@@ -16,3 +16,4 @@ slurm-*.out
 *.slurm.err
 .DS_Store
 data/raw/
+*.pt

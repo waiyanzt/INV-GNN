@@ -1,0 +1,97 @@
+{
+  "aggregation_backend": "dgl_slotgat_exact_relation_score_fusion",
+  "best_mean_val_loss": 1.5358451008796692,
+  "dataset": "FREEBASE",
+  "decomposed_layers": 4,
+  "edge_chunk_size": 0,
+  "encoder": "slotgat",
+  "epoch_accounting": {
+    "batches_per_variant": 1,
+    "definition": "one super-epoch visits every variant; each label batch performs one complete graph forward and one optimizer update",
+    "expected_optimizer_steps": 86,
+    "optimizer_steps": 86,
+    "super_epochs_ran": 43,
+    "test_graph_forwards": 2,
+    "train_graph_forwards": 86,
+    "updates_per_super_epoch": 2,
+    "validation_graph_forwards": 86,
+    "variant_epochs_ran": 86
+  },
+  "mean_test_metrics": {
+    "Accuracy": 0.6788183532369578,
+    "Hits@1": 0.6788183748722076,
+    "Hits@3": 0.9010056555271149,
+    "MRR": 0.8011841177940369,
+    "Macro_F1": 0.4703896767015225,
+    "Micro_F1": 0.6788183532369578,
+    "NLL": 1.529535710811615,
+    "Precision_macro": 0.5927761531876921,
+    "Recall_macro": 0.43251085393084554,
+    "edge_count": 48426679.0
+  },
+  "memory": {
+    "buffer_bytes": 4,
+    "checkpoint_bytes": 64625883,
+    "inference_gpu": {
+      "gpu_allocated_bytes": 8026493952,
+      "gpu_peak_allocated_bytes": 43872232448,
+      "gpu_peak_reserved_bytes": 52084867072,
+      "gpu_reserved_bytes": 21919432704
+    },
+    "parameter_bytes": 64611448,
+    "process_peak_rss_bytes": 4434493440,
+    "static_model_bytes": 64611452,
+    "training_gpu": {
+      "gpu_allocated_bytes": 8032257536,
+      "gpu_peak_allocated_bytes": 64559264768,
+      "gpu_peak_reserved_bytes": 70200066048,
+      "gpu_reserved_bytes": 21919432704
+    }
+  },
+  "model": "FreebaseSlotGATClassifier",
+  "pairwise_invariance": [
+    {
+      "kendall_tau_confidence": 0.8112118218578662,
+      "kendall_tau_flat_logits": 0.8200907776848049,
+      "max_abs_logit_diff": 1.570693850517273,
+      "mean_abs_logit_diff": 0.043413661420345306,
+      "mean_l2_logit_diff": 0.1618247777223587,
+      "prediction_agreement": 0.9264613450659962,
+      "variant_a": "unchanged",
+      "variant_b": "exact_2"
+    }
+  ],
+  "per_variant_test_metrics": {
+    "exact_2": {
+      "Accuracy": 0.6750471401634193,
+      "Hits@1": 0.6750471591949463,
+      "Hits@3": 0.8944060206413269,
+      "MRR": 0.7971985340118408,
+      "Macro_F1": 0.44661366621821885,
+      "Micro_F1": 0.6750471401634193,
+      "NLL": 1.5365067720413208,
+      "Precision_macro": 0.5966446646941781,
+      "Recall_macro": 0.41452276358470147,
+      "edge_count": 94737982.0
+    },
+    "unchanged": {
+      "Accuracy": 0.6825895663104965,
+      "Hits@1": 0.682589590549469,
+      "Hits@3": 0.9076052904129028,
+      "MRR": 0.8051697015762329,
+      "Macro_F1": 0.4941656871848261,
+      "Micro_F1": 0.6825895663104965,
+      "NLL": 1.5225646495819092,
+      "Precision_macro": 0.588907641681206,
+      "Recall_macro": 0.45049894427698967,
+      "edge_count": 2115376.0
+    }
+  },
+  "seed": 1566911444,
+  "selection_metric": "mean_validation_nll",
+  "training_seconds": 1463.984945180826,
+  "variants": [
+    "unchanged",
+    "exact_2"
+  ]
+}

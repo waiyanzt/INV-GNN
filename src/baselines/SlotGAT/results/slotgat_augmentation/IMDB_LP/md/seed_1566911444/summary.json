@@ -1,0 +1,176 @@
+{
+  "best_mean_val_loss": 0.6931471824645996,
+  "dataset": "IMDB_LP",
+  "encoder": "slotgat",
+  "epoch_accounting": {
+    "batches_per_variant": 1,
+    "definition": "one super-epoch visits every selected graph variant and all positive-row minibatches within each variant",
+    "effective_batch_size": 2926,
+    "expected_optimizer_steps": 82,
+    "optimizer_steps": 82,
+    "super_epochs_ran": 41,
+    "test_graph_forwards": 2,
+    "train_graph_forwards": 82,
+    "validation_graph_forwards": 82,
+    "variant_epochs_ran": 82
+  },
+  "global_native_relations": [
+    "movie-actor",
+    "actor-movie",
+    "movie-director",
+    "director-movie",
+    "movie-link",
+    "link-movie",
+    "movie-genre",
+    "genre-movie",
+    "link-director",
+    "director-link",
+    "link-actor",
+    "actor-link"
+  ],
+  "graph_keys_by_variant": {
+    "v1": [
+      "movie-actor",
+      "movie-director",
+      "movie-link"
+    ],
+    "v3": [
+      "link-actor",
+      "movie-director",
+      "movie-link"
+    ]
+  },
+  "mean_test_metrics": {
+    "AP": 0.05,
+    "AUC": 0.5,
+    "Accuracy": 0.05,
+    "F1": 0.09523809523809523,
+    "Hits@1": 1.0,
+    "Hits@3": 1.0,
+    "Hits@5": 1.0,
+    "MRR": 1.0,
+    "Precision": 0.05,
+    "Recall": 1.0,
+    "edge_count": 39280.0,
+    "ranking_queries": 836.0
+  },
+  "memory": {
+    "buffer_bytes": 125584,
+    "checkpoint_bytes": 14443275,
+    "inference_gpu": {
+      "gpu_allocated_bytes": 73006080,
+      "gpu_peak_allocated_bytes": 986344960,
+      "gpu_peak_reserved_bytes": 1243611136,
+      "gpu_reserved_bytes": 463470592
+    },
+    "parameter_bytes": 14308632,
+    "process_peak_rss_bytes": 1788903424,
+    "static_model_bytes": 14434216,
+    "training_gpu": {
+      "gpu_allocated_bytes": 57632256,
+      "gpu_peak_allocated_bytes": 1285843968,
+      "gpu_peak_reserved_bytes": 1516240896,
+      "gpu_reserved_bytes": 461373440
+    }
+  },
+  "model": "IMDbSlotGATEncoder",
+  "negative_candidates_per_positive": {
+    "test": 19,
+    "train": 19,
+    "val": 19
+  },
+  "pairwise_invariance": [
+    {
+      "candidate_count": 16720,
+      "hits_at_1_agreement": 1.0,
+      "hits_at_3_agreement": 1.0,
+      "kendall_tau_positive_ranks": NaN,
+      "kendall_tau_scores": NaN,
+      "max_abs_score_diff": 0.0,
+      "mean_abs_score_diff": 0.0,
+      "prediction_agreement": 1.0,
+      "query_count": 836,
+      "rank_agreement": 1.0,
+      "variant_a": "v1",
+      "variant_b": "v3"
+    }
+  ],
+  "per_variant_test_metrics": {
+    "v1": {
+      "AP": 0.05,
+      "AUC": 0.5,
+      "Accuracy": 0.05,
+      "F1": 0.09523809523809523,
+      "Hits@1": 1.0,
+      "Hits@3": 1.0,
+      "Hits@5": 1.0,
+      "MRR": 1.0,
+      "Precision": 0.05,
+      "Recall": 1.0,
+      "edge_count": 39280.0,
+      "ranking_queries": 836.0
+    },
+    "v3": {
+      "AP": 0.05,
+      "AUC": 0.5,
+      "Accuracy": 0.05,
+      "F1": 0.09523809523809523,
+      "Hits@1": 1.0,
+      "Hits@3": 1.0,
+      "Hits@5": 1.0,
+      "MRR": 1.0,
+      "Precision": 0.05,
+      "Recall": 1.0,
+      "edge_count": 39280.0,
+      "ranking_queries": 836.0
+    }
+  },
+  "seed": 1566911444,
+  "shared_split_shapes": {
+    "test_neg": [
+      836,
+      19
+    ],
+    "test_pos": [
+      836,
+      2
+    ],
+    "train_neg": [
+      2926,
+      19
+    ],
+    "train_pos": [
+      2926,
+      2
+    ],
+    "val_neg": [
+      418,
+      19
+    ],
+    "val_pos": [
+      418,
+      2
+    ]
+  },
+  "slotgat": {
+    "aggregator": "SA",
+    "alpha": 0.05,
+    "decomposed_layers": 1,
+    "dropout_attn": 0.2,
+    "dropout_feat": 0.5,
+    "edge_chunk_size": 0,
+    "edge_feats": 64,
+    "hidden_dim": 64,
+    "num_heads": 8,
+    "num_layers": 2,
+    "sa_att_dim": 3,
+    "slope": 0.05
+  },
+  "structural_self_loop_edge_type": 12,
+  "task": "md",
+  "training_seconds": 7.574845604132861,
+  "variants": [
+    "v1",
+    "v3"
+  ]
+}
