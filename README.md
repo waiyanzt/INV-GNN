@@ -161,6 +161,14 @@ The SlotGAT experiment jointly trains one shared model on `unchanged` and
 for preprocessing, the production command, memory requirements, resume
 behavior, and outputs.
 
+### IMDb joint-augmentation node classification
+
+The SlotGAT experiment jointly trains one shared model on IMDb variants
+`v1,v2,v3,v4`, with globally aligned semantic relation IDs. See
+[`src/baselines/SlotGAT/slotgat_data_augmentation/README_IMDB.md`](src/baselines/SlotGAT/slotgat_data_augmentation/README_IMDB.md)
+for preprocessing, the production command, balanced super-epoch accounting,
+resume behavior, and outputs.
+
 ### IMDB link prediction
 
 CMPNN owns the shared IMDB md/ml splits. Build them first:

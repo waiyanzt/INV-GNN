@@ -1,0 +1,7 @@
+dataset,training_regime,variant_a,variant_b,comparison,seed_count,valid_seed_count,kendall_tau_mean,kendall_tau_std,kendall_tau_at_1_mean,kendall_tau_at_1_std,kendall_tau_at_3_mean,kendall_tau_at_3_std,instance_count,min_valid_tau_count,min_valid_tau_at_1_count,min_valid_tau_at_3_count
+imdb_nc,IMDb1--4,v1,v2,IMDb1 vs IMDb2,3,3,0.7509303561935141,0.07210771901888785,nan,nan,nan,nan,836,836,0,0
+imdb_nc,IMDb1--4,v1,v3,IMDb1 vs IMDb3,3,3,0.8022328548644339,0.039196828476697,nan,nan,nan,nan,836,836,0,0
+imdb_nc,IMDb1--4,v1,v4,IMDb1 vs IMDb4,3,3,0.9327485380116959,0.015095450148326056,nan,nan,nan,nan,836,836,0,0
+imdb_nc,IMDb1--4,v2,v3,IMDb2 vs IMDb3,3,3,0.8753322700691122,0.034209813747847304,nan,nan,nan,nan,836,836,0,0
+imdb_nc,IMDb1--4,v2,v4,IMDb2 vs IMDb4,3,3,0.7698032961190856,0.053413155140480936,nan,nan,nan,nan,836,836,0,0
+imdb_nc,IMDb1--4,v3,v4,IMDb3 vs IMDb4,3,3,0.7759170653907496,0.052601363904435414,nan,nan,nan,nan,836,836,0,0

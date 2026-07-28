@@ -1,0 +1,10 @@
+dataset,training_regime,seed,variant_a,variant_b,comparison,kendall_tau,kendall_tau_at_1,kendall_tau_at_3,instance_count,valid_tau_count,valid_tau_at_1_count,valid_tau_at_3_count
+wordnet_lp,No Changes + All Inverse + Universal,20241017,no_changes,all_inverse_edges,No Changes vs All Inverse Edges,0.5348085260040346,0.5180338333865305,0.2683517515073937,3134,3134,3133,3134
+wordnet_lp,No Changes + All Inverse + Universal,20241017,no_changes,universal_edges,No Changes vs Universal,0.44264852309341957,0.44554455445544555,0.16331486230004583,3134,3134,3131,3134
+wordnet_lp,No Changes + All Inverse + Universal,20241017,all_inverse_edges,universal_edges,All Inverse Edges vs Universal,0.7774143287064456,0.6748642606196104,0.44843102204087953,3134,3134,3131,3134
+wordnet_lp,No Changes + All Inverse + Universal,20251017,no_changes,all_inverse_edges,No Changes vs All Inverse Edges,0.5110166449732807,0.4620293554562859,0.18538608806636886,3134,3134,3134,3134
+wordnet_lp,No Changes + All Inverse + Universal,20251017,no_changes,universal_edges,No Changes vs Universal,0.4276361712989798,0.40523292916400766,0.10187194213997021,3134,3134,3134,3134
+wordnet_lp,No Changes + All Inverse + Universal,20251017,all_inverse_edges,universal_edges,All Inverse Edges vs Universal,0.7828125412950214,0.6860242501595405,0.4411401829398,3134,3134,3134,3134
+wordnet_lp,No Changes + All Inverse + Universal,1566911444,no_changes,all_inverse_edges,No Changes vs All Inverse Edges,0.5142111071464931,0.4805360561582642,0.1984045947670708,3134,3134,3134,3134
+wordnet_lp,No Changes + All Inverse + Universal,1566911444,no_changes,universal_edges,No Changes vs Universal,0.4246795522215755,0.39438417358008937,0.09049138481174217,3134,3134,3134,3134
+wordnet_lp,No Changes + All Inverse + Universal,1566911444,all_inverse_edges,universal_edges,All Inverse Edges vs Universal,0.7792534014037231,0.6687938736439055,0.41261433737502656,3134,3134,3134,3134

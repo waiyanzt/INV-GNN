@@ -1,0 +1,7 @@
+# Install ONLY after: pip install -r requirements.txt
+# Must match the PyTorch build in requirements.txt (torch 2.4.0 + cu124).
+# For other stacks, see https://data.pyg.org/whl/
+--find-links https://data.pyg.org/whl/torch-2.4.0+cu124.html
+torch-sparse
+torch-scatter
+torch-geometric

@@ -1,0 +1,19 @@
+dataset,training_regime,seed,variant_a,variant_b,comparison,kendall_tau,kendall_tau_at_1,kendall_tau_at_3,instance_count,valid_tau_count,valid_tau_at_1_count,valid_tau_at_3_count
+imdb_nc,IMDb1--4,20241017,v1,v2,IMDb1 vs IMDb2,0.6706539074960127,nan,nan,836,836,0,0
+imdb_nc,IMDb1--4,20241017,v1,v3,IMDb1 vs IMDb3,0.7575757575757576,nan,nan,836,836,0,0
+imdb_nc,IMDb1--4,20241017,v1,v4,IMDb1 vs IMDb4,0.9154704944178629,nan,nan,836,836,0,0
+imdb_nc,IMDb1--4,20241017,v2,v3,IMDb2 vs IMDb3,0.8365231259968102,nan,nan,836,836,0,0
+imdb_nc,IMDb1--4,20241017,v2,v4,IMDb2 vs IMDb4,0.7105263157894737,nan,nan,836,836,0,0
+imdb_nc,IMDb1--4,20241017,v3,v4,IMDb3 vs IMDb4,0.7161084529505581,nan,nan,836,836,0,0
+imdb_nc,IMDb1--4,20251017,v1,v2,IMDb1 vs IMDb2,0.7719298245614036,nan,nan,836,836,0,0
+imdb_nc,IMDb1--4,20251017,v1,v3,IMDb1 vs IMDb3,0.8181818181818182,nan,nan,836,836,0,0
+imdb_nc,IMDb1--4,20251017,v1,v4,IMDb1 vs IMDb4,0.9393939393939394,nan,nan,836,836,0,0
+imdb_nc,IMDb1--4,20251017,v2,v3,IMDb2 vs IMDb3,0.901116427432217,nan,nan,836,836,0,0
+imdb_nc,IMDb1--4,20251017,v2,v4,IMDb2 vs IMDb4,0.784688995215311,nan,nan,836,836,0,0
+imdb_nc,IMDb1--4,20251017,v3,v4,IMDb3 vs IMDb4,0.8149920255183414,nan,nan,836,836,0,0
+imdb_nc,IMDb1--4,1566911444,v1,v2,IMDb1 vs IMDb2,0.810207336523126,nan,nan,836,836,0,0
+imdb_nc,IMDb1--4,1566911444,v1,v3,IMDb1 vs IMDb3,0.8309409888357256,nan,nan,836,836,0,0
+imdb_nc,IMDb1--4,1566911444,v1,v4,IMDb1 vs IMDb4,0.9433811802232854,nan,nan,836,836,0,0
+imdb_nc,IMDb1--4,1566911444,v2,v3,IMDb2 vs IMDb3,0.8883572567783093,nan,nan,836,836,0,0
+imdb_nc,IMDb1--4,1566911444,v2,v4,IMDb2 vs IMDb4,0.814194577352472,nan,nan,836,836,0,0
+imdb_nc,IMDb1--4,1566911444,v3,v4,IMDb3 vs IMDb4,0.7966507177033493,nan,nan,836,836,0,0

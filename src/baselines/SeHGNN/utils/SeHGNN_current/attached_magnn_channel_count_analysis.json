@@ -1,0 +1,203 @@
+{
+  "magnn_root": "full_magnn_preprocess_scripts",
+  "pipelines": {
+    "up_to_exact_2": {
+      "variants": [
+        "unchanged",
+        "exact_2"
+      ],
+      "up_to_variant": "exact_2",
+      "union_relation_schema_count": 42,
+      "magnn_union_raw_metapath_count": 16,
+      "magnn_source": "unchanged/exact_2/union/center/preprocess_freebase_node.py",
+      "full_k": [
+        {
+          "k": 1,
+          "full_type_exact_hop": 8,
+          "full_type_up_to_k_including_identity": 9,
+          "full_relation_exact_hop": 13,
+          "full_relation_up_to_k_including_identity": 14
+        },
+        {
+          "k": 2,
+          "full_type_exact_hop": 64,
+          "full_type_up_to_k_including_identity": 73,
+          "full_relation_exact_hop": 145,
+          "full_relation_up_to_k_including_identity": 159
+        },
+        {
+          "k": 3,
+          "full_type_exact_hop": 512,
+          "full_type_up_to_k_including_identity": 585,
+          "full_relation_exact_hop": 1581,
+          "full_relation_up_to_k_including_identity": 1740
+        },
+        {
+          "k": 4,
+          "full_type_exact_hop": 4096,
+          "full_type_up_to_k_including_identity": 4681,
+          "full_relation_exact_hop": 17153,
+          "full_relation_up_to_k_including_identity": 18893
+        },
+        {
+          "k": 5,
+          "full_type_exact_hop": 32768,
+          "full_type_up_to_k_including_identity": 37449,
+          "full_relation_exact_hop": 185901,
+          "full_relation_up_to_k_including_identity": 204794
+        },
+        {
+          "k": 6,
+          "full_type_exact_hop": 262144,
+          "full_type_up_to_k_including_identity": 299593,
+          "full_relation_exact_hop": 2014289,
+          "full_relation_up_to_k_including_identity": 2219083
+        }
+      ],
+      "restricted_k": [
+        {
+          "k": 0,
+          "restricted_type_including_identity": 1,
+          "restricted_relation_including_identity": 1,
+          "raw_magnn_metapaths_kept": 0
+        },
+        {
+          "k": 1,
+          "restricted_type_including_identity": 1,
+          "restricted_relation_including_identity": 1,
+          "raw_magnn_metapaths_kept": 0
+        },
+        {
+          "k": 2,
+          "restricted_type_including_identity": 9,
+          "restricted_relation_including_identity": 13,
+          "raw_magnn_metapaths_kept": 12
+        },
+        {
+          "k": 3,
+          "restricted_type_including_identity": 9,
+          "restricted_relation_including_identity": 13,
+          "raw_magnn_metapaths_kept": 12
+        },
+        {
+          "k": 4,
+          "restricted_type_including_identity": 13,
+          "restricted_relation_including_identity": 17,
+          "raw_magnn_metapaths_kept": 16
+        },
+        {
+          "k": 5,
+          "restricted_type_including_identity": 13,
+          "restricted_relation_including_identity": 17,
+          "raw_magnn_metapaths_kept": 16
+        },
+        {
+          "k": 6,
+          "restricted_type_including_identity": 13,
+          "restricted_relation_including_identity": 17,
+          "raw_magnn_metapaths_kept": 16
+        }
+      ]
+    },
+    "full": {
+      "variants": [
+        "unchanged",
+        "exact_2",
+        "exact_3",
+        "range_2_3"
+      ],
+      "up_to_variant": "range_2_3",
+      "union_relation_schema_count": 218,
+      "magnn_union_raw_metapath_count": 207,
+      "magnn_source": "unchanged/range_2_3/union/center/preprocess_freebase_node.py",
+      "full_k": [
+        {
+          "k": 1,
+          "full_type_exact_hop": 8,
+          "full_type_up_to_k_including_identity": 9,
+          "full_relation_exact_hop": 101,
+          "full_relation_up_to_k_including_identity": 102
+        },
+        {
+          "k": 2,
+          "full_type_exact_hop": 64,
+          "full_type_up_to_k_including_identity": 73,
+          "full_relation_exact_hop": 5262,
+          "full_relation_up_to_k_including_identity": 5364
+        },
+        {
+          "k": 3,
+          "full_type_exact_hop": 512,
+          "full_type_up_to_k_including_identity": 585,
+          "full_relation_exact_hop": 330125,
+          "full_relation_up_to_k_including_identity": 335489
+        },
+        {
+          "k": 4,
+          "full_type_exact_hop": 4096,
+          "full_type_up_to_k_including_identity": 4681,
+          "full_relation_exact_hop": 19260280,
+          "full_relation_up_to_k_including_identity": 19595769
+        },
+        {
+          "k": 5,
+          "full_type_exact_hop": 32768,
+          "full_type_up_to_k_including_identity": 37449,
+          "full_relation_exact_hop": 1155561396,
+          "full_relation_up_to_k_including_identity": 1175157165
+        },
+        {
+          "k": 6,
+          "full_type_exact_hop": 262144,
+          "full_type_up_to_k_including_identity": 299593,
+          "full_relation_exact_hop": 68559359857,
+          "full_relation_up_to_k_including_identity": 69734517022
+        }
+      ],
+      "restricted_k": [
+        {
+          "k": 0,
+          "restricted_type_including_identity": 1,
+          "restricted_relation_including_identity": 1,
+          "raw_magnn_metapaths_kept": 0
+        },
+        {
+          "k": 1,
+          "restricted_type_including_identity": 1,
+          "restricted_relation_including_identity": 1,
+          "raw_magnn_metapaths_kept": 0
+        },
+        {
+          "k": 2,
+          "restricted_type_including_identity": 9,
+          "restricted_relation_including_identity": 99,
+          "raw_magnn_metapaths_kept": 98
+        },
+        {
+          "k": 3,
+          "restricted_type_including_identity": 9,
+          "restricted_relation_including_identity": 99,
+          "raw_magnn_metapaths_kept": 98
+        },
+        {
+          "k": 4,
+          "restricted_type_including_identity": 45,
+          "restricted_relation_including_identity": 145,
+          "raw_magnn_metapaths_kept": 144
+        },
+        {
+          "k": 5,
+          "restricted_type_including_identity": 45,
+          "restricted_relation_including_identity": 145,
+          "raw_magnn_metapaths_kept": 144
+        },
+        {
+          "k": 6,
+          "restricted_type_including_identity": 108,
+          "restricted_relation_including_identity": 208,
+          "raw_magnn_metapaths_kept": 207
+        }
+      ]
+    }
+  }
+}

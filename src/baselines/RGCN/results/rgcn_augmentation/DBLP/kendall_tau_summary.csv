@@ -1,0 +1,4 @@
+dataset,training_regime,variant_a,variant_b,comparison,seed_count,valid_seed_count,kendall_tau_mean,kendall_tau_std,kendall_tau_at_1_mean,kendall_tau_at_1_std,kendall_tau_at_3_mean,kendall_tau_at_3_std,instance_count,min_valid_tau_count,min_valid_tau_at_1_count,min_valid_tau_at_3_count
+dblp_lp,DBLP1--3,v1,v2,DBLP1 vs DBLP2,3,2,nan,nan,nan,nan,nan,nan,2666,0,0,0
+dblp_lp,DBLP1--3,v1,v3,DBLP1 vs DBLP3,3,2,nan,nan,nan,nan,nan,nan,2666,0,0,0
+dblp_lp,DBLP1--3,v2,v3,DBLP2 vs DBLP3,3,2,nan,nan,nan,nan,nan,nan,2666,0,0,0

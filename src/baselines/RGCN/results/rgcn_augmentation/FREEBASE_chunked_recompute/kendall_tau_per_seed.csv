@@ -1,0 +1,4 @@
+dataset,training_regime,seed,variant_a,variant_b,comparison,kendall_tau,kendall_tau_at_1,kendall_tau_at_3,instance_count,valid_tau_count,valid_tau_at_1_count,valid_tau_at_3_count
+freebase_nc,Unchanged + Exact 2,20241017,unchanged,exact_2,Unchanged vs Exact 2,0.9841968214061237,nan,nan,1591,1591,0,0
+freebase_nc,Unchanged + Exact 2,20251017,unchanged,exact_2,Unchanged vs Exact 2,0.978629792583281,nan,nan,1591,1591,0,0
+freebase_nc,Unchanged + Exact 2,1566911444,unchanged,exact_2,Unchanged vs Exact 2,0.9802011313639221,nan,nan,1591,1591,0,0

@@ -1,5 +1,5 @@
 # data/*
-
+*.tex
 # Python environments and caches
 .venv/
 __pycache__/

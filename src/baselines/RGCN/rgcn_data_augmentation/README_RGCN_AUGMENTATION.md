@@ -45,6 +45,35 @@ Each results directory contains one `seed_<seed>/` subdirectory, so checkpoints
 and histories for different seeds cannot overwrite each other. `--resume` uses
 the state inside that seed directory.
 
+## Kendall-tau postprocessing
+
+After the production runs have written their test-score CSVs, recompute the
+per-instance/query Kendall statistics for every available augmentation
+benchmark with:
+
+```bash
+python rgcn_data_augmentation/calculate_kendall_tau.py
+```
+
+To process selected benchmarks only:
+
+```bash
+python rgcn_data_augmentation/calculate_kendall_tau.py \
+  --datasets imdb_nc imdb_lp_ml imdb_lp_md
+```
+
+Each selected result directory receives:
+
+```text
+kendall_tau_per_seed.csv
+kendall_tau_summary.csv
+```
+
+The training-regime label (for example, `IMDb1--4`) identifies the variants
+visited by the shared model during training. Kendall comparisons remain between
+the model's per-variant test rankings, such as `IMDb1 vs IMDb2`; there is no
+separate `IMDb1--4` test graph or prediction vector.
+
 ## Epoch accounting
 
 ### IMDb

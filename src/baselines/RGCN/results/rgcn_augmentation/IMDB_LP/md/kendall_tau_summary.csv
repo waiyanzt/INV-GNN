@@ -1,0 +1,2 @@
+dataset,training_regime,variant_a,variant_b,comparison,seed_count,valid_seed_count,kendall_tau_mean,kendall_tau_std,kendall_tau_at_1_mean,kendall_tau_at_1_std,kendall_tau_at_3_mean,kendall_tau_at_3_std,instance_count,min_valid_tau_count,min_valid_tau_at_1_count,min_valid_tau_at_3_count
+imdb_lp_md,IMDb1--3,v1,v3,IMDb1 vs IMDb3,3,3,0.5336308087248619,0.26323216583995174,-0.0023923444976076715,0.29819976790290237,0.10972886762360445,0.22270418750505078,836,836,836,836
