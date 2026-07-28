@@ -8,6 +8,7 @@ __pycache__/
 # Generated experiment artifacts outside data/
 **/checkpoint/
 **/checkpoints/
+*.pt
 
 # Scheduler and operating-system artifacts
 slurm-*.out
