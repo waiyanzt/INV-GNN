@@ -1,0 +1,58 @@
+{
+  "best_val_filtered_MRR": 0.34371691942214966,
+  "checkpoint": "/nfs/hpc/share/tinw/idealab/INV-GNN/src/baselines/RGCN/checkpoint/wordnet_3var_updated/best_model_R2087_seed_20251017_variant_no_changes.pt",
+  "dataset": "WORDNET",
+  "epochs_trained": 1650,
+  "memory": {
+    "buffer_bytes": 0,
+    "checkpoint_bytes": 39638572,
+    "inference_gpu": {
+      "gpu_allocated_bytes": 132785152,
+      "gpu_peak_allocated_bytes": 415088128,
+      "gpu_peak_reserved_bytes": 748683264,
+      "gpu_reserved_bytes": 748683264
+    },
+    "parameter_bytes": 39635240,
+    "process_peak_rss_bytes": 1601499136,
+    "static_model_bytes": 39635240,
+    "training_gpu": {
+      "gpu_allocated_bytes": 218531840,
+      "gpu_peak_allocated_bytes": 1930472448,
+      "gpu_peak_reserved_bytes": 2373976064,
+      "gpu_reserved_bytes": 2373976064
+    }
+  },
+  "mode": "full_training",
+  "model": "legacy_WordNetRGCNLinkPredictor",
+  "seed": 20251017,
+  "splits_npz": "/nfs/hpc/share/tinw/idealab/INV-GNN/data/raw/wordnet_3hops_augmented_full/wordnet_splits.npz",
+  "telemetry_semantics": {
+    "inference_gpu": "Peak CUDA allocator statistics for final validation-and-test evaluation after loading the best checkpoint.",
+    "process_peak_rss_bytes": "Process-wide ru_maxrss; this value is cumulative when multiple seeds run in one Python process.",
+    "training_gpu": "Peak CUDA allocator statistics across training and periodic validation after model/graph construction."
+  },
+  "test_metrics": {
+    "Hits@1": 0.29546904913848115,
+    "Hits@10": 0.42358008934269303,
+    "Hits@3": 0.38481174218251435,
+    "accuracy": 0.9884505174118148,
+    "filtered_MRR": 0.34740903973579407,
+    "macro_f1": 0.7972002326756413,
+    "precision": 0.9614617130669463,
+    "raw_MRR": 0.2425919473171234,
+    "recall": 0.7208104658583281
+  },
+  "training_seconds": 666.6955889060628,
+  "val_metrics": {
+    "Hits@1": 0.29218852999340805,
+    "Hits@10": 0.4208965062623599,
+    "Hits@3": 0.3808503625576796,
+    "accuracy": 0.9883218943477193,
+    "filtered_MRR": 0.34371691942214966,
+    "macro_f1": 0.7963933498424745,
+    "precision": 0.9533152434649321,
+    "raw_MRR": 0.23823517560958862,
+    "recall": 0.7217501647989453
+  },
+  "variant": "no_changes"
+}
