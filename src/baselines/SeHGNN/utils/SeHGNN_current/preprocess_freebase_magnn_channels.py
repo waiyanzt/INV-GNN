@@ -47,10 +47,10 @@ DEFAULT_NUM_CLASSES = 8
 # requested for running from that folder.
 BASELINE_DIR = Path(__file__).resolve().parent
 DEFAULT_DATA_ROOT = (BASELINE_DIR / "../../../../../data").resolve()
-DEFAULT_VARIANTS_ROOT = DEFAULT_DATA_ROOT / "dataset_variant_3hops_filtered"
+DEFAULT_VARIANTS_ROOT = DEFAULT_DATA_ROOT / "raw/dataset_variant_3hops_filter"
 DEFAULT_MAGNN_PREPROCESS_ROOT = (
-    BASELINE_DIR
-    / "../MAGNN/preprocess_scripts/freebase/full_magnn_preprocess_scripts"
+    BASELINE_DIR.parents[2]
+    / "MAGNN/preprocess_scripts/freebase/full_magnn_preprocess_scripts"
 ).resolve()
 DEFAULT_OUTPUT_ROOT = DEFAULT_DATA_ROOT / "preprocessed/sehgnn_freebase_magnn"
 

@@ -59,7 +59,7 @@ from sehgnn_augmentation_common import (
     torch_load,
 )
 
-DEFAULT_VARIANTS = ("unchanged", "exact_2", "exact_3", "range_2_3")
+DEFAULT_VARIANTS = ("unchanged", "exact_2")
 
 
 def parse_csv(spec: str) -> List[str]:
@@ -483,7 +483,15 @@ def save_variant_outputs(
         frame[f"logit_class_{class_id}"] = test_logits[:, class_id]
     score_path = seed_dir / f"{variant}_test_scores.csv"
     frame.to_csv(score_path, index=False)
-    return {"logits_file": str(logits_path), "test_scores_file": str(score_path)}
+    compatibility_score_path = seed_dir / f"test_scores_{variant}.csv"
+    frame.to_csv(compatibility_score_path, index=False)
+    return {
+        "logits_file": str(logits_path),
+        "test_scores_file": str(score_path),
+        "rgcn_compatible_test_scores_file": str(
+            compatibility_score_path
+        ),
+    }
 
 
 def run_seed(
@@ -819,7 +827,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--data-root", type=Path, required=True, help="Directory containing k/<variant>")
     parser.add_argument("--variants", default=",".join(DEFAULT_VARIANTS))
     parser.add_argument("--output-dir", type=Path, default=Path("results/sehgnn_augmentation/FREEBASE_NC_k"))
-    parser.add_argument("--seeds", default="1566911444,20241017,20251017,20261017")
+    parser.add_argument("--seeds", default="1566911444,20241017,20251017")
     parser.add_argument("--gpu", type=int, default=0)
     parser.add_argument("--cpu", action="store_true")
     parser.add_argument("--super-epochs", type=int, default=200)

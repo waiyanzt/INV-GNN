@@ -3,9 +3,16 @@
 This implementation adds graph-variant data augmentation for:
 
 - **IMDB node classification:** original graph variants `1,2,3,4`.
-- **Freebase node classification:** native per-variant **K** channels (`k`) for `unchanged`, `exact_2`, `exact_3`, and `range_2_3` by default.
+- **Freebase node classification:** native per-variant **K** channels (`k`) for
+  `unchanged` and `exact_2` by default, matching the RGCN and SlotGAT joint
+  augmentation experiment.
 
 It intentionally does **not** train IMDB skip/universal variants or Freebase `restricted_k` / `full_k` representations.
+
+For Freebase, **original/native representation** means flavor `k`: channels
+are generated independently from each variant's own graph. The canonical
+channel union only fixes one shared model parameter layout; it does not merge
+the variant graphs or replace their inputs with `full_k`/`restricted_k`.
 
 ## Training protocol
 
@@ -113,15 +120,33 @@ Use already-preprocessed K data:
 bash scripts/run_freebase_nc_k_augmentation.sh
 ```
 
-Run K preprocessing first, then train:
+The production defaults are:
+
+```text
+pipeline: up_to_exact_2
+variants: unchanged,exact_2
+K: 2
+channel identity: type
+seeds: 1566911444,20241017,20251017
+```
+
+Run K preprocessing first, then train and aggregate:
 
 ```bash
 RUN_PREPROCESS=1 \
-VARIANTS_ROOT=/path/to/freebase/variants \
-PREPROCESSED_ROOT=/path/to/preprocessed/sehgnn_freebase_magnn \
+bash scripts/run_freebase_nc_k_augmentation.sh
+```
+
+By default, the launcher reads raw variants from
+`data/raw/dataset_variant_3hops_filter` and writes preprocessed channels under
+`data/preprocessed/sehgnn_freebase_magnn`. Set `VARIANTS_ROOT` or
+`PREPROCESSED_ROOT` only when using a different layout.
+
+Existing four-variant studies remain available as an explicit override:
+
+```bash
 PIPELINE=full \
-K=2 \
-CHANNEL_IDENTITY=type \
+VARIANTS=unchanged,exact_2,exact_3,range_2_3 \
 bash scripts/run_freebase_nc_k_augmentation.sh
 ```
 
@@ -142,11 +167,18 @@ python run_IMDB_nc_augmentation.py \
 
 ```bash
 python run_freebase_magnn_channels_augmentation.py \
-  --data-root /path/to/full/k2/type_channels \
-  --variants unchanged,exact_2,exact_3,range_2_3 \
-  --seeds 1566911444,20241017,20251017,20261017 \
-  --output-dir results/sehgnn_augmentation/FREEBASE_NC/full/k2/type_channels
+  --data-root ../../../../../data/preprocessed/sehgnn_freebase_magnn/up_to_exact_2/k2/type_channels \
+  --variants unchanged,exact_2 \
+  --seeds 1566911444,20241017,20251017 \
+  --output-dir results/sehgnn_augmentation/FREEBASE_NC/up_to_exact_2/k2/type_channels \
+  --resume
 ```
+
+Each seed directory contains one shared checkpoint and exact resume state,
+training history, `<variant>_logits.npz`, both
+`<variant>_test_scores.csv` and RGCN-compatible
+`test_scores_<variant>.csv`, pairwise invariance metrics,
+`test_metrics_by_variant.csv`, and `summary.json`.
 
 ## Aggregate an existing run
 

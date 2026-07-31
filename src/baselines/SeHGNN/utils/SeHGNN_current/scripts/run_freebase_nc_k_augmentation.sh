@@ -1,21 +1,26 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# Shared-checkpoint SeHGNN data augmentation over native per-variant K channels.
-# This script never creates or trains restricted_k/full_k representations.
+# Shared-checkpoint SeHGNN data augmentation over original/native per-variant
+# K channels. The canonical union aligns model parameters only. This script
+# never creates or trains restricted_k/full_k representations or a union graph.
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$SCRIPT_DIR"
 
 DATA_ROOT_BASE="${DATA_ROOT_BASE:-$SCRIPT_DIR/../../../../../data}"
-VARIANTS_ROOT="${VARIANTS_ROOT:-$DATA_ROOT_BASE/dataset_variant_3hops_filter}"
+DEFAULT_VARIANTS_ROOT="$DATA_ROOT_BASE/raw/dataset_variant_3hops_filter"
+if [[ ! -d "$DEFAULT_VARIANTS_ROOT" && -d "$DATA_ROOT_BASE/dataset_variant_3hops_filter" ]]; then
+  DEFAULT_VARIANTS_ROOT="$DATA_ROOT_BASE/dataset_variant_3hops_filter"
+fi
+VARIANTS_ROOT="${VARIANTS_ROOT:-$DEFAULT_VARIANTS_ROOT}"
 PREPROCESSED_ROOT="${PREPROCESSED_ROOT:-$DATA_ROOT_BASE/preprocessed/sehgnn_freebase_magnn}"
 RESULTS_ROOT_BASE="${RESULTS_ROOT_BASE:-$SCRIPT_DIR/results/sehgnn_augmentation/FREEBASE_NC}"
-PIPELINE="${PIPELINE:-full}"
-VARIANTS="${VARIANTS:-unchanged,exact_2,exact_3,range_2_3}"
+PIPELINE="${PIPELINE:-up_to_exact_2}"
+VARIANTS="${VARIANTS:-unchanged,exact_2}"
 K="${K:-2}"
 CHANNEL_IDENTITY="${CHANNEL_IDENTITY:-type}"
 SPLIT_SEED="${SPLIT_SEED:-1566911444}"
-SEEDS="${SEEDS:-1566911444,20241017,20251017,20261017}"
+SEEDS="${SEEDS:-1566911444,20241017,20251017}"
 EXPECTED_RUNS="${EXPECTED_RUNS:-$(awk -F, '{print NF}' <<< "$SEEDS")}"
 GPU="${GPU:-0}"
 RUN_PREPROCESS="${RUN_PREPROCESS:-0}"
