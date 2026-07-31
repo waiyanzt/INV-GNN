@@ -11,7 +11,7 @@ The paper evaluates the method on IMDb and DBLP variants using node classificati
 | DBLP link prediction     |   ✓   |  ✓   |   ✓   |        |    ✓    |
 | IMDB link prediction     |   ✓   |  ✓   |   ✓   |        |    ✓    |
 | WordNet link prediction (joint augmentation) | | ✓ | | | ✓ |
-| Freebase node classification (joint augmentation) | | ✓ | | | ✓ |
+| Freebase node classification (joint augmentation) | | ✓ | | ✓ | ✓ |
 
 ## Data
 Download the experiment data from:
@@ -165,6 +165,12 @@ The SlotGAT experiment jointly trains one shared model on `unchanged` and
 [`src/baselines/SlotGAT/slotgat_data_augmentation/README_FREEBASE.md`](src/baselines/SlotGAT/slotgat_data_augmentation/README_FREEBASE.md)
 for preprocessing, the production command, memory requirements, resume
 behavior, and outputs.
+
+The SeHGNN experiment follows the same `unchanged,exact_2` shared-checkpoint
+contract using native per-variant K=2 semantic channels and an explicit
+canonical channel union. See
+[`src/baselines/SeHGNN/utils/SeHGNN_current/README_SEHGNN_DATA_AUGMENTATION.md`](src/baselines/SeHGNN/utils/SeHGNN_current/README_SEHGNN_DATA_AUGMENTATION.md)
+for preprocessing, production, aggregation, and artifact details.
 
 ### IMDb joint-augmentation node classification
 
