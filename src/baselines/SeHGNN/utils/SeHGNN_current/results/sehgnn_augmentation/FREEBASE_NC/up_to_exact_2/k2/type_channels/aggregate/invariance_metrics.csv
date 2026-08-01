@@ -1,0 +1,12 @@
+dataset,variant_a,variant_b,metric,mean,std,ddof,values
+Freebase NC,unchanged,exact_2,kendall_tau,0.9326120140073628,0.0,1,[0.9326120140073628]
+Freebase NC,unchanged,exact_2,kendall_tau_at_1,0.9692017598994344,0.0,1,[0.9692017598994344]
+Freebase NC,unchanged,exact_2,kendall_tau_at_3,0.8732872407291012,0.0,1,[0.8732872407291012]
+Freebase NC,unchanged,exact_2,kendall_tau_flat_logits,0.9228766362844866,0.0,1,[0.9228766362844866]
+Freebase NC,unchanged,exact_2,kendall_tau_confidence,0.8841676252821492,0.0,1,[0.8841676252821492]
+Freebase NC,unchanged,exact_2,prediction_agreement,0.9692017598994344,0.0,1,[0.9692017598994344]
+Freebase NC,unchanged,exact_2,mean_abs_logit_diff,0.053850771794490576,0.0,1,[0.053850771794490576]
+Freebase NC,unchanged,exact_2,max_abs_logit_diff,2.859656572341919,0.0,1,[2.859656572341919]
+Freebase NC,unchanged,exact_2,mean_l2_logit_diff,0.19808624350193133,0.0,1,[0.19808624350193133]
+Freebase NC,unchanged,exact_2,mean_abs_probability_diff,0.006656592587562004,0.0,1,[0.006656592587562004]
+Freebase NC,unchanged,exact_2,max_abs_probability_diff,0.5981827447426511,0.0,1,[0.5981827447426511]

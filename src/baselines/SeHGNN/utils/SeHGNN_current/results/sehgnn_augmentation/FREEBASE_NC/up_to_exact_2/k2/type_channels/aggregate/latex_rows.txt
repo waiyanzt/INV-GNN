@@ -1,0 +1,16 @@
+Freebase NC
+SeHGNN shared-checkpoint graph-variant data augmentation
+
+Test node prediction (mean $\pm$ sample std across seeds)
+Variant & Accuracy & Balanced Acc. & Macro Precision & Macro Recall & Micro F1 & Macro F1 & Weighted F1 & Hit@1 & Hit@3 & MRR & Loss \\
+Unchanged & 0.6285 $\pm$ 0.0000 & 0.4083 $\pm$ 0.0000 & 0.4815 $\pm$ 0.0000 & 0.3572 $\pm$ 0.0000 & 0.6285 $\pm$ 0.0000 & 0.3789 $\pm$ 0.0000 & 0.5993 $\pm$ 0.0000 & 0.6285 $\pm$ 0.0000 & 0.8749 $\pm$ 0.0000 & 0.7662 $\pm$ 0.0000 & 1.1530 $\pm$ 0.0000 \\
+Exact 2 & 0.6254 $\pm$ 0.0000 & 0.3994 $\pm$ 0.0000 & 0.4701 $\pm$ 0.0000 & 0.3494 $\pm$ 0.0000 & 0.6254 $\pm$ 0.0000 & 0.3711 $\pm$ 0.0000 & 0.5972 $\pm$ 0.0000 & 0.6254 $\pm$ 0.0000 & 0.8642 $\pm$ 0.0000 & 0.7617 $\pm$ 0.0000 & 1.1671 $\pm$ 0.0000 \\
+Mean over variants & 0.6270 $\pm$ 0.0000 & 0.4038 $\pm$ 0.0000 & 0.4758 $\pm$ 0.0000 & 0.3533 $\pm$ 0.0000 & 0.6270 $\pm$ 0.0000 & 0.3750 $\pm$ 0.0000 & 0.5983 $\pm$ 0.0000 & 0.6270 $\pm$ 0.0000 & 0.8696 $\pm$ 0.0000 & 0.7639 $\pm$ 0.0000 & 1.1601 $\pm$ 0.0000 \\
+
+Pairwise invariance
+Comparison & Kendall $\tau$ & $\tau$@1 & $\tau$@3 & Flat-logit $\tau$ & Confidence $\tau$ & Prediction agreement & Mean $|\Delta$ logit$|$ & Max $|\Delta$ logit$|$ & Mean L2 logit & Mean $|\Delta p|$ & Max $|\Delta p|$ \\
+unchanged vs exact 2 & 0.9326 $\pm$ 0.0000 & 0.9692 $\pm$ 0.0000 & 0.8733 $\pm$ 0.0000 & 0.9229 $\pm$ 0.0000 & 0.8842 $\pm$ 0.0000 & 0.9692 $\pm$ 0.0000 & 0.0539 $\pm$ 0.0000 & 2.8597 $\pm$ 0.0000 & 0.1981 $\pm$ 0.0000 & 0.0067 $\pm$ 0.0000 & 0.5982 $\pm$ 0.0000 \\
+
+Shared training and memory (reported once per seed, not once per variant)
+Train sec. & Super-epochs & Variant-epochs & Optimizer steps & Checkpoint MiB & Parameter MiB & Peak train GPU MiB & Peak inference GPU MiB \\
+990.60 $\pm$ 0.00 & 68.00 $\pm$ 0.00 & 136.00 $\pm$ 0.00 & 136.00 $\pm$ 0.00 & 576.17 $\pm$ 0.00 & 576.14 $\pm$ 0.00 & 19036.01 $\pm$ 0.00 & 9880.12 $\pm$ 0.00 \\

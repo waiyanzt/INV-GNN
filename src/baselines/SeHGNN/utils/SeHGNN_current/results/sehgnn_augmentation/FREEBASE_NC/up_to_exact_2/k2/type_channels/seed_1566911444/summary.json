@@ -1,0 +1,2319 @@
+{
+  "format_version": 1,
+  "dataset": "Freebase NC",
+  "model": "SeHGNN shared graph-variant augmentation",
+  "flavor": "k",
+  "seed": 1566911444,
+  "variants": [
+    "unchanged",
+    "exact_2"
+  ],
+  "data_dirs": {
+    "unchanged": "/nfs/hpc/share/tinw/idealab/INV-GNN/data/preprocessed/sehgnn_freebase_magnn/up_to_exact_2/k2/type_channels/k/unchanged",
+    "exact_2": "/nfs/hpc/share/tinw/idealab/INV-GNN/data/preprocessed/sehgnn_freebase_magnn/up_to_exact_2/k2/type_channels/k/exact_2"
+  },
+  "parameter_compatibility": {
+    "strategy": "canonical_union_channels_with_explicit_absence_mask",
+    "parameter_shape_signature": "11a2e0b2c45d655f9c55e3d26312d033af70ceda6fe1924f150b9f464deccbf7",
+    "same_checkpoint_for_all_variants": true,
+    "global_channels": 73,
+    "per_variant_active_channels": {
+      "unchanged": 73,
+      "exact_2": 73
+    }
+  },
+  "architecture": {
+    "pipeline": "up_to_exact_2",
+    "k": 2,
+    "channel_identity": "type",
+    "target_type": 0,
+    "num_classes": 8,
+    "split_seed": 1566911444,
+    "node_counts": {
+      "0": 40402,
+      "1": 19427,
+      "2": 82351,
+      "3": 1025,
+      "4": 17641,
+      "5": 9368,
+      "6": 2731,
+      "7": 7153
+    },
+    "strategy": "canonical_union_channels_with_explicit_absence_mask",
+    "num_channels": 73,
+    "feature_keys": [
+      "0",
+      "C000001_T0",
+      "C000002_T0",
+      "C000003_T1",
+      "C000004_T2",
+      "C000005_T3",
+      "C000006_T4",
+      "C000007_T5",
+      "C000008_T6",
+      "C000009_T7",
+      "C000010_T1",
+      "C000011_T0",
+      "C000012_T1",
+      "C000013_T2",
+      "C000014_T3",
+      "C000015_T4",
+      "C000016_T5",
+      "C000017_T6",
+      "C000018_T7",
+      "C000019_T2",
+      "C000020_T0",
+      "C000021_T1",
+      "C000022_T2",
+      "C000023_T3",
+      "C000024_T4",
+      "C000025_T5",
+      "C000026_T6",
+      "C000027_T7",
+      "C000028_T3",
+      "C000029_T0",
+      "C000030_T1",
+      "C000031_T2",
+      "C000032_T3",
+      "C000033_T4",
+      "C000034_T5",
+      "C000035_T6",
+      "C000036_T7",
+      "C000037_T4",
+      "C000038_T0",
+      "C000039_T1",
+      "C000040_T2",
+      "C000041_T3",
+      "C000042_T4",
+      "C000043_T5",
+      "C000044_T6",
+      "C000045_T7",
+      "C000046_T5",
+      "C000047_T0",
+      "C000048_T1",
+      "C000049_T2",
+      "C000050_T3",
+      "C000051_T4",
+      "C000052_T5",
+      "C000053_T6",
+      "C000054_T7",
+      "C000055_T6",
+      "C000056_T0",
+      "C000057_T1",
+      "C000058_T2",
+      "C000059_T3",
+      "C000060_T4",
+      "C000061_T5",
+      "C000062_T6",
+      "C000063_T7",
+      "C000064_T7",
+      "C000065_T0",
+      "C000066_T1",
+      "C000067_T2",
+      "C000068_T3",
+      "C000069_T4",
+      "C000070_T5",
+      "C000071_T6",
+      "C000072_T7"
+    ],
+    "channels": [
+      {
+        "model_key": "0",
+        "semantic_id": "identity:0",
+        "source_type": 0,
+        "shape": [
+          40402,
+          40402
+        ],
+        "hop_count": 0,
+        "node_type_path": [
+          0
+        ],
+        "semantic_signatures": []
+      },
+      {
+        "model_key": "C000001_T0",
+        "semantic_id": "type:0>0",
+        "source_type": 0,
+        "shape": [
+          40402,
+          40402
+        ],
+        "hop_count": 1,
+        "node_type_path": [
+          0,
+          0
+        ],
+        "semantic_signatures": []
+      },
+      {
+        "model_key": "C000002_T0",
+        "semantic_id": "type:0>0>0",
+        "source_type": 0,
+        "shape": [
+          40402,
+          40402
+        ],
+        "hop_count": 2,
+        "node_type_path": [
+          0,
+          0,
+          0
+        ],
+        "semantic_signatures": []
+      },
+      {
+        "model_key": "C000003_T1",
+        "semantic_id": "type:0>0>1",
+        "source_type": 1,
+        "shape": [
+          40402,
+          19427
+        ],
+        "hop_count": 2,
+        "node_type_path": [
+          0,
+          0,
+          1
+        ],
+        "semantic_signatures": []
+      },
+      {
+        "model_key": "C000004_T2",
+        "semantic_id": "type:0>0>2",
+        "source_type": 2,
+        "shape": [
+          40402,
+          82351
+        ],
+        "hop_count": 2,
+        "node_type_path": [
+          0,
+          0,
+          2
+        ],
+        "semantic_signatures": []
+      },
+      {
+        "model_key": "C000005_T3",
+        "semantic_id": "type:0>0>3",
+        "source_type": 3,
+        "shape": [
+          40402,
+          1025
+        ],
+        "hop_count": 2,
+        "node_type_path": [
+          0,
+          0,
+          3
+        ],
+        "semantic_signatures": []
+      },
+      {
+        "model_key": "C000006_T4",
+        "semantic_id": "type:0>0>4",
+        "source_type": 4,
+        "shape": [
+          40402,
+          17641
+        ],
+        "hop_count": 2,
+        "node_type_path": [
+          0,
+          0,
+          4
+        ],
+        "semantic_signatures": []
+      },
+      {
+        "model_key": "C000007_T5",
+        "semantic_id": "type:0>0>5",
+        "source_type": 5,
+        "shape": [
+          40402,
+          9368
+        ],
+        "hop_count": 2,
+        "node_type_path": [
+          0,
+          0,
+          5
+        ],
+        "semantic_signatures": []
+      },
+      {
+        "model_key": "C000008_T6",
+        "semantic_id": "type:0>0>6",
+        "source_type": 6,
+        "shape": [
+          40402,
+          2731
+        ],
+        "hop_count": 2,
+        "node_type_path": [
+          0,
+          0,
+          6
+        ],
+        "semantic_signatures": []
+      },
+      {
+        "model_key": "C000009_T7",
+        "semantic_id": "type:0>0>7",
+        "source_type": 7,
+        "shape": [
+          40402,
+          7153
+        ],
+        "hop_count": 2,
+        "node_type_path": [
+          0,
+          0,
+          7
+        ],
+        "semantic_signatures": []
+      },
+      {
+        "model_key": "C000010_T1",
+        "semantic_id": "type:0>1",
+        "source_type": 1,
+        "shape": [
+          40402,
+          19427
+        ],
+        "hop_count": 1,
+        "node_type_path": [
+          0,
+          1
+        ],
+        "semantic_signatures": []
+      },
+      {
+        "model_key": "C000011_T0",
+        "semantic_id": "type:0>1>0",
+        "source_type": 0,
+        "shape": [
+          40402,
+          40402
+        ],
+        "hop_count": 2,
+        "node_type_path": [
+          0,
+          1,
+          0
+        ],
+        "semantic_signatures": []
+      },
+      {
+        "model_key": "C000012_T1",
+        "semantic_id": "type:0>1>1",
+        "source_type": 1,
+        "shape": [
+          40402,
+          19427
+        ],
+        "hop_count": 2,
+        "node_type_path": [
+          0,
+          1,
+          1
+        ],
+        "semantic_signatures": []
+      },
+      {
+        "model_key": "C000013_T2",
+        "semantic_id": "type:0>1>2",
+        "source_type": 2,
+        "shape": [
+          40402,
+          82351
+        ],
+        "hop_count": 2,
+        "node_type_path": [
+          0,
+          1,
+          2
+        ],
+        "semantic_signatures": []
+      },
+      {
+        "model_key": "C000014_T3",
+        "semantic_id": "type:0>1>3",
+        "source_type": 3,
+        "shape": [
+          40402,
+          1025
+        ],
+        "hop_count": 2,
+        "node_type_path": [
+          0,
+          1,
+          3
+        ],
+        "semantic_signatures": []
+      },
+      {
+        "model_key": "C000015_T4",
+        "semantic_id": "type:0>1>4",
+        "source_type": 4,
+        "shape": [
+          40402,
+          17641
+        ],
+        "hop_count": 2,
+        "node_type_path": [
+          0,
+          1,
+          4
+        ],
+        "semantic_signatures": []
+      },
+      {
+        "model_key": "C000016_T5",
+        "semantic_id": "type:0>1>5",
+        "source_type": 5,
+        "shape": [
+          40402,
+          9368
+        ],
+        "hop_count": 2,
+        "node_type_path": [
+          0,
+          1,
+          5
+        ],
+        "semantic_signatures": []
+      },
+      {
+        "model_key": "C000017_T6",
+        "semantic_id": "type:0>1>6",
+        "source_type": 6,
+        "shape": [
+          40402,
+          2731
+        ],
+        "hop_count": 2,
+        "node_type_path": [
+          0,
+          1,
+          6
+        ],
+        "semantic_signatures": []
+      },
+      {
+        "model_key": "C000018_T7",
+        "semantic_id": "type:0>1>7",
+        "source_type": 7,
+        "shape": [
+          40402,
+          7153
+        ],
+        "hop_count": 2,
+        "node_type_path": [
+          0,
+          1,
+          7
+        ],
+        "semantic_signatures": []
+      },
+      {
+        "model_key": "C000019_T2",
+        "semantic_id": "type:0>2",
+        "source_type": 2,
+        "shape": [
+          40402,
+          82351
+        ],
+        "hop_count": 1,
+        "node_type_path": [
+          0,
+          2
+        ],
+        "semantic_signatures": []
+      },
+      {
+        "model_key": "C000020_T0",
+        "semantic_id": "type:0>2>0",
+        "source_type": 0,
+        "shape": [
+          40402,
+          40402
+        ],
+        "hop_count": 2,
+        "node_type_path": [
+          0,
+          2,
+          0
+        ],
+        "semantic_signatures": []
+      },
+      {
+        "model_key": "C000021_T1",
+        "semantic_id": "type:0>2>1",
+        "source_type": 1,
+        "shape": [
+          40402,
+          19427
+        ],
+        "hop_count": 2,
+        "node_type_path": [
+          0,
+          2,
+          1
+        ],
+        "semantic_signatures": []
+      },
+      {
+        "model_key": "C000022_T2",
+        "semantic_id": "type:0>2>2",
+        "source_type": 2,
+        "shape": [
+          40402,
+          82351
+        ],
+        "hop_count": 2,
+        "node_type_path": [
+          0,
+          2,
+          2
+        ],
+        "semantic_signatures": []
+      },
+      {
+        "model_key": "C000023_T3",
+        "semantic_id": "type:0>2>3",
+        "source_type": 3,
+        "shape": [
+          40402,
+          1025
+        ],
+        "hop_count": 2,
+        "node_type_path": [
+          0,
+          2,
+          3
+        ],
+        "semantic_signatures": []
+      },
+      {
+        "model_key": "C000024_T4",
+        "semantic_id": "type:0>2>4",
+        "source_type": 4,
+        "shape": [
+          40402,
+          17641
+        ],
+        "hop_count": 2,
+        "node_type_path": [
+          0,
+          2,
+          4
+        ],
+        "semantic_signatures": []
+      },
+      {
+        "model_key": "C000025_T5",
+        "semantic_id": "type:0>2>5",
+        "source_type": 5,
+        "shape": [
+          40402,
+          9368
+        ],
+        "hop_count": 2,
+        "node_type_path": [
+          0,
+          2,
+          5
+        ],
+        "semantic_signatures": []
+      },
+      {
+        "model_key": "C000026_T6",
+        "semantic_id": "type:0>2>6",
+        "source_type": 6,
+        "shape": [
+          40402,
+          2731
+        ],
+        "hop_count": 2,
+        "node_type_path": [
+          0,
+          2,
+          6
+        ],
+        "semantic_signatures": []
+      },
+      {
+        "model_key": "C000027_T7",
+        "semantic_id": "type:0>2>7",
+        "source_type": 7,
+        "shape": [
+          40402,
+          7153
+        ],
+        "hop_count": 2,
+        "node_type_path": [
+          0,
+          2,
+          7
+        ],
+        "semantic_signatures": []
+      },
+      {
+        "model_key": "C000028_T3",
+        "semantic_id": "type:0>3",
+        "source_type": 3,
+        "shape": [
+          40402,
+          1025
+        ],
+        "hop_count": 1,
+        "node_type_path": [
+          0,
+          3
+        ],
+        "semantic_signatures": []
+      },
+      {
+        "model_key": "C000029_T0",
+        "semantic_id": "type:0>3>0",
+        "source_type": 0,
+        "shape": [
+          40402,
+          40402
+        ],
+        "hop_count": 2,
+        "node_type_path": [
+          0,
+          3,
+          0
+        ],
+        "semantic_signatures": []
+      },
+      {
+        "model_key": "C000030_T1",
+        "semantic_id": "type:0>3>1",
+        "source_type": 1,
+        "shape": [
+          40402,
+          19427
+        ],
+        "hop_count": 2,
+        "node_type_path": [
+          0,
+          3,
+          1
+        ],
+        "semantic_signatures": []
+      },
+      {
+        "model_key": "C000031_T2",
+        "semantic_id": "type:0>3>2",
+        "source_type": 2,
+        "shape": [
+          40402,
+          82351
+        ],
+        "hop_count": 2,
+        "node_type_path": [
+          0,
+          3,
+          2
+        ],
+        "semantic_signatures": []
+      },
+      {
+        "model_key": "C000032_T3",
+        "semantic_id": "type:0>3>3",
+        "source_type": 3,
+        "shape": [
+          40402,
+          1025
+        ],
+        "hop_count": 2,
+        "node_type_path": [
+          0,
+          3,
+          3
+        ],
+        "semantic_signatures": []
+      },
+      {
+        "model_key": "C000033_T4",
+        "semantic_id": "type:0>3>4",
+        "source_type": 4,
+        "shape": [
+          40402,
+          17641
+        ],
+        "hop_count": 2,
+        "node_type_path": [
+          0,
+          3,
+          4
+        ],
+        "semantic_signatures": []
+      },
+      {
+        "model_key": "C000034_T5",
+        "semantic_id": "type:0>3>5",
+        "source_type": 5,
+        "shape": [
+          40402,
+          9368
+        ],
+        "hop_count": 2,
+        "node_type_path": [
+          0,
+          3,
+          5
+        ],
+        "semantic_signatures": []
+      },
+      {
+        "model_key": "C000035_T6",
+        "semantic_id": "type:0>3>6",
+        "source_type": 6,
+        "shape": [
+          40402,
+          2731
+        ],
+        "hop_count": 2,
+        "node_type_path": [
+          0,
+          3,
+          6
+        ],
+        "semantic_signatures": []
+      },
+      {
+        "model_key": "C000036_T7",
+        "semantic_id": "type:0>3>7",
+        "source_type": 7,
+        "shape": [
+          40402,
+          7153
+        ],
+        "hop_count": 2,
+        "node_type_path": [
+          0,
+          3,
+          7
+        ],
+        "semantic_signatures": []
+      },
+      {
+        "model_key": "C000037_T4",
+        "semantic_id": "type:0>4",
+        "source_type": 4,
+        "shape": [
+          40402,
+          17641
+        ],
+        "hop_count": 1,
+        "node_type_path": [
+          0,
+          4
+        ],
+        "semantic_signatures": []
+      },
+      {
+        "model_key": "C000038_T0",
+        "semantic_id": "type:0>4>0",
+        "source_type": 0,
+        "shape": [
+          40402,
+          40402
+        ],
+        "hop_count": 2,
+        "node_type_path": [
+          0,
+          4,
+          0
+        ],
+        "semantic_signatures": []
+      },
+      {
+        "model_key": "C000039_T1",
+        "semantic_id": "type:0>4>1",
+        "source_type": 1,
+        "shape": [
+          40402,
+          19427
+        ],
+        "hop_count": 2,
+        "node_type_path": [
+          0,
+          4,
+          1
+        ],
+        "semantic_signatures": []
+      },
+      {
+        "model_key": "C000040_T2",
+        "semantic_id": "type:0>4>2",
+        "source_type": 2,
+        "shape": [
+          40402,
+          82351
+        ],
+        "hop_count": 2,
+        "node_type_path": [
+          0,
+          4,
+          2
+        ],
+        "semantic_signatures": []
+      },
+      {
+        "model_key": "C000041_T3",
+        "semantic_id": "type:0>4>3",
+        "source_type": 3,
+        "shape": [
+          40402,
+          1025
+        ],
+        "hop_count": 2,
+        "node_type_path": [
+          0,
+          4,
+          3
+        ],
+        "semantic_signatures": []
+      },
+      {
+        "model_key": "C000042_T4",
+        "semantic_id": "type:0>4>4",
+        "source_type": 4,
+        "shape": [
+          40402,
+          17641
+        ],
+        "hop_count": 2,
+        "node_type_path": [
+          0,
+          4,
+          4
+        ],
+        "semantic_signatures": []
+      },
+      {
+        "model_key": "C000043_T5",
+        "semantic_id": "type:0>4>5",
+        "source_type": 5,
+        "shape": [
+          40402,
+          9368
+        ],
+        "hop_count": 2,
+        "node_type_path": [
+          0,
+          4,
+          5
+        ],
+        "semantic_signatures": []
+      },
+      {
+        "model_key": "C000044_T6",
+        "semantic_id": "type:0>4>6",
+        "source_type": 6,
+        "shape": [
+          40402,
+          2731
+        ],
+        "hop_count": 2,
+        "node_type_path": [
+          0,
+          4,
+          6
+        ],
+        "semantic_signatures": []
+      },
+      {
+        "model_key": "C000045_T7",
+        "semantic_id": "type:0>4>7",
+        "source_type": 7,
+        "shape": [
+          40402,
+          7153
+        ],
+        "hop_count": 2,
+        "node_type_path": [
+          0,
+          4,
+          7
+        ],
+        "semantic_signatures": []
+      },
+      {
+        "model_key": "C000046_T5",
+        "semantic_id": "type:0>5",
+        "source_type": 5,
+        "shape": [
+          40402,
+          9368
+        ],
+        "hop_count": 1,
+        "node_type_path": [
+          0,
+          5
+        ],
+        "semantic_signatures": []
+      },
+      {
+        "model_key": "C000047_T0",
+        "semantic_id": "type:0>5>0",
+        "source_type": 0,
+        "shape": [
+          40402,
+          40402
+        ],
+        "hop_count": 2,
+        "node_type_path": [
+          0,
+          5,
+          0
+        ],
+        "semantic_signatures": []
+      },
+      {
+        "model_key": "C000048_T1",
+        "semantic_id": "type:0>5>1",
+        "source_type": 1,
+        "shape": [
+          40402,
+          19427
+        ],
+        "hop_count": 2,
+        "node_type_path": [
+          0,
+          5,
+          1
+        ],
+        "semantic_signatures": []
+      },
+      {
+        "model_key": "C000049_T2",
+        "semantic_id": "type:0>5>2",
+        "source_type": 2,
+        "shape": [
+          40402,
+          82351
+        ],
+        "hop_count": 2,
+        "node_type_path": [
+          0,
+          5,
+          2
+        ],
+        "semantic_signatures": []
+      },
+      {
+        "model_key": "C000050_T3",
+        "semantic_id": "type:0>5>3",
+        "source_type": 3,
+        "shape": [
+          40402,
+          1025
+        ],
+        "hop_count": 2,
+        "node_type_path": [
+          0,
+          5,
+          3
+        ],
+        "semantic_signatures": []
+      },
+      {
+        "model_key": "C000051_T4",
+        "semantic_id": "type:0>5>4",
+        "source_type": 4,
+        "shape": [
+          40402,
+          17641
+        ],
+        "hop_count": 2,
+        "node_type_path": [
+          0,
+          5,
+          4
+        ],
+        "semantic_signatures": []
+      },
+      {
+        "model_key": "C000052_T5",
+        "semantic_id": "type:0>5>5",
+        "source_type": 5,
+        "shape": [
+          40402,
+          9368
+        ],
+        "hop_count": 2,
+        "node_type_path": [
+          0,
+          5,
+          5
+        ],
+        "semantic_signatures": []
+      },
+      {
+        "model_key": "C000053_T6",
+        "semantic_id": "type:0>5>6",
+        "source_type": 6,
+        "shape": [
+          40402,
+          2731
+        ],
+        "hop_count": 2,
+        "node_type_path": [
+          0,
+          5,
+          6
+        ],
+        "semantic_signatures": []
+      },
+      {
+        "model_key": "C000054_T7",
+        "semantic_id": "type:0>5>7",
+        "source_type": 7,
+        "shape": [
+          40402,
+          7153
+        ],
+        "hop_count": 2,
+        "node_type_path": [
+          0,
+          5,
+          7
+        ],
+        "semantic_signatures": []
+      },
+      {
+        "model_key": "C000055_T6",
+        "semantic_id": "type:0>6",
+        "source_type": 6,
+        "shape": [
+          40402,
+          2731
+        ],
+        "hop_count": 1,
+        "node_type_path": [
+          0,
+          6
+        ],
+        "semantic_signatures": []
+      },
+      {
+        "model_key": "C000056_T0",
+        "semantic_id": "type:0>6>0",
+        "source_type": 0,
+        "shape": [
+          40402,
+          40402
+        ],
+        "hop_count": 2,
+        "node_type_path": [
+          0,
+          6,
+          0
+        ],
+        "semantic_signatures": []
+      },
+      {
+        "model_key": "C000057_T1",
+        "semantic_id": "type:0>6>1",
+        "source_type": 1,
+        "shape": [
+          40402,
+          19427
+        ],
+        "hop_count": 2,
+        "node_type_path": [
+          0,
+          6,
+          1
+        ],
+        "semantic_signatures": []
+      },
+      {
+        "model_key": "C000058_T2",
+        "semantic_id": "type:0>6>2",
+        "source_type": 2,
+        "shape": [
+          40402,
+          82351
+        ],
+        "hop_count": 2,
+        "node_type_path": [
+          0,
+          6,
+          2
+        ],
+        "semantic_signatures": []
+      },
+      {
+        "model_key": "C000059_T3",
+        "semantic_id": "type:0>6>3",
+        "source_type": 3,
+        "shape": [
+          40402,
+          1025
+        ],
+        "hop_count": 2,
+        "node_type_path": [
+          0,
+          6,
+          3
+        ],
+        "semantic_signatures": []
+      },
+      {
+        "model_key": "C000060_T4",
+        "semantic_id": "type:0>6>4",
+        "source_type": 4,
+        "shape": [
+          40402,
+          17641
+        ],
+        "hop_count": 2,
+        "node_type_path": [
+          0,
+          6,
+          4
+        ],
+        "semantic_signatures": []
+      },
+      {
+        "model_key": "C000061_T5",
+        "semantic_id": "type:0>6>5",
+        "source_type": 5,
+        "shape": [
+          40402,
+          9368
+        ],
+        "hop_count": 2,
+        "node_type_path": [
+          0,
+          6,
+          5
+        ],
+        "semantic_signatures": []
+      },
+      {
+        "model_key": "C000062_T6",
+        "semantic_id": "type:0>6>6",
+        "source_type": 6,
+        "shape": [
+          40402,
+          2731
+        ],
+        "hop_count": 2,
+        "node_type_path": [
+          0,
+          6,
+          6
+        ],
+        "semantic_signatures": []
+      },
+      {
+        "model_key": "C000063_T7",
+        "semantic_id": "type:0>6>7",
+        "source_type": 7,
+        "shape": [
+          40402,
+          7153
+        ],
+        "hop_count": 2,
+        "node_type_path": [
+          0,
+          6,
+          7
+        ],
+        "semantic_signatures": []
+      },
+      {
+        "model_key": "C000064_T7",
+        "semantic_id": "type:0>7",
+        "source_type": 7,
+        "shape": [
+          40402,
+          7153
+        ],
+        "hop_count": 1,
+        "node_type_path": [
+          0,
+          7
+        ],
+        "semantic_signatures": []
+      },
+      {
+        "model_key": "C000065_T0",
+        "semantic_id": "type:0>7>0",
+        "source_type": 0,
+        "shape": [
+          40402,
+          40402
+        ],
+        "hop_count": 2,
+        "node_type_path": [
+          0,
+          7,
+          0
+        ],
+        "semantic_signatures": []
+      },
+      {
+        "model_key": "C000066_T1",
+        "semantic_id": "type:0>7>1",
+        "source_type": 1,
+        "shape": [
+          40402,
+          19427
+        ],
+        "hop_count": 2,
+        "node_type_path": [
+          0,
+          7,
+          1
+        ],
+        "semantic_signatures": []
+      },
+      {
+        "model_key": "C000067_T2",
+        "semantic_id": "type:0>7>2",
+        "source_type": 2,
+        "shape": [
+          40402,
+          82351
+        ],
+        "hop_count": 2,
+        "node_type_path": [
+          0,
+          7,
+          2
+        ],
+        "semantic_signatures": []
+      },
+      {
+        "model_key": "C000068_T3",
+        "semantic_id": "type:0>7>3",
+        "source_type": 3,
+        "shape": [
+          40402,
+          1025
+        ],
+        "hop_count": 2,
+        "node_type_path": [
+          0,
+          7,
+          3
+        ],
+        "semantic_signatures": []
+      },
+      {
+        "model_key": "C000069_T4",
+        "semantic_id": "type:0>7>4",
+        "source_type": 4,
+        "shape": [
+          40402,
+          17641
+        ],
+        "hop_count": 2,
+        "node_type_path": [
+          0,
+          7,
+          4
+        ],
+        "semantic_signatures": []
+      },
+      {
+        "model_key": "C000070_T5",
+        "semantic_id": "type:0>7>5",
+        "source_type": 5,
+        "shape": [
+          40402,
+          9368
+        ],
+        "hop_count": 2,
+        "node_type_path": [
+          0,
+          7,
+          5
+        ],
+        "semantic_signatures": []
+      },
+      {
+        "model_key": "C000071_T6",
+        "semantic_id": "type:0>7>6",
+        "source_type": 6,
+        "shape": [
+          40402,
+          2731
+        ],
+        "hop_count": 2,
+        "node_type_path": [
+          0,
+          7,
+          6
+        ],
+        "semantic_signatures": []
+      },
+      {
+        "model_key": "C000072_T7",
+        "semantic_id": "type:0>7>7",
+        "source_type": 7,
+        "shape": [
+          40402,
+          7153
+        ],
+        "hop_count": 2,
+        "node_type_path": [
+          0,
+          7,
+          7
+        ],
+        "semantic_signatures": []
+      }
+    ],
+    "semantic_to_model_key": {
+      "identity:0": "0",
+      "type:0>0": "C000001_T0",
+      "type:0>0>0": "C000002_T0",
+      "type:0>0>1": "C000003_T1",
+      "type:0>0>2": "C000004_T2",
+      "type:0>0>3": "C000005_T3",
+      "type:0>0>4": "C000006_T4",
+      "type:0>0>5": "C000007_T5",
+      "type:0>0>6": "C000008_T6",
+      "type:0>0>7": "C000009_T7",
+      "type:0>1": "C000010_T1",
+      "type:0>1>0": "C000011_T0",
+      "type:0>1>1": "C000012_T1",
+      "type:0>1>2": "C000013_T2",
+      "type:0>1>3": "C000014_T3",
+      "type:0>1>4": "C000015_T4",
+      "type:0>1>5": "C000016_T5",
+      "type:0>1>6": "C000017_T6",
+      "type:0>1>7": "C000018_T7",
+      "type:0>2": "C000019_T2",
+      "type:0>2>0": "C000020_T0",
+      "type:0>2>1": "C000021_T1",
+      "type:0>2>2": "C000022_T2",
+      "type:0>2>3": "C000023_T3",
+      "type:0>2>4": "C000024_T4",
+      "type:0>2>5": "C000025_T5",
+      "type:0>2>6": "C000026_T6",
+      "type:0>2>7": "C000027_T7",
+      "type:0>3": "C000028_T3",
+      "type:0>3>0": "C000029_T0",
+      "type:0>3>1": "C000030_T1",
+      "type:0>3>2": "C000031_T2",
+      "type:0>3>3": "C000032_T3",
+      "type:0>3>4": "C000033_T4",
+      "type:0>3>5": "C000034_T5",
+      "type:0>3>6": "C000035_T6",
+      "type:0>3>7": "C000036_T7",
+      "type:0>4": "C000037_T4",
+      "type:0>4>0": "C000038_T0",
+      "type:0>4>1": "C000039_T1",
+      "type:0>4>2": "C000040_T2",
+      "type:0>4>3": "C000041_T3",
+      "type:0>4>4": "C000042_T4",
+      "type:0>4>5": "C000043_T5",
+      "type:0>4>6": "C000044_T6",
+      "type:0>4>7": "C000045_T7",
+      "type:0>5": "C000046_T5",
+      "type:0>5>0": "C000047_T0",
+      "type:0>5>1": "C000048_T1",
+      "type:0>5>2": "C000049_T2",
+      "type:0>5>3": "C000050_T3",
+      "type:0>5>4": "C000051_T4",
+      "type:0>5>5": "C000052_T5",
+      "type:0>5>6": "C000053_T6",
+      "type:0>5>7": "C000054_T7",
+      "type:0>6": "C000055_T6",
+      "type:0>6>0": "C000056_T0",
+      "type:0>6>1": "C000057_T1",
+      "type:0>6>2": "C000058_T2",
+      "type:0>6>3": "C000059_T3",
+      "type:0>6>4": "C000060_T4",
+      "type:0>6>5": "C000061_T5",
+      "type:0>6>6": "C000062_T6",
+      "type:0>6>7": "C000063_T7",
+      "type:0>7": "C000064_T7",
+      "type:0>7>0": "C000065_T0",
+      "type:0>7>1": "C000066_T1",
+      "type:0>7>2": "C000067_T2",
+      "type:0>7>3": "C000068_T3",
+      "type:0>7>4": "C000069_T4",
+      "type:0>7>5": "C000070_T5",
+      "type:0>7>6": "C000071_T6",
+      "type:0>7>7": "C000072_T7"
+    }
+  },
+  "estimated_parameters": 151030543,
+  "hyperparameters": {
+    "variants": "unchanged,exact_2",
+    "seeds": "1566911444",
+    "gpu": 0,
+    "cpu": false,
+    "super_epochs": 200,
+    "embed_size": 512,
+    "hidden": 512,
+    "n_fp_layers": 2,
+    "n_task_layers": 4,
+    "num_heads": 1,
+    "dropout": 0.5,
+    "input_drop": 0.0,
+    "att_drop": 0.0,
+    "act": "none",
+    "residual": false,
+    "lr": 0.005,
+    "weight_decay": 0.0001,
+    "batch_size": 10000,
+    "eval_batch_size": 20000,
+    "patience": 50,
+    "min_delta": 1e-10,
+    "grad_clip": 0.0,
+    "log_every": 20,
+    "max_estimated_parameters": 500000000,
+    "allow_large_model": false
+  },
+  "selection_metric": "mean_validation_cross_entropy",
+  "best_mean_val_loss": 1.1257779227762417,
+  "best_super_epoch": 18,
+  "epoch_accounting": {
+    "definition": "one super-epoch visits every K-graph variant once; every label minibatch performs one optimizer update",
+    "super_epochs_ran": 68,
+    "variant_epochs_ran": 136,
+    "batches_per_variant": {
+      "unchanged": 1,
+      "exact_2": 1
+    },
+    "updates_per_super_epoch": 2,
+    "optimizer_steps": 136,
+    "expected_optimizer_steps": 136
+  },
+  "training_seconds": 990.6043169300538,
+  "inference_seconds": 13.61128744785674,
+  "mean_test_metrics": {
+    "accuracy": 0.6269641734758014,
+    "balanced_accuracy": 0.40381755215648174,
+    "hit_at_1": 0.6269641734758014,
+    "hit_at_3": 0.8695788812067882,
+    "loss": 1.1600516897347655,
+    "macro_f1": 0.37501325662381957,
+    "macro_precision": 0.4758231186086913,
+    "macro_recall": 0.35334035813692155,
+    "micro_f1": 0.6269641734758014,
+    "micro_precision": 0.6269641734758014,
+    "micro_recall": 0.6269641734758014,
+    "mrr": 0.7639254287510102,
+    "weighted_f1": 0.5982517380307371
+  },
+  "per_variant_split_metrics": {
+    "unchanged": {
+      "train": {
+        "accuracy": 0.8237636211232188,
+        "balanced_accuracy": 0.6373430019976288,
+        "macro_precision": 0.7786609640723856,
+        "macro_recall": 0.5576751267479252,
+        "micro_precision": 0.8237636211232188,
+        "micro_recall": 0.8237636211232188,
+        "micro_f1": 0.8237636211232188,
+        "macro_f1": 0.5812215418712112,
+        "weighted_f1": 0.7987273584819152,
+        "hit_at_1": 0.8237636211232188,
+        "hit_at_3": 0.9694048616932104,
+        "mrr": 0.8992171596216024,
+        "loss": 0.6663400799206337,
+        "per_class_precision": [
+          0.991701244813278,
+          0.9187221997573797,
+          0.6223506743737958,
+          1.0,
+          0.8563218390804598,
+          0.9542857142857143,
+          0.8859060402684564,
+          0.0
+        ],
+        "per_class_recall": [
+          0.9299610894941635,
+          0.9742710120068611,
+          0.9237368922783603,
+          0.02702702702702703,
+          0.2582322357019064,
+          0.7767441860465116,
+          0.5714285714285714,
+          0.0
+        ],
+        "per_class_f1": [
+          0.9598393574297188,
+          0.945681581685744,
+          0.7436684574059862,
+          0.05263157894736842,
+          0.3968042609853529,
+          0.8564102564102564,
+          0.6947368421052632,
+          0.0
+        ],
+        "per_class_support": [
+          257,
+          2332,
+          1049,
+          111,
+          577,
+          215,
+          231,
+          0
+        ],
+        "confusion_matrix": [
+          [
+            239,
+            8,
+            9,
+            0,
+            0,
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            2272,
+            58,
+            0,
+            1,
+            0,
+            1,
+            0
+          ],
+          [
+            0,
+            54,
+            969,
+            0,
+            24,
+            0,
+            2,
+            0
+          ],
+          [
+            0,
+            38,
+            63,
+            3,
+            0,
+            2,
+            5,
+            0
+          ],
+          [
+            0,
+            44,
+            378,
+            0,
+            149,
+            1,
+            5,
+            0
+          ],
+          [
+            0,
+            15,
+            29,
+            0,
+            0,
+            167,
+            4,
+            0
+          ],
+          [
+            2,
+            42,
+            51,
+            0,
+            0,
+            4,
+            132,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        ]
+      },
+      "val": {
+        "accuracy": 0.6398491514770585,
+        "balanced_accuracy": 0.39811659021168994,
+        "macro_precision": 0.4637014055383263,
+        "macro_recall": 0.3483520164352286,
+        "micro_precision": 0.6398491514770585,
+        "micro_recall": 0.6398491514770585,
+        "micro_f1": 0.6398491514770585,
+        "macro_f1": 0.370589113604409,
+        "weighted_f1": 0.6057562237070564,
+        "hit_at_1": 0.6398491514770585,
+        "hit_at_3": 0.8818353236957888,
+        "mrr": 0.7737863278560952,
+        "loss": 1.1203458679694747,
+        "per_class_precision": [
+          0.68,
+          0.7352625937834941,
+          0.45336225596529284,
+          0.0,
+          0.6326530612244898,
+          0.7333333333333333,
+          0.475,
+          0.0
+        ],
+        "per_class_recall": [
+          0.5930232558139535,
+          0.8828828828828829,
+          0.5971428571428572,
+          0.0,
+          0.16145833333333334,
+          0.3055555555555556,
+          0.24675324675324675,
+          0.0
+        ],
+        "per_class_f1": [
+          0.6335403726708074,
+          0.8023391812865497,
+          0.5154130702836005,
+          0.0,
+          0.2572614107883817,
+          0.43137254901960786,
+          0.3247863247863248,
+          0.0
+        ],
+        "per_class_support": [
+          86,
+          777,
+          350,
+          37,
+          192,
+          72,
+          77,
+          0
+        ],
+        "confusion_matrix": [
+          [
+            51,
+            20,
+            15,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            14,
+            686,
+            56,
+            1,
+            2,
+            6,
+            12,
+            0
+          ],
+          [
+            6,
+            111,
+            209,
+            2,
+            15,
+            2,
+            5,
+            0
+          ],
+          [
+            0,
+            17,
+            20,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            2,
+            37,
+            118,
+            0,
+            31,
+            0,
+            4,
+            0
+          ],
+          [
+            0,
+            35,
+            15,
+            0,
+            0,
+            22,
+            0,
+            0
+          ],
+          [
+            2,
+            27,
+            28,
+            0,
+            1,
+            0,
+            19,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        ]
+      },
+      "test": {
+        "accuracy": 0.6285355122564424,
+        "balanced_accuracy": 0.4082685414271508,
+        "macro_precision": 0.48150892224872005,
+        "macro_recall": 0.35723497374875696,
+        "micro_precision": 0.6285355122564424,
+        "micro_recall": 0.6285355122564424,
+        "micro_f1": 0.6285355122564424,
+        "macro_f1": 0.37893393062010816,
+        "weighted_f1": 0.599279762869096,
+        "hit_at_1": 0.6285355122564424,
+        "hit_at_3": 0.8749214330609679,
+        "mrr": 0.7661892789799766,
+        "loss": 1.152957517502166,
+        "per_class_precision": [
+          0.717948717948718,
+          0.7343578485181119,
+          0.41914893617021276,
+          0.0,
+          0.6153846153846154,
+          0.9090909090909091,
+          0.45614035087719296,
+          0.0
+        ],
+        "per_class_recall": [
+          0.6511627906976745,
+          0.861003861003861,
+          0.5644699140401146,
+          0.0,
+          0.16580310880829016,
+          0.2777777777777778,
+          0.33766233766233766,
+          0.0
+        ],
+        "per_class_f1": [
+          0.6829268292682927,
+          0.792654028436019,
+          0.4810744810744811,
+          0.0,
+          0.2612244897959184,
+          0.425531914893617,
+          0.3880597014925373,
+          0.0
+        ],
+        "per_class_support": [
+          86,
+          777,
+          349,
+          37,
+          193,
+          72,
+          77,
+          0
+        ],
+        "confusion_matrix": [
+          [
+            56,
+            15,
+            12,
+            0,
+            1,
+            0,
+            2,
+            0
+          ],
+          [
+            12,
+            669,
+            79,
+            1,
+            0,
+            2,
+            14,
+            0
+          ],
+          [
+            6,
+            120,
+            197,
+            0,
+            19,
+            0,
+            7,
+            0
+          ],
+          [
+            0,
+            16,
+            21,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            2,
+            28,
+            126,
+            0,
+            32,
+            0,
+            5,
+            0
+          ],
+          [
+            0,
+            32,
+            17,
+            0,
+            0,
+            20,
+            3,
+            0
+          ],
+          [
+            2,
+            31,
+            18,
+            0,
+            0,
+            0,
+            26,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        ]
+      },
+      "graph": {
+        "edge_count": 0,
+        "active_channels": 73,
+        "global_channels": 73,
+        "total_channel_nnz": 642401144
+      }
+    },
+    "exact_2": {
+      "train": {
+        "accuracy": 0.8170578373847444,
+        "balanced_accuracy": 0.6290908685174302,
+        "macro_precision": 0.7780964314682577,
+        "macro_recall": 0.5504545099527515,
+        "micro_precision": 0.8170578373847444,
+        "micro_recall": 0.8170578373847444,
+        "micro_f1": 0.8170578373847444,
+        "macro_f1": 0.5757051963942293,
+        "weighted_f1": 0.7943745309529695,
+        "hit_at_1": 0.8170578373847444,
+        "hit_at_3": 0.9660519698239731,
+        "mrr": 0.8948693769209278,
+        "loss": 0.6766805929875103,
+        "per_class_precision": [
+          0.9916317991631799,
+          0.9260636100784799,
+          0.6022235948116121,
+          1.0,
+          0.8659217877094972,
+          0.9532163742690059,
+          0.8857142857142857,
+          0.0
+        ],
+        "per_class_recall": [
+          0.9221789883268483,
+          0.9614065180102916,
+          0.9294566253574833,
+          0.02702702702702703,
+          0.268630849220104,
+          0.7581395348837209,
+          0.5367965367965368,
+          0.0
+        ],
+        "per_class_f1": [
+          0.9556451612903226,
+          0.9434041657900274,
+          0.7308845577211395,
+          0.05263157894736842,
+          0.41005291005291006,
+          0.844559585492228,
+          0.6684636118598383,
+          0.0
+        ],
+        "per_class_support": [
+          257,
+          2332,
+          1049,
+          111,
+          577,
+          215,
+          231,
+          0
+        ],
+        "confusion_matrix": [
+          [
+            237,
+            9,
+            10,
+            0,
+            0,
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            2242,
+            87,
+            0,
+            1,
+            0,
+            2,
+            0
+          ],
+          [
+            0,
+            49,
+            975,
+            0,
+            23,
+            0,
+            2,
+            0
+          ],
+          [
+            0,
+            36,
+            66,
+            3,
+            0,
+            2,
+            4,
+            0
+          ],
+          [
+            0,
+            34,
+            382,
+            0,
+            155,
+            1,
+            5,
+            0
+          ],
+          [
+            0,
+            17,
+            32,
+            0,
+            0,
+            163,
+            3,
+            0
+          ],
+          [
+            2,
+            34,
+            67,
+            0,
+            0,
+            4,
+            124,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        ]
+      },
+      "val": {
+        "accuracy": 0.6385920804525456,
+        "balanced_accuracy": 0.3977591653006936,
+        "macro_precision": 0.4584303071958,
+        "macro_recall": 0.3480392696381069,
+        "micro_precision": 0.6385920804525456,
+        "micro_recall": 0.6385920804525456,
+        "micro_f1": 0.6385920804525456,
+        "macro_f1": 0.3689596804557403,
+        "weighted_f1": 0.6066585116052494,
+        "hit_at_1": 0.6385920804525456,
+        "hit_at_3": 0.8705216844751729,
+        "mrr": 0.769357397264374,
+        "loss": 1.1312099775830087,
+        "per_class_precision": [
+          0.6986301369863014,
+          0.7428884026258206,
+          0.4495798319327731,
+          0.0,
+          0.6666666666666666,
+          0.7096774193548387,
+          0.4,
+          0.0
+        ],
+        "per_class_recall": [
+          0.5930232558139535,
+          0.8738738738738738,
+          0.6114285714285714,
+          0.0,
+          0.16666666666666666,
+          0.3055555555555556,
+          0.23376623376623376,
+          0.0
+        ],
+        "per_class_f1": [
+          0.6415094339622641,
+          0.8030751034890597,
+          0.5181598062953995,
+          0.0,
+          0.26666666666666666,
+          0.42718446601941745,
+          0.29508196721311475,
+          0.0
+        ],
+        "per_class_support": [
+          86,
+          777,
+          350,
+          37,
+          192,
+          72,
+          77,
+          0
+        ],
+        "confusion_matrix": [
+          [
+            51,
+            20,
+            15,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            14,
+            679,
+            61,
+            2,
+            1,
+            7,
+            13,
+            0
+          ],
+          [
+            5,
+            108,
+            214,
+            2,
+            14,
+            2,
+            5,
+            0
+          ],
+          [
+            0,
+            16,
+            21,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            2,
+            33,
+            117,
+            0,
+            32,
+            0,
+            8,
+            0
+          ],
+          [
+            0,
+            33,
+            16,
+            0,
+            0,
+            22,
+            1,
+            0
+          ],
+          [
+            1,
+            25,
+            32,
+            0,
+            1,
+            0,
+            18,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        ]
+      },
+      "test": {
+        "accuracy": 0.6253928346951603,
+        "balanced_accuracy": 0.39936656288581274,
+        "macro_precision": 0.4701373149686625,
+        "macro_recall": 0.34944574252508614,
+        "micro_precision": 0.6253928346951603,
+        "micro_recall": 0.6253928346951603,
+        "micro_f1": 0.6253928346951603,
+        "macro_f1": 0.37109258262753103,
+        "weighted_f1": 0.597223713192378,
+        "hit_at_1": 0.6253928346951603,
+        "hit_at_3": 0.8642363293526084,
+        "mrr": 0.7616615785220437,
+        "loss": 1.1671458619673651,
+        "per_class_precision": [
+          0.7402597402597403,
+          0.7383073496659243,
+          0.41478439425051333,
+          0.0,
+          0.6181818181818182,
+          0.8695652173913043,
+          0.38,
+          0.0
+        ],
+        "per_class_recall": [
+          0.6627906976744186,
+          0.8532818532818532,
+          0.5787965616045845,
+          0.0,
+          0.17616580310880828,
+          0.2777777777777778,
+          0.24675324675324675,
+          0.0
+        ],
+        "per_class_f1": [
+          0.6993865030674846,
+          0.7916417910447762,
+          0.48325358851674644,
+          0.0,
+          0.27419354838709675,
+          0.42105263157894735,
+          0.2992125984251969,
+          0.0
+        ],
+        "per_class_support": [
+          86,
+          777,
+          349,
+          37,
+          193,
+          72,
+          77,
+          0
+        ],
+        "confusion_matrix": [
+          [
+            57,
+            14,
+            11,
+            0,
+            1,
+            1,
+            2,
+            0
+          ],
+          [
+            11,
+            663,
+            85,
+            1,
+            1,
+            2,
+            14,
+            0
+          ],
+          [
+            6,
+            115,
+            202,
+            0,
+            19,
+            0,
+            7,
+            0
+          ],
+          [
+            0,
+            15,
+            22,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            1,
+            30,
+            123,
+            0,
+            34,
+            0,
+            5,
+            0
+          ],
+          [
+            0,
+            30,
+            19,
+            0,
+            0,
+            20,
+            3,
+            0
+          ],
+          [
+            2,
+            31,
+            25,
+            0,
+            0,
+            0,
+            19,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        ]
+      },
+      "graph": {
+        "edge_count": 0,
+        "active_channels": 73,
+        "global_channels": 73,
+        "total_channel_nnz": 1516795065
+      }
+    }
+  },
+  "pairwise_invariance": [
+    {
+      "variant_a": "unchanged",
+      "variant_b": "exact_2",
+      "kendall_tau": 0.9326120140073628,
+      "kendall_tau_at_1": 0.9692017598994344,
+      "kendall_tau_at_3": 0.8732872407291012,
+      "kendall_tau_flat_logits": 0.9228766362844866,
+      "kendall_tau_confidence": 0.8841676252821492,
+      "prediction_agreement": 0.9692017598994344,
+      "mean_abs_logit_diff": 0.053850771794490576,
+      "max_abs_logit_diff": 2.859656572341919,
+      "mean_l2_logit_diff": 0.19808624350193133,
+      "mean_abs_probability_diff": 0.006656592587562004,
+      "max_abs_probability_diff": 0.5981827447426511
+    }
+  ],
+  "artifacts": {
+    "shared_checkpoint": "/nfs/hpc/share/tinw/idealab/INV-GNN/src/baselines/SeHGNN/utils/SeHGNN_current/results/sehgnn_augmentation/FREEBASE_NC/up_to_exact_2/k2/type_channels/seed_1566911444/shared_checkpoint.pt",
+    "latest_training_state": "/nfs/hpc/share/tinw/idealab/INV-GNN/src/baselines/SeHGNN/utils/SeHGNN_current/results/sehgnn_augmentation/FREEBASE_NC/up_to_exact_2/k2/type_channels/seed_1566911444/latest_training_state.pt",
+    "training_history": "/nfs/hpc/share/tinw/idealab/INV-GNN/src/baselines/SeHGNN/utils/SeHGNN_current/results/sehgnn_augmentation/FREEBASE_NC/up_to_exact_2/k2/type_channels/seed_1566911444/training_history.csv",
+    "per_variant": {
+      "unchanged": {
+        "logits_file": "/nfs/hpc/share/tinw/idealab/INV-GNN/src/baselines/SeHGNN/utils/SeHGNN_current/results/sehgnn_augmentation/FREEBASE_NC/up_to_exact_2/k2/type_channels/seed_1566911444/unchanged_logits.npz",
+        "test_scores_file": "/nfs/hpc/share/tinw/idealab/INV-GNN/src/baselines/SeHGNN/utils/SeHGNN_current/results/sehgnn_augmentation/FREEBASE_NC/up_to_exact_2/k2/type_channels/seed_1566911444/unchanged_test_scores.csv"
+      },
+      "exact_2": {
+        "logits_file": "/nfs/hpc/share/tinw/idealab/INV-GNN/src/baselines/SeHGNN/utils/SeHGNN_current/results/sehgnn_augmentation/FREEBASE_NC/up_to_exact_2/k2/type_channels/seed_1566911444/exact_2_logits.npz",
+        "test_scores_file": "/nfs/hpc/share/tinw/idealab/INV-GNN/src/baselines/SeHGNN/utils/SeHGNN_current/results/sehgnn_augmentation/FREEBASE_NC/up_to_exact_2/k2/type_channels/seed_1566911444/exact_2_test_scores.csv"
+      }
+    }
+  },
+  "split_fingerprints": {
+    "labels_sha256": "ea9cdd9467d3f7d13969bb7d7e9a80063fd0e3f89fe7f4e2a167c3bde7705baa",
+    "train_idx_sha256": "9dad82422623344667be2d3693817aaa33ce3b1df254c88ea414e23db52b23b5",
+    "val_idx_sha256": "90ed9692c939488e501eda07195c0738906171357efb24ad1e51387bda4476d1",
+    "test_idx_sha256": "08d1e5e8c08b9236af79612aa7d7edb81ac4cae44c5005e1ed44860578b4f3c1"
+  },
+  "memory": {
+    "parameter_count": 151030543,
+    "trainable_parameter_count": 151030543,
+    "buffer_count": 3075,
+    "parameter_bytes": 604122172,
+    "buffer_bytes": 12312,
+    "parameter_mib": 576.135799407959,
+    "buffer_mib": 0.01174163818359375,
+    "static_model_mib": 576.1475410461426,
+    "checkpoint_bytes": 604163070,
+    "checkpoint_mib": 576.1748027801514,
+    "process_peak_rss_bytes": 45961412608,
+    "process_peak_rss_mib": 43832.21875,
+    "training_gpu": {
+      "allocated_mib": 2308.423828125,
+      "peak_allocated_mib": 19036.009765625,
+      "peak_reserved_mib": 20012.0,
+      "reserved_mib": 20012.0
+    },
+    "inference_gpu": {
+      "allocated_mib": 2308.423828125,
+      "reserved_mib": 10650.0,
+      "peak_allocated_mib": 9880.12109375,
+      "peak_reserved_mib": 10650.0
+    }
+  }
+}
